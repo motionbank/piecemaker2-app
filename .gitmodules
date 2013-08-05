@@ -1,0 +1,4 @@
+[submodule "piecemaker2/app/frontend"]
+	path = piecemaker2/app/frontend
+	url = https://github.com/motionbank/piecemaker2-frontend.git
+	branch = master

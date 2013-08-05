@@ -18,6 +18,17 @@
 			name = nodejs;
 			productName = nodejs;
 		};
+		ADDAD9ED17B0662E00594C5F /* ruby */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = ADDAD9EE17B0662E00594C5F /* Build configuration list for PBXAggregateTarget "ruby" */;
+			buildPhases = (
+				ADDAD9F117B0663400594C5F /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = ruby;
+			productName = ruby;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -168,6 +179,7 @@
 			targets = (
 				396EA793178F2E06003319B1 /* piecemaker2 */,
 				396EA7B6178F2EB3003319B1 /* nodejs */,
+				ADDAD9ED17B0662E00594C5F /* ruby */,
 			);
 		};
 /* End PBXProject section */
@@ -201,6 +213,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = "prefix=$(pwd)/local\ncd node-0.10.13\n./configure --prefix=$prefix && make && make install";
+		};
+		ADDAD9F117B0663400594C5F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "prefix=$(pwd)/local\ncd ruby-2_0_0_247\nautoconf\n./configure --prefix=$prefix && make && make install";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -341,6 +366,20 @@
 			};
 			name = Release;
 		};
+		ADDAD9EF17B0662E00594C5F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ADDAD9F017B0662E00594C5F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -370,6 +409,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		ADDAD9EE17B0662E00594C5F /* Build configuration list for PBXAggregateTarget "ruby" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ADDAD9EF17B0662E00594C5F /* Debug */,
+				ADDAD9F017B0662E00594C5F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
