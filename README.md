@@ -2,7 +2,7 @@
 
 __requires Mac OS 10.8 (64-bit)__
 
-Download [piecemaker2.dmg](https://github.com/motionbank/piecemaker2/raw/master/app/piecemaker2.dmg), 
+Download [piecemaker2.dmg](https://github.com/motionbank/piecemaker2-app/raw/master/app/piecemaker2.dmg), 
 open the app, click the "Test" button. It should print something like this:
 
 ```
