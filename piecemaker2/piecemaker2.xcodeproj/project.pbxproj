@@ -6,31 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		396EA7B6178F2EB3003319B1 /* nodejs */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 396EA7B7178F2EB3003319B1 /* Build configuration list for PBXAggregateTarget "nodejs" */;
-			buildPhases = (
-				396EA7BA178F2EC2003319B1 /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = nodejs;
-			productName = nodejs;
-		};
-		ADDAD9ED17B0662E00594C5F /* ruby */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = ADDAD9EE17B0662E00594C5F /* Build configuration list for PBXAggregateTarget "ruby" */;
-			buildPhases = (
-				ADDAD9F117B0663400594C5F /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = ruby;
-			productName = ruby;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		396EA798178F2E06003319B1 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 396EA797178F2E06003319B1 /* Cocoa.framework */; };
 		396EA7A2178F2E06003319B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7A0178F2E06003319B1 /* InfoPlist.strings */; };
@@ -38,7 +13,6 @@
 		396EA7A8178F2E06003319B1 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7A6178F2E06003319B1 /* Credits.rtf */; };
 		396EA7AB178F2E06003319B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 396EA7AA178F2E06003319B1 /* AppDelegate.m */; };
 		396EA7AE178F2E07003319B1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7AC178F2E07003319B1 /* MainMenu.xib */; };
-		396EA7B5178F2E8E003319B1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7B4178F2E8E003319B1 /* README.md */; };
 		396EA7BD178F3181003319B1 /* local in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7BC178F3018003319B1 /* local */; };
 		396EA7C0178F3202003319B1 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7BE178F31B1003319B1 /* app */; };
 /* End PBXBuildFile section */
@@ -57,9 +31,9 @@
 		396EA7A9178F2E06003319B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		396EA7AA178F2E06003319B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		396EA7AD178F2E07003319B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		396EA7B4178F2E8E003319B1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		396EA7BC178F3018003319B1 /* local */ = {isa = PBXFileReference; lastKnownFileType = folder; path = local; sourceTree = "<group>"; };
 		396EA7BE178F31B1003319B1 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; path = app; sourceTree = "<group>"; };
+		ADDAD9F217B06B8100594C5F /* test.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = test.rb; path = app/test.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +51,7 @@
 		396EA78B178F2E06003319B1 = {
 			isa = PBXGroup;
 			children = (
+				ADDAD9F217B06B8100594C5F /* test.rb */,
 				396EA7BE178F31B1003319B1 /* app */,
 				396EA7BC178F3018003319B1 /* local */,
 				396EA79D178F2E06003319B1 /* piecemaker2 */,
@@ -131,7 +106,6 @@
 				396EA7A3178F2E06003319B1 /* main.m */,
 				396EA7A5178F2E06003319B1 /* piecemaker2-Prefix.pch */,
 				396EA7A6178F2E06003319B1 /* Credits.rtf */,
-				396EA7B4178F2E8E003319B1 /* README.md */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -178,8 +152,6 @@
 			projectRoot = "";
 			targets = (
 				396EA793178F2E06003319B1 /* piecemaker2 */,
-				396EA7B6178F2EB3003319B1 /* nodejs */,
-				ADDAD9ED17B0662E00594C5F /* ruby */,
 			);
 		};
 /* End PBXProject section */
@@ -192,42 +164,12 @@
 				396EA7A2178F2E06003319B1 /* InfoPlist.strings in Resources */,
 				396EA7A8178F2E06003319B1 /* Credits.rtf in Resources */,
 				396EA7AE178F2E07003319B1 /* MainMenu.xib in Resources */,
-				396EA7B5178F2E8E003319B1 /* README.md in Resources */,
 				396EA7BD178F3181003319B1 /* local in Resources */,
 				396EA7C0178F3202003319B1 /* app in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		396EA7BA178F2EC2003319B1 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "prefix=$(pwd)/local\ncd node-0.10.13\n./configure --prefix=$prefix && make && make install";
-		};
-		ADDAD9F117B0663400594C5F /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/bash;
-			shellScript = "prefix=$(pwd)/local\ncd ruby-2_0_0_247\nautoconf\n./configure --prefix=$prefix && make && make install";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		396EA790178F2E06003319B1 /* Sources */ = {
@@ -352,34 +294,6 @@
 			};
 			name = Release;
 		};
-		396EA7B8178F2EB3003319B1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		396EA7B9178F2EB3003319B1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		ADDAD9EF17B0662E00594C5F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		ADDAD9F017B0662E00594C5F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -400,23 +314,6 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
-		};
-		396EA7B7178F2EB3003319B1 /* Build configuration list for PBXAggregateTarget "nodejs" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				396EA7B8178F2EB3003319B1 /* Debug */,
-				396EA7B9178F2EB3003319B1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		ADDAD9EE17B0662E00594C5F /* Build configuration list for PBXAggregateTarget "ruby" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				ADDAD9EF17B0662E00594C5F /* Debug */,
-				ADDAD9F017B0662E00594C5F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

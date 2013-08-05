@@ -20,18 +20,18 @@
 -(IBAction)testButton:(id)sender {
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
     NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
-    NSString *node = [resourcesDir stringByAppendingString:@"/local/bin/node"];
+    NSString *ruby = [resourcesDir stringByAppendingString:@"/local/bin/ruby"];
     
     // NSString *node = [NSString stringWithFormat:@"cd %@ && ./local/bin/node", resourcesDir];
     
-    _textField.stringValue = [NSString stringWithFormat:@"workingDir:\n%@\n\nwhich node:\n%@\n\nstdout:\n%@", workingDir, node, @"waiting..."];
+    _textField.stringValue = [NSString stringWithFormat:@"workingDir:\n%@\n\nwhich ruby:\n%@\n\nstdout:\n%@", workingDir, ruby, @"waiting..."];
     
     NSTask *task;
     task = [[NSTask alloc] init];
-    [task setLaunchPath: node];
+    [task setLaunchPath: ruby];
 
     NSArray *arguments;
-    arguments = [NSArray arrayWithObjects: [resourcesDir stringByAppendingString:@"/app/test.js"], nil];
+    arguments = [NSArray arrayWithObjects: [resourcesDir stringByAppendingString:@"/app/test.rb"], nil];
     [task setArguments: arguments];
     
     NSPipe *pipe;
@@ -50,7 +50,7 @@
     taskOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
     NSLog (@"task returned:\n%@", taskOutput);
     
-    _textField.stringValue = [NSString stringWithFormat:@"workingDir:\n%@\n\nwhich node:\n%@\n\nstdout:\n%@", workingDir, node, taskOutput];
+    _textField.stringValue = [NSString stringWithFormat:@"workingDir:\n%@\n\nwhich ruby:\n%@\n\nstdout:\n%@", workingDir, ruby, taskOutput];
 }
 
 @end

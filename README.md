@@ -2,16 +2,27 @@
 
 __requires Mac OS 10.8 (64-bit)__
 
-Download [piecemaker2.dmg](https://github.com/motionbank/piecemaker2-app/raw/master/app/piecemaker2.dmg), 
+Download [piecemaker2.dmg](https://github.com/motionbank/piecemaker2-app/raw/master/piecemaker2.dmg), 
 open the app, click the "Test" button. It should print something like this:
 
 ```
 workingDir:
-/Volumes/Piecemaker2/piecemaker2.app
+/Users/mattes/Developer/piecemaker2-app/piecemaker2.app
 
-which node:
-/Volumes/Piecemaker2/piecemaker2.app/Contents/Resources/local/bin/node
+which ruby:
+/Users/mattes/Developer/piecemaker2-app/piecemaker2.app/Contents/Resources/local/bin/ruby
 
 stdout:
-It works!
+Hello, Ruby!
+```
+
+## Compiling
+
+### Ruby
+
+```
+prefix=$(pwd)/local
+cd ruby-2_0_0_247
+autoconf
+./configure --prefix=$prefix && make && make install
 ```

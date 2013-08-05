@@ -15,6 +15,9 @@ task :dmg do
   # copy piecemaker app to tmp dir
   system("cp -r #{WORKING_DIR + 'piecemaker2.app'} #{TMP_DIR}")
 
+  # remove existing piecemaker2.dmg
+  system("rm -R '#{WORKING_DIR + 'piecemaker2.dmg'}'")
+
   # build dmg
   system("hdiutil create -fs HFS+ -volname 'Piecemaker2' \
     -srcfolder '#{TMP_DIR}' '#{WORKING_DIR + 'piecemaker2.dmg'}'")

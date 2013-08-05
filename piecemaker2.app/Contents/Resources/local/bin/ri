@@ -1,0 +1,12 @@
+#!/Users/mattes/Developer/piecemaker2-app/piecemaker2/local/bin/ruby
+
+begin
+  gem 'rdoc'
+rescue NameError => e # --disable-gems
+  raise unless e.name == :gem
+rescue Gem::LoadError
+end
+
+require 'rdoc/ri/driver'
+
+RDoc::RI::Driver.run ARGV
