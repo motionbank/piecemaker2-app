@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nobu Nakada"]
-  s.date = "2013-08-05"
+  s.date = "2013-02-24"
   s.description = "add console capabilities to IO instances."
   s.email = "nobu@ruby-lang.org"
   s.extensions = ["extconf.rb"]

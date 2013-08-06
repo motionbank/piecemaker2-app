@@ -1,0 +1,30 @@
+# go to https://newrelic.com, sign up and get your license key
+# leave empty to disable newrelic monitor support
+newrelic_license_key:
+
+production:
+  adapter   : postgres
+  host      : localhost
+  port      : 5432
+  database  : piecemaker2_prod
+  username  : XXX
+  password  : XXX
+  max_connections: 4
+
+development:
+  adapter   : postgres
+  host      : localhost
+  port      : 5432
+  database  : piecemaker2_dev
+  username  : XXX
+  password  : XXX
+  max_connections: 4
+
+test:
+  adapter   : postgres
+  host      : localhost
+  port      : 5432
+  database  : piecemaker2_test
+  username  : XXX
+  password  : XXX
+  max_connections: 4

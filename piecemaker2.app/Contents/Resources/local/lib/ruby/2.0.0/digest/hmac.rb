@@ -7,7 +7,7 @@
 # All rights reserved.  You can redistribute and/or modify it under
 # the same terms as Ruby.
 #
-#   $Id$
+#   $Id: hmac.rb 31594 2011-05-16 20:52:55Z drbrain $
 #
 
 warn "use of the experimetal library 'digest/hmac' is discouraged; require 'openssl' and use OpenSSL::HMAC instead." if $VERBOSE

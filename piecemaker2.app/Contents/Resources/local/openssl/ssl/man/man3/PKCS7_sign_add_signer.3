@@ -1,0 +1,279 @@
+.rn '' }`
+''' $RCSfile$$Revision$$Date$
+'''
+''' $Log$
+'''
+.de Sh
+.br
+.if t .Sp
+.ne 5
+.PP
+\fB\\$1\fR
+.PP
+..
+.de Sp
+.if t .sp .5v
+.if n .sp
+..
+.de Ip
+.br
+.ie \\n(.$>=3 .ne \\$3
+.el .ne 3
+.IP "\\$1" \\$2
+..
+.de Vb
+.ft CW
+.nf
+.ne \\$1
+..
+.de Ve
+.ft R
+
+.fi
+..
+'''
+'''
+'''     Set up \*(-- to give an unbreakable dash;
+'''     string Tr holds user defined translation string.
+'''     Bell System Logo is used as a dummy character.
+'''
+.tr \(*W-|\(bv\*(Tr
+.ie n \{\
+.ds -- \(*W-
+.ds PI pi
+.if (\n(.H=4u)&(1m=24u) .ds -- \(*W\h'-12u'\(*W\h'-12u'-\" diablo 10 pitch
+.if (\n(.H=4u)&(1m=20u) .ds -- \(*W\h'-12u'\(*W\h'-8u'-\" diablo 12 pitch
+.ds L" ""
+.ds R" ""
+'''   \*(M", \*(S", \*(N" and \*(T" are the equivalent of
+'''   \*(L" and \*(R", except that they are used on ".xx" lines,
+'''   such as .IP and .SH, which do another additional levels of
+'''   double-quote interpretation
+.ds M" """
+.ds S" """
+.ds N" """""
+.ds T" """""
+.ds L' '
+.ds R' '
+.ds M' '
+.ds S' '
+.ds N' '
+.ds T' '
+'br\}
+.el\{\
+.ds -- \(em\|
+.tr \*(Tr
+.ds L" ``
+.ds R" ''
+.ds M" ``
+.ds S" ''
+.ds N" ``
+.ds T" ''
+.ds L' `
+.ds R' '
+.ds M' `
+.ds S' '
+.ds N' `
+.ds T' '
+.ds PI \(*p
+'br\}
+.\"	If the F register is turned on, we'll generate
+.\"	index entries out stderr for the following things:
+.\"		TH	Title 
+.\"		SH	Header
+.\"		Sh	Subsection 
+.\"		Ip	Item
+.\"		X<>	Xref  (embedded
+.\"	Of course, you have to process the output yourself
+.\"	in some meaninful fashion.
+.if \nF \{
+.de IX
+.tm Index:\\$1\t\\n%\t"\\$2"
+..
+.nr % 0
+.rr F
+.\}
+.TH PKCS7_sign_add_signer 3 "1.0.1e" "11/Feb/2013" "OpenSSL"
+.UC
+.if n .hy 0
+.if n .na
+.ds C+ C\v'-.1v'\h'-1p'\s-2+\h'-1p'+\s0\v'.1v'\h'-1p'
+.de CQ          \" put $1 in typewriter font
+.ft CW
+'if n "\c
+'if t \\&\\$1\c
+'if n \\&\\$1\c
+'if n \&"
+\\&\\$2 \\$3 \\$4 \\$5 \\$6 \\$7
+'.ft R
+..
+.\" @(#)ms.acc 1.5 88/02/08 SMI; from UCB 4.2
+.	\" AM - accent mark definitions
+.bd B 3
+.	\" fudge factors for nroff and troff
+.if n \{\
+.	ds #H 0
+.	ds #V .8m
+.	ds #F .3m
+.	ds #[ \f1
+.	ds #] \fP
+.\}
+.if t \{\
+.	ds #H ((1u-(\\\\n(.fu%2u))*.13m)
+.	ds #V .6m
+.	ds #F 0
+.	ds #[ \&
+.	ds #] \&
+.\}
+.	\" simple accents for nroff and troff
+.if n \{\
+.	ds ' \&
+.	ds ` \&
+.	ds ^ \&
+.	ds , \&
+.	ds ~ ~
+.	ds ? ?
+.	ds ! !
+.	ds /
+.	ds q
+.\}
+.if t \{\
+.	ds ' \\k:\h'-(\\n(.wu*8/10-\*(#H)'\'\h"|\\n:u"
+.	ds ` \\k:\h'-(\\n(.wu*8/10-\*(#H)'\`\h'|\\n:u'
+.	ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'^\h'|\\n:u'
+.	ds , \\k:\h'-(\\n(.wu*8/10)',\h'|\\n:u'
+.	ds ~ \\k:\h'-(\\n(.wu-\*(#H-.1m)'~\h'|\\n:u'
+.	ds ? \s-2c\h'-\w'c'u*7/10'\u\h'\*(#H'\zi\d\s+2\h'\w'c'u*8/10'
+.	ds ! \s-2\(or\s+2\h'-\w'\(or'u'\v'-.8m'.\v'.8m'
+.	ds / \\k:\h'-(\\n(.wu*8/10-\*(#H)'\z\(sl\h'|\\n:u'
+.	ds q o\h'-\w'o'u*8/10'\s-4\v'.4m'\z\(*i\v'-.4m'\s+4\h'\w'o'u*8/10'
+.\}
+.	\" troff and (daisy-wheel) nroff accents
+.ds : \\k:\h'-(\\n(.wu*8/10-\*(#H+.1m+\*(#F)'\v'-\*(#V'\z.\h'.2m+\*(#F'.\h'|\\n:u'\v'\*(#V'
+.ds 8 \h'\*(#H'\(*b\h'-\*(#H'
+.ds v \\k:\h'-(\\n(.wu*9/10-\*(#H)'\v'-\*(#V'\*(#[\s-4v\s0\v'\*(#V'\h'|\\n:u'\*(#]
+.ds _ \\k:\h'-(\\n(.wu*9/10-\*(#H+(\*(#F*2/3))'\v'-.4m'\z\(hy\v'.4m'\h'|\\n:u'
+.ds . \\k:\h'-(\\n(.wu*8/10)'\v'\*(#V*4/10'\z.\v'-\*(#V*4/10'\h'|\\n:u'
+.ds 3 \*(#[\v'.2m'\s-2\&3\s0\v'-.2m'\*(#]
+.ds o \\k:\h'-(\\n(.wu+\w'\(de'u-\*(#H)/2u'\v'-.3n'\*(#[\z\(de\v'.3n'\h'|\\n:u'\*(#]
+.ds d- \h'\*(#H'\(pd\h'-\w'~'u'\v'-.25m'\f2\(hy\fP\v'.25m'\h'-\*(#H'
+.ds D- D\\k:\h'-\w'D'u'\v'-.11m'\z\(hy\v'.11m'\h'|\\n:u'
+.ds th \*(#[\v'.3m'\s+1I\s-1\v'-.3m'\h'-(\w'I'u*2/3)'\s-1o\s+1\*(#]
+.ds Th \*(#[\s+2I\s-2\h'-\w'I'u*3/5'\v'-.3m'o\v'.3m'\*(#]
+.ds ae a\h'-(\w'a'u*4/10)'e
+.ds Ae A\h'-(\w'A'u*4/10)'E
+.ds oe o\h'-(\w'o'u*4/10)'e
+.ds Oe O\h'-(\w'O'u*4/10)'E
+.	\" corrections for vroff
+.if v .ds ~ \\k:\h'-(\\n(.wu*9/10-\*(#H)'\s-2\u~\d\s+2\h'|\\n:u'
+.if v .ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'\v'-.4m'^\v'.4m'\h'|\\n:u'
+.	\" for low resolution devices (crt and lpr)
+.if \n(.H>23 .if \n(.V>19 \
+\{\
+.	ds : e
+.	ds 8 ss
+.	ds v \h'-1'\o'\(aa\(ga'
+.	ds _ \h'-1'^
+.	ds . \h'-1'.
+.	ds 3 3
+.	ds o a
+.	ds d- d\h'-1'\(ga
+.	ds D- D\h'-1'\(hy
+.	ds th \o'bp'
+.	ds Th \o'LP'
+.	ds ae ae
+.	ds Ae AE
+.	ds oe oe
+.	ds Oe OE
+.\}
+.rm #[ #] #H #V #F C
+.SH "NAME"
+PKCS7_sign_add_signer \- add a signer PKCS7 signed data structure.
+.SH "SYNOPSIS"
+.PP
+.Vb 1
+\& #include <openssl/pkcs7.h>
+.Ve
+.Vb 1
+\& PKCS7_SIGNER_INFO *PKCS7_sign_add_signer(PKCS7 *p7, X509 *signcert, EVP_PKEY *pkey, const EVP_MD *md, int flags);
+.Ve
+.SH "DESCRIPTION"
+\fIPKCS7_sign_add_signer()\fR adds a signer with certificate \fBsigncert\fR and private
+key \fBpkey\fR using message digest \fBmd\fR to a PKCS7 signed data structure
+\fBp7\fR.
+.PP
+The PKCS7 structure should be obtained from an initial call to \fIPKCS7_sign()\fR
+with the flag \fBPKCS7_PARTIAL\fR set or in the case or re-signing a valid PKCS7
+signed data structure.
+.PP
+If the \fBmd\fR parameter is \fBNULL\fR then the default digest for the public
+key algorithm will be used.
+.PP
+Unless the \fBPKCS7_REUSE_DIGEST\fR flag is set the returned PKCS7 structure
+is not complete and must be finalized either by streaming (if applicable) or
+a call to \fIPKCS7_final()\fR.
+.SH "NOTES"
+The main purpose of this function is to provide finer control over a PKCS#7
+signed data structure where the simpler \fIPKCS7_sign()\fR function defaults are
+not appropriate. For example if multiple signers or non default digest
+algorithms are needed.
+.PP
+Any of the following flags (ored together) can be passed in the \fBflags\fR
+parameter.
+.PP
+If \fBPKCS7_REUSE_DIGEST\fR is set then an attempt is made to copy the content
+digest value from the PKCS7 struture: to add a signer to an existing structure.
+An error occurs if a matching digest value cannot be found to copy. The
+returned PKCS7 structure will be valid and finalized when this flag is set.
+.PP
+If \fBPKCS7_PARTIAL\fR is set in addition to \fBPKCS7_REUSE_DIGEST\fR then the 
+\fBPKCS7_SIGNER_INO\fR structure will not be finalized so additional attributes
+can be added. In this case an explicit call to \fIPKCS7_SIGNER_INFO_sign()\fR is
+needed to finalize it.
+.PP
+If \fBPKCS7_NOCERTS\fR is set the signer's certificate will not be included in the
+PKCS7 structure, the signer's certificate must still be supplied in the
+\fBsigncert\fR parameter though. This can reduce the size of the signature if the
+signers certificate can be obtained by other means: for example a previously
+signed message.
+.PP
+The signedData structure includes several PKCS#7 autenticatedAttributes
+including the signing time, the PKCS#7 content type and the supported list of
+ciphers in an SMIMECapabilities attribute. If \fBPKCS7_NOATTR\fR is set then no
+authenticatedAttributes will be used. If \fBPKCS7_NOSMIMECAP\fR is set then just
+the SMIMECapabilities are omitted.
+.PP
+If present the SMIMECapabilities attribute indicates support for the following
+algorithms: triple DES, 128 bit RC2, 64 bit RC2, DES and 40 bit RC2. If any of
+these algorithms is disabled then it will not be included.
+.PP
+\fIPKCS7_sign_add_signers()\fR returns an internal pointer to the PKCS7_SIGNER_INFO
+structure just added, this can be used to set additional attributes 
+before it is finalized.
+.SH "RETURN VALUES"
+\fIPKCS7_sign_add_signers()\fR returns an internal pointer to the PKCS7_SIGNER_INFO
+structure just added or NULL if an error occurs.
+.SH "SEE ALSO"
+ERR_get_error(3), PKCS7_sign(3),
+PKCS7_final(3),
+.SH "HISTORY"
+\fIPPKCS7_sign_add_signer()\fR was added to OpenSSL 1.0.0
+
+.rn }` ''
+.IX Title "PKCS7_sign_add_signer 3"
+.IX Name "PKCS7_sign_add_signer - add a signer PKCS7 signed data structure."
+
+.IX Header "NAME"
+
+.IX Header "SYNOPSIS"
+
+.IX Header "DESCRIPTION"
+
+.IX Header "NOTES"
+
+.IX Header "RETURN VALUES"
+
+.IX Header "SEE ALSO"
+
+.IX Header "HISTORY"
+

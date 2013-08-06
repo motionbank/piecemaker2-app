@@ -16,7 +16,10 @@ task :dmg do
   system("cp -r #{WORKING_DIR + 'piecemaker2.app'} #{TMP_DIR}")
 
   # remove existing piecemaker2.dmg
-  system("rm -R '#{WORKING_DIR + 'piecemaker2.dmg'}'")
+  system("rm -rf '#{WORKING_DIR + 'piecemaker2.dmg'}'")
+
+  # remove postgres data dir
+  system("rm -rf #{TMP_DIR + 'piecemaker2.app/Contents/Resources/local/var/pqsql'}")
 
   # build dmg
   system("hdiutil create -fs HFS+ -volname 'Piecemaker2' \
