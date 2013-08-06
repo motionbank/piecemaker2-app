@@ -26,3 +26,10 @@ cd ruby-2_0_0_247
 autoconf
 ./configure --prefix=$prefix && make && make install
 ```
+
+### PostgreSQL
+```
+prefix=$(pwd)/local
+cd postgresql-9.2.4
+./configure --prefix=$prefix && make && make install
+```
