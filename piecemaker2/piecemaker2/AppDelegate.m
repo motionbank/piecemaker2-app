@@ -62,7 +62,7 @@
         }
         
         // use this new directory as data dir for postgresql
-        NSDictionary *result = [Helper runCommand:@"initdb --auth=trust -D local/var/pqsql/data"];
+        NSDictionary *result = [Helper runCommand:@"initdb --auth=trust -D local/var/pqsql/data" waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Init Error (101)"
                       message:[NSString stringWithFormat:@"Unable to init data dir in %@", dataDir]

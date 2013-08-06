@@ -11,7 +11,7 @@
 @implementation Helper
 
 
-+ (NSDictionary*)runCommand:(NSString*) commandToRun {
++ (NSDictionary*)runCommand:(NSString*) commandToRun waitUntilExit:(Boolean)waitUntilExit {
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
     NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
     NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
@@ -35,7 +35,9 @@
     
     NSLog(@"run command: %@", commandToRun);
     
-    [task waitUntilExit];
+    if(waitUntilExit) {
+        [task waitUntilExit];
+    }
     
     NSPipe *pipe;
     pipe = [NSPipe pipe];
@@ -86,14 +88,14 @@
 
 
 + (void)createDatabaseIfNotExist:(NSString*) database {
-    NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"psql --port=50725 --list | grep piecemaker2_%@", database]];
+    NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"psql --port=50725 --list | grep piecemaker2_%@", database] waitUntilExit:TRUE];
     if([[result valueForKey:@"code"] intValue] == 0 && [[result valueForKey:@"result"] length] > 0) {
         // database exist
         NSLog(@"database 'piecemaker2_%@' exists", database);        
     } else {
         // create database
         NSLog(@"database 'piecemaker2_%@' does not exist", database);
-        NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"createdb --port=50725 piecemaker2_%@", database]];
+        NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"createdb --port=50725 piecemaker2_%@", database] waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Error (502)"
                       message:[NSString stringWithFormat:@"Unable to create database 'piecemaker2_%@'.", database]
@@ -102,7 +104,7 @@
         }
         
         // init database
-        result = [Helper runCommand:[NSString stringWithFormat:@"cd app/api && rake db:migrate[%@]", database]];
+        result = [Helper runCommand:[NSString stringWithFormat:@"cd app/api && rake db:migrate[%@]", database] waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Error (503)"
                       message:[NSString stringWithFormat:@"Unable to init database 'piecemaker2_%@'.", database]
@@ -117,11 +119,10 @@
     
     if([action isEqual: @"start"]) {
         command = [NSString stringWithFormat:@"cd app/api && rake daemon[start]", nil];
-        NSDictionary *result = [Helper runCommand:command];
-        
+        NSDictionary *result = [Helper runCommand:command waitUntilExit:FALSE];
     } else if ([action isEqual: @"stop"]) {
         command = [NSString stringWithFormat:@"cd app/api && rake daemon[stop]", nil];
-        NSDictionary *result = [Helper runCommand:command];
+        NSDictionary *result = [Helper runCommand:command waitUntilExit:FALSE];
     }
     
 
@@ -142,7 +143,7 @@
     }
     
     if(command) {
-        NSDictionary *result = [Helper runCommand:command];
+        NSDictionary *result = [Helper runCommand:command waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Error (500)"
                       message:[NSString stringWithFormat:@"Unable to %@ PostgreSQL.", action]
@@ -154,7 +155,7 @@
             // be sure, the server is running ...
             if([action isEqual: @"start"]) {
                 command = [NSString stringWithFormat:@"pg_ctl status -l '%@' -D '%@'", logFile, dataDir];
-                NSDictionary *result = [Helper runCommand:command];
+                NSDictionary *result = [Helper runCommand:command waitUntilExit:TRUE];
                 if([[result valueForKey:@"code"] intValue] > 0) {
                     // try to start again
                     [NSThread sleepForTimeInterval:10.0];

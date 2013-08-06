@@ -12,7 +12,7 @@
 
 + (Boolean)postgresql:(NSString *)action quitOnError:(Boolean)quit;
 
-+ (NSDictionary*)runCommand:(NSString*) commandToRun;
++ (NSDictionary*)runCommand:(NSString*) commandToRun waitUntilExit:(Boolean)waitUntilExit;
 
 +(void)showAlert:(NSString *)messageText
          message:(NSString *)informativeText
