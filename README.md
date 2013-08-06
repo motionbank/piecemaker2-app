@@ -21,7 +21,9 @@ Hello, Ruby!
 
 https://github.com/mxcl/homebrew/blob/master/Library/Formula/openssl.rb
 https://github.com/mxcl/homebrew/blob/master/Library/Formula/postgresql.rb
-https://github.com/sstephenson/ruby-build
+
+
+We are going to compile ruby with [ruby-build](https://github.com/sstephenson/ruby-build). Install with ```brew install ruby-build```.
 
 
 ```
@@ -29,18 +31,10 @@ https://github.com/sstephenson/ruby-build
 cd piecemaker2-app/piecemaker2
 prefix=$(pwd)/local
 
-# compile openssl
-cd openssl-1.0.1e
-./Configure --prefix=$prefix darwin64-x86_64-cc
-make
-make install
 
 # compile ruby
-cd ruby-2_0_0_247
-autoconf
-./configure --prefix=$prefix --disable-install-doc 
-make
-make install
+CONFIGURE_OPTS="--disable-install-doc"
+ruby-build 2.0.0-p247 $prefix
 
 
 # compile PostgreSQL
