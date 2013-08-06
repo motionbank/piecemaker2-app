@@ -7,18 +7,77 @@
 //
 
 #import "AppDelegate.h"
+#import "Helper.h"
 
 @implementation AppDelegate
-@synthesize testButton = _testButton;
-@synthesize textField = _textField;
+//@synthesize testButton = _testButton;
+//@synthesize textField = _textField;
 
 
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
+    NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
+    
+    NSError *error;
+    NSFileManager *fileManager= [NSFileManager defaultManager];
+    NSString *dataDir = [resourcesDir stringByAppendingString:@"/local/var/pqsql/data"];
+    
+    
+    // debugging area
+    // (dont forget to comment-out the following lines)
+    // ------------------------------------------------
+    
+    error = nil;
+    [fileManager removeItemAtPath:[resourcesDir stringByAppendingString:@"/local/var/pqsql"] error:&error];
+    if(error) {
+        NSLog(@"removing data dir failed:\n%@", error);
+    }
+    
+    // ------------------------------------------------
+    
+    
+    
+    
+    // data dir exists?
+    // ----------------
 
+    if(![fileManager fileExistsAtPath:dataDir]) {
+        // data dir is missing ... create new directory now
+        error = nil;
+        if(![fileManager createDirectoryAtPath:dataDir withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create data dir \"%@\". Error: %@", dataDir, error);
+            [Helper showAlert:@"PostgreSQL Init Error (100)"
+                      message:[NSString stringWithFormat:@"Unable to create data directory in %@", dataDir]
+                detailMessage:nil
+                         quit:TRUE];
+        }
+        
+        // use this new directory as data dir for postgresql
+        NSDictionary *result = [Helper runCommand:@"initdb -D local/var/pqsql/data"];
+        if([[result valueForKey:@"code"] intValue] > 0) {
+            [Helper showAlert:@"PostgreSQL Init Error (101)"
+                      message:[NSString stringWithFormat:@"Unable to init data dir in %@", dataDir]
+                detailMessage:[result valueForKey:@"result"]
+                         quit:TRUE];
+        }
+        
+        // we then need to update postgresql.conf
+        [Helper updatePostgresqlConf:@"/local/var/pqsql/data/postgresql.conf" quitOnError:TRUE port:@"50725"];
+        
+    }
+    
+
+    
+}
+
+
+/*
 - (void)applicationWillTerminate:(NSNotification *)notification {
     NSLog(@"Trying to shutdown postgres server");
     
     // stop postgres server again
-    Boolean success = [self postgresql:@"stop"];
+
+    Boolean success = [Helper postgresql:@"stop"];
     
     //if(!success) {
         // show dialog and quit
@@ -26,87 +85,6 @@
     //}
 }
 
-- (Boolean)postgresql:(NSString *)action {
-    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
-    NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
-    NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
-    NSString *pg_ctl = [bin stringByAppendingString:@"/pg_ctl"];
-    NSString *pgsqlDataDir = [resourcesDir stringByAppendingString:@"/local/var/pqsql/data"];
-    NSString *pgsqlLogFile = [resourcesDir stringByAppendingString:@"/local/var/pqsql/log.log"];
-    
-    
-    
-    // start postgres server and create databases
-    NSTask *postgresTask = [[NSTask alloc] init];
-    [postgresTask setLaunchPath: pg_ctl];
-
-    if([action isEqual: @"start"]) {
-        [postgresTask setArguments: [NSArray arrayWithObjects:@"start", @"-D", pgsqlDataDir, @"-l", pgsqlLogFile, nil]];
-    } else if ([action isEqual: @"stop"]) {
-        [postgresTask setArguments: [NSArray arrayWithObjects:@"stop", @"-D", pgsqlDataDir, @"-l", pgsqlLogFile, nil]];
-    }
-    
-    // [postgresTask waitUntilExit];
-    
-    NSPipe *pipe = [NSPipe pipe];
-    [postgresTask setStandardOutput: pipe];
-    NSFileHandle *file = [pipe fileHandleForReading];
-    [postgresTask launch];
-    NSData *data = [file readDataToEndOfFile];
-    NSString *taskOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    NSLog (@"pg_ctl returned:\n%@", taskOutput);
-    int status = [postgresTask terminationStatus];
-    
-    if(status > 0) {
-        return false;
-    }
-    else {
-        return true;
-    }
-}
-
-
-- (void)showAlert:(NSString *)messageText message:(NSString *)informativeText detailMessage:(NSString *)detailText quit:(Boolean)quit {
-    NSAlert *alert = [NSAlert alertWithMessageText:messageText defaultButton:@"Quit" alternateButton:@"Details" otherButton:nil informativeTextWithFormat:informativeText, nil];
-    NSInteger returnedButton = [alert runModal];
-    if (returnedButton == NSAlertDefaultReturn) {
-        if(quit)
-            [NSApp terminate:self];
-    }
-    if (returnedButton == NSAlertAlternateReturn) {
-        // show details alert and quit
-        NSAlert *detailsAlert = [NSAlert alertWithMessageText:messageText defaultButton:@"Quit" alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
-        
-        NSScrollView *accessory = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 600, 300)];
-        NSSize contentSize = [accessory contentSize];
-        [accessory setBorderType:NSNoBorder];
-        [accessory setHasVerticalScroller:YES];
-        [accessory setHasHorizontalScroller:NO];
-        [accessory setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-        
-        NSTextView *theTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
-        [theTextView setMinSize:NSMakeSize(0.0, contentSize.height)];
-        [theTextView setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
-        [theTextView setVerticallyResizable:YES];
-        [theTextView setHorizontallyResizable:NO];
-        [theTextView setAutoresizingMask:NSViewWidthSizable];
-        [theTextView setBackgroundColor:[NSColor windowBackgroundColor]];
-        [[theTextView textContainer]
-         setContainerSize:NSMakeSize(contentSize.width, FLT_MAX)];
-        [[theTextView textContainer] setWidthTracksTextView:YES];
-        [theTextView setFont:[NSFont fontWithName:@"Menlo" size:11]];
-        [theTextView insertText:detailText];
-        [theTextView setEditable:NO];
-        
-        [accessory setDocumentView:theTextView];
-        [detailsAlert setAccessoryView:accessory];
-        
-        if ([detailsAlert runModal] == NSAlertDefaultReturn) {
-            if(quit)
-                [NSApp terminate:self];
-        }
-    }
-}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
@@ -412,5 +390,6 @@
     
     _textField.stringValue = [NSString stringWithFormat:@"workingDir:\n%@\n\nwhich ruby:\n%@\n\nstdout:\n%@", workingDir, ruby, taskOutput];
 }
+*/
 
 @end
