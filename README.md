@@ -92,15 +92,18 @@ sed -i '' -e "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/"
    $ ps aux | grep postgres
    $ kill %ID%
    ```
+
  * ```
    $ ps aux | grep ruby
    $ kill %ID%
    ```
+
  * __Finding logs in ...__  
    ```
    piecemaker2.app/Contents/Resources/app/api/logs
    piecemaker2.app/Contents/Resources/local/var/pgsql/
    ```
+   
  * __DMG file issues___  
    ! The .app won't run, when started within the original .dmg file.
 
