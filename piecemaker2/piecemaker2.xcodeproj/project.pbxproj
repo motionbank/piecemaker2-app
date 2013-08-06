@@ -33,7 +33,6 @@
 		396EA7AD178F2E07003319B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		396EA7BC178F3018003319B1 /* local */ = {isa = PBXFileReference; lastKnownFileType = folder; path = local; sourceTree = "<group>"; };
 		396EA7BE178F31B1003319B1 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; path = app; sourceTree = "<group>"; };
-		ADDAD9F217B06B8100594C5F /* test.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; name = test.rb; path = app/test.rb; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,7 +50,6 @@
 		396EA78B178F2E06003319B1 = {
 			isa = PBXGroup;
 			children = (
-				ADDAD9F217B06B8100594C5F /* test.rb */,
 				396EA7BE178F31B1003319B1 /* app */,
 				396EA7BC178F3018003319B1 /* local */,
 				396EA79D178F2E06003319B1 /* piecemaker2 */,
