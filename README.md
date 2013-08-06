@@ -93,7 +93,7 @@ sed -i '' -e "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/"
    $ kill %ID%
    ```
 
- * ___Ruby process__  
+ * __Ruby process__  
    ```
    $ ps aux | grep ruby
    $ kill %ID%
