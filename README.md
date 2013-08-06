@@ -83,8 +83,14 @@ sed -i '' -e "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/"
 
 ## Troubleshooting
 
- * __How-to re-create databases?__
+ * __How-to re-create databases?__  
    Quit the app, if running. Delete ```local/var/pgsql/data``` in the .app package resources. Restart app.
 
+ * __The app crashed. It seems as if i can't connect to the DB anymore?!__  
+   Make sure there is no orphaned postgresql server process.  
+   ```
+   $ ps aux | grep postgres
+   $ kill %ID%
+   ```
 
 

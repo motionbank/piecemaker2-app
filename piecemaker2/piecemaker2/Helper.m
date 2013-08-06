@@ -53,6 +53,22 @@
     
     [task terminate];
     
+    
+    // workaround for error:
+    // [NSConcreteTask terminationStatus]: task still running
+    // https://developer.apple.com/library/mac/#documentation/cocoa/Reference/Foundation/Classes/NSTask_Class/Reference/Reference.html
+    // "It is not always possible to terminate the receiver because it might be ignoring the terminate signal. terminate sends SIGTERM."
+    // BUT: "waitUntilExit: This method first checks to see if the receiver is still running using isRunning. Then it polls the current run loop using NSDefaultRunLoopMode until the task completes."
+    // ... strange!
+    
+    [NSThread sleepForTimeInterval:1.0];
+    if([task isRunning]) {
+        [NSThread sleepForTimeInterval:10.0];
+    }
+    
+    // should the error still appear in the logs: restart the app!
+    
+    
     NSNumber *exitCode = [NSNumber numberWithInt:[task terminationStatus]];
     NSNumber *pid = [NSNumber numberWithInt:[task processIdentifier]];
     
@@ -69,41 +85,33 @@
 
 
 
-+ (Boolean)postgresql:(NSString *)action {
++ (Boolean)postgresql:(NSString *)action quitOnError:(Boolean)quit {
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
     NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
-    NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
-    NSString *pg_ctl = [bin stringByAppendingString:@"/pg_ctl"];
-    NSString *pgsqlDataDir = [resourcesDir stringByAppendingString:@"/local/var/pqsql/data"];
-    NSString *pgsqlLogFile = [resourcesDir stringByAppendingString:@"/local/var/pqsql/log.log"];
+    NSString *dataDir = [resourcesDir stringByAppendingString:@"/local/var/pqsql/data"];
+    NSString *logFile = [resourcesDir stringByAppendingString:@"/local/var/pqsql/log.log"];
     
-
-    // start postgres server and create databases
-    NSTask *postgresTask = [[NSTask alloc] init];
-    [postgresTask setLaunchPath: pg_ctl];
+    NSString *command = nil;
     
     if([action isEqual: @"start"]) {
-        [postgresTask setArguments: [NSArray arrayWithObjects:@"start", @"-D", pgsqlDataDir, @"-l", pgsqlLogFile, nil]];
+        command = [NSString stringWithFormat:@"pg_ctl start -l '%@' -D '%@'", logFile, dataDir];
     } else if ([action isEqual: @"stop"]) {
-        [postgresTask setArguments: [NSArray arrayWithObjects:@"stop", @"-D", pgsqlDataDir, @"-l", pgsqlLogFile, nil]];
+        command = [NSString stringWithFormat:@"pg_ctl stop -l '%@' -D '%@'", logFile, dataDir];
     }
     
-    // [postgresTask waitUntilExit];
-    
-    NSPipe *pipe = [NSPipe pipe];
-    [postgresTask setStandardOutput: pipe];
-    NSFileHandle *file = [pipe fileHandleForReading];
-    [postgresTask launch];
-    NSData *data = [file readDataToEndOfFile];
-    NSString *taskOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    NSLog (@"pg_ctl returned:\n%@", taskOutput);
-    int status = [postgresTask terminationStatus];
-    
-    if(status > 0) {
+    if(command) {
+        NSDictionary *result = [Helper runCommand:command];
+        if([[result valueForKey:@"code"] intValue] > 0) {
+            [Helper showAlert:@"PostgreSQL Error (500)"
+                      message:[NSString stringWithFormat:@"Unable to %@ PostgreSQL.", action]
+                detailMessage:[result valueForKey:@"result"]
+                         quit:quit];
+            return false;
+        } else {
+            return true;
+        }
+    } else {
         return false;
-    }
-    else {
-        return true;
     }
 }
 
@@ -154,7 +162,7 @@
             quit:(Boolean)quit {
     
     NSString *defaultButtonString = quit ? @"Quit" : @"OK";
-    NSString *alternateButtonString = detailText ? @"Details" : nil;
+    NSString *alternateButtonString = [detailText length] > 0 ? @"Details" : nil;
     
         
     

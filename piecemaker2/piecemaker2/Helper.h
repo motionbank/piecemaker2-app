@@ -10,7 +10,7 @@
 
 @interface Helper : NSObject
 
-+ (Boolean)postgresql:(NSString *)action;
++ (Boolean)postgresql:(NSString *)action quitOnError:(Boolean)quit;
 
 + (NSDictionary*)runCommand:(NSString*) commandToRun;
 

@@ -26,13 +26,13 @@
     // debugging area
     // (dont forget to comment-out the following lines)
     // ------------------------------------------------
-    
-    error = nil;
-    [fileManager removeItemAtPath:[resourcesDir stringByAppendingString:@"/local/var/pqsql"] error:&error];
-    if(error) {
-        NSLog(@"removing data dir failed:\n%@", error);
+    if(1==2) {
+        error = nil;
+        [fileManager removeItemAtPath:[resourcesDir stringByAppendingString:@"/local/var/pqsql"] error:&error];
+        if(error) {
+            NSLog(@"removing data dir failed:\n%@", error);
+        }
     }
-    
     // ------------------------------------------------
     
     
@@ -53,7 +53,7 @@
         }
         
         // use this new directory as data dir for postgresql
-        NSDictionary *result = [Helper runCommand:@"initdb -D local/var/pqsql/data"];
+        NSDictionary *result = [Helper runCommand:@"initdb --auth=trust -D local/var/pqsql/data"];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Init Error (101)"
                       message:[NSString stringWithFormat:@"Unable to init data dir in %@", dataDir]
@@ -63,28 +63,29 @@
         
         // we then need to update postgresql.conf
         [Helper updatePostgresqlConf:@"/local/var/pqsql/data/postgresql.conf" quitOnError:TRUE port:@"50725"];
-        
     }
     
-
+    
+    // lets start the postgres server now
+    // ----------------------------------
+    [Helper postgresql:@"start" quitOnError:TRUE];
+    
+    
+    // see if tables exist?
+    // -------------------
+    
+    
     
 }
 
 
-/*
+
 - (void)applicationWillTerminate:(NSNotification *)notification {
     NSLog(@"Trying to shutdown postgres server");
-    
-    // stop postgres server again
-
-    Boolean success = [Helper postgresql:@"stop"];
-    
-    //if(!success) {
-        // show dialog and quit
-     //   [self showAlert:@"PostgreSQL Error (100)" message:[NSString stringWithFormat:@"Unable to stop PostgreSQL server."] detailMessage:@"" quit:TRUE];
-    //}
+    [Helper postgresql:@"stop" quitOnError:FALSE];
 }
 
+/*
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
