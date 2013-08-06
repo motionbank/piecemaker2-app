@@ -93,7 +93,6 @@
 #define NOINLINE(x) __attribute__ ((noinline)) x
 #define FUNC_CDECL(x) __attribute__ ((cdecl)) x
 #define HAVE_GCC_ATOMIC_BUILTINS 1
-#define UNREACHABLE __builtin_unreachable()
 #define RUBY_FUNC_EXPORTED __attribute__ ((visibility("default"))) extern
 #define HAVE_DECL_SYS_NERR 1
 #define HAVE_LIBDL 1

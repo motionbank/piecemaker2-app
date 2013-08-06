@@ -6,8 +6,8 @@
 
 my $openssl;
 
-my $dir = "/usr/local/ssl";
-my $prefix = "/usr/local/ssl";
+my $dir = "/Users/mattes/Developer/piecemaker2-app/piecemaker2/local/ssl";
+my $prefix = "/Users/mattes/Developer/piecemaker2-app/piecemaker2/local";
 
 if(defined $ENV{OPENSSL}) {
 	$openssl = $ENV{OPENSSL};
