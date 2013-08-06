@@ -21,4 +21,6 @@
 
 +(void)updatePostgresqlConf:(NSString* )filename quitOnError:(Boolean)quit port:(NSString *)port;
 
++ (void)createDatabaseIfNotExist:(NSString*) database;
+
 @end

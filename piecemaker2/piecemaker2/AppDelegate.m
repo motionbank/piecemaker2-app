@@ -26,7 +26,7 @@
     // debugging area
     // (dont forget to comment-out the following lines)
     // ------------------------------------------------
-    if(1==2) {
+    if(1==1) {
         error = nil;
         [fileManager removeItemAtPath:[resourcesDir stringByAppendingString:@"/local/var/pqsql"] error:&error];
         if(error) {
@@ -71,9 +71,23 @@
     [Helper postgresql:@"start" quitOnError:TRUE];
     
     
-    // see if tables exist?
-    // -------------------
+    // see if tables exist? ... and create if not
+    // ------------------------------------------
+    [Helper createDatabaseIfNotExist:@"prod"];
+    [Helper createDatabaseIfNotExist:@"test"];
+    [Helper createDatabaseIfNotExist:@"dev"];
     
+    
+    // ------------------------------------------------------------------------
+    
+    
+    
+    // start api
+    // ---------
+    
+    // first, make sure the connection settings in config.yml are correct
+    
+    // starting ... whoop whoop
     
     
 }

@@ -18,6 +18,7 @@
     
     NSMutableDictionary *env = [[NSMutableDictionary alloc] init];
     [env setObject:[bin stringByAppendingString:@":/usr/bin:/usr/sbin:/bin"] forKey:@"PATH"];
+    [env setObject:[resourcesDir stringByAppendingString:@""] forKey:@"HOME"];
 
     
     NSTask *task;
@@ -63,7 +64,7 @@
     
     [NSThread sleepForTimeInterval:1.0];
     if([task isRunning]) {
-        [NSThread sleepForTimeInterval:10.0];
+        [NSThread sleepForTimeInterval:5.0];
     }
     
     // should the error still appear in the logs: restart the app!
@@ -83,6 +84,33 @@
 }
 
 
+
++ (void)createDatabaseIfNotExist:(NSString*) database {
+    NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"psql --port=50725 --list | grep piecemaker2_%@", database]];
+    if([[result valueForKey:@"code"] intValue] == 0 && [[result valueForKey:@"result"] length] > 0) {
+        // database exist
+        NSLog(@"database 'piecemaker2_%@' exists", database);        
+    } else {
+        // create database
+        NSLog(@"database 'piecemaker2_%@' does not exist", database);
+        NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"createdb --port=50725 piecemaker2_%@", database]];
+        if([[result valueForKey:@"code"] intValue] > 0) {
+            [Helper showAlert:@"PostgreSQL Error (502)"
+                      message:[NSString stringWithFormat:@"Unable to create database 'piecemaker2_%@'.", database]
+                detailMessage:[result valueForKey:@"result"]
+                         quit:TRUE];
+        }
+        
+        // init database
+        result = [Helper runCommand:[NSString stringWithFormat:@"cd app/api && rake db:migrate[%@]", database]];
+        if([[result valueForKey:@"code"] intValue] > 0) {
+            [Helper showAlert:@"PostgreSQL Error (503)"
+                      message:[NSString stringWithFormat:@"Unable to init database 'piecemaker2_%@'.", database]
+                detailMessage:[result valueForKey:@"result"]
+                         quit:TRUE];
+        }
+    }
+}
 
 
 + (Boolean)postgresql:(NSString *)action quitOnError:(Boolean)quit {
@@ -108,7 +136,21 @@
                          quit:quit];
             return false;
         } else {
-            return true;
+            
+            // be sure, the server is running ...
+            if([action isEqual: @"start"]) {
+                command = [NSString stringWithFormat:@"pg_ctl status -l '%@' -D '%@'", logFile, dataDir];
+                NSDictionary *result = [Helper runCommand:command];
+                if([[result valueForKey:@"code"] intValue] > 0) {
+                    // try to start again
+                    [NSThread sleepForTimeInterval:10.0];
+                    [Helper postgresql:@"start" quitOnError:quit];
+                } else {
+                    return true;
+                }
+            } else {
+                return true;
+            }
         }
     } else {
         return false;
