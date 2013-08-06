@@ -105,6 +105,6 @@ sed -i '' -e "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/"
    piecemaker2.app/Contents/Resources/local/var/pgsql/
    ```
 
- * __DMG file issues__ 
+ * __DMG file issues__  
    ! The .app won't run, when started within the original .dmg file.
 
