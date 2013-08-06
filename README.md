@@ -41,8 +41,10 @@ make
 make install
 
 
+# install bundler
 ./local/bin/gem install bundler
 
+# initial api config and gem installation
 cd app/api/
 cp config/config.sample.yml config/config.yml
 ../../local/bin/bundle install
@@ -61,12 +63,17 @@ cp config/config.sample.yml config/config.yml
 mkdir -p local/var/pgsql/data
 ./local/bin/initdb -D local/var/pgsql/data 
 
+# update postgresql.conf
 sed -i '' -e 's/#port = 5432/port = 50725/' local/var/pgsql/data/postgresql.conf
 sed -i '' -e "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/" local/var/pgsql/data/postgresql.conf
 
+# start postgresql server with data dir
 ./local/bin/postgres -D local/var/pgsql/data
+
+# create databases in another proceess while server is running
 ./local/bin/createdb --host=localhost --port=50725 piecemaker2_test | ..prod,dev
 
+# optional: connect with psql client
 ./local/bin/psql --host=localhost --port=50725 piecemaker2_dev
 
 ````
