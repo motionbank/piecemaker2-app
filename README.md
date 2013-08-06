@@ -38,12 +38,14 @@ ruby-build 2.0.0-p247 $prefix
 cd postgresql-9.2.4
 ./configure --prefix=$prefix
 make
-make test
 make install
-cd ..
 
 
 ./local/bin/gem install bundler
+
+cd app/api/
+cp config/config.sample.yml config/config.yml
+../../local/bin/bundle install
 
 ````
 
