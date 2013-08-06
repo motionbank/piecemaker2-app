@@ -19,57 +19,86 @@
     NSString *initdb = [bin stringByAppendingString:@"/initdb"];
         
     // setup postgres databases, if local/var/pgsql/data does not exist
+    // ----------------------------------------------------------------
     NSFileManager *fileManager= [NSFileManager defaultManager];
     NSError *error = nil;
-    
     NSString *pgsqlDataDir = [resourcesDir stringByAppendingString:@"/local/var/pqsql/data"];
 
+    
     // delete data dir for debug purposes
     // dont forget to comment-out the following line
     [fileManager removeItemAtPath:pgsqlDataDir error:&error];
+    //// !!! comment-out line above!
+    
     
     // data dir exists already?
     if(![ fileManager fileExistsAtPath:pgsqlDataDir]) {
          
         // no ... create it
         if(![fileManager createDirectoryAtPath:pgsqlDataDir withIntermediateDirectories:YES attributes:nil error:&error]) {
-            // An error has occurred, do something to handle it
             NSLog(@"Failed to create directory \"%@\". Error: %@", pgsqlDataDir, error);
             
-            // show dialog
+            // show dialog and quit
             NSAlert *alert = [NSAlert alertWithMessageText:@"PostgreSQL Init Error (100)" defaultButton:@"Quit" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Unable to create data directory in %@", pgsqlDataDir];        
-
             if ([alert runModal] == NSAlertDefaultReturn) {
                 [NSApp terminate:self];
             }
         }
         
         // now init db
-        NSTask *task;
-        task = [[NSTask alloc] init];
+        NSTask *task = [[NSTask alloc] init];
         [task setLaunchPath: initdb];
-        NSArray *arguments;
-        arguments = [NSArray arrayWithObjects:@"-D", pgsqlDataDir, nil];
-        [task setArguments: arguments];
+        [task setArguments: [NSArray arrayWithObjects:@"-D", pgsqlDataDir, nil]];
         
-        NSPipe *pipe;
-        pipe = [NSPipe pipe];
+        NSPipe *pipe = [NSPipe pipe];
         [task setStandardOutput: pipe];
-        NSFileHandle *file;
-        file = [pipe fileHandleForReading];
+        NSFileHandle *file = [pipe fileHandleForReading];
         [task launch];
-        NSData *data;
-        data = [file readDataToEndOfFile];
-        NSString *taskOutput;
-        taskOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+        NSData *data = [file readDataToEndOfFile];
+        NSString *taskOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
         NSLog (@"initdb returned:\n%@", taskOutput);
         
         int status = [task terminationStatus];
         if(status >= 0) {
-            // show dialog
-            NSAlert *alert = [NSAlert alertWithMessageText:@"PostgreSQL Init Error (101)" defaultButton:@"Quit" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Unable to init database in %@", pgsqlDataDir];
-            if ([alert runModal] == NSAlertDefaultReturn) {
+            // show dialog and quit
+            NSAlert *alert = [NSAlert alertWithMessageText:@"PostgreSQL Init Error (101)" defaultButton:@"Quit" alternateButton:@"Details" otherButton:nil informativeTextWithFormat:@"Unable to init database in %@", pgsqlDataDir];
+            NSInteger returnedButton = [alert runModal];
+            if (returnedButton == NSAlertDefaultReturn) {
                 [NSApp terminate:self];
+            }
+            if (returnedButton == NSAlertAlternateReturn) {
+                // show details alert and quit
+                NSAlert *detailsAlert = [NSAlert alertWithMessageText:@"PostgreSQL Init Error (101)" defaultButton:@"Quit" alternateButton:nil otherButton:nil informativeTextWithFormat:@""];
+                
+                NSScrollView *accessory = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 600, 300)];
+                NSSize contentSize = [accessory contentSize];
+                [accessory setBorderType:NSNoBorder];
+                [accessory setHasVerticalScroller:YES];
+                [accessory setHasHorizontalScroller:NO];
+                [accessory setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+                
+                NSTextView *theTextView = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
+                
+                [theTextView setMinSize:NSMakeSize(0.0, contentSize.height)];
+                [theTextView setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
+                [theTextView setVerticallyResizable:YES];
+                [theTextView setHorizontallyResizable:NO];
+                [theTextView setAutoresizingMask:NSViewWidthSizable];
+                [theTextView setBackgroundColor:[NSColor windowBackgroundColor]];
+                [[theTextView textContainer]
+                 setContainerSize:NSMakeSize(contentSize.width, FLT_MAX)];
+                [[theTextView textContainer] setWidthTracksTextView:YES];
+            
+                [theTextView setFont:[NSFont fontWithName:@"Menlo" size:11]];
+                [theTextView insertText:taskOutput];
+                [theTextView setEditable:NO];
+                
+                [accessory setDocumentView:theTextView];
+                [detailsAlert setAccessoryView:accessory];
+                
+                if ([detailsAlert runModal] == NSAlertDefaultReturn) {
+                    [NSApp terminate:self];
+                }
             }
         }
     }
