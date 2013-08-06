@@ -19,10 +19,6 @@ Hello, Ruby!
 
 ## Compiling for .app
 
-https://github.com/mxcl/homebrew/blob/master/Library/Formula/openssl.rb
-https://github.com/mxcl/homebrew/blob/master/Library/Formula/postgresql.rb
-
-
 We are going to compile ruby with [ruby-build](https://github.com/sstephenson/ruby-build). Install with ```brew install ruby-build```.
 
 
@@ -38,9 +34,11 @@ ruby-build 2.0.0-p247 $prefix
 
 
 # compile PostgreSQL
+# http://www.postgresql.org/ftp/source/
 cd postgresql-9.2.4
 ./configure --prefix=$prefix
 make
+make test
 make install
 cd ..
 

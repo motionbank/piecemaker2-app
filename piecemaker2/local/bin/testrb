@@ -1,0 +1,3 @@
+#!/Users/mattes/Developer/piecemaker2-app/piecemaker2/local/bin/ruby
+require 'test/unit'
+exit Test::Unit::AutoRunner.run(true)

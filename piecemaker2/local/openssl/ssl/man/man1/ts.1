@@ -1,0 +1,770 @@
+.rn '' }`
+''' $RCSfile$$Revision$$Date$
+'''
+''' $Log$
+'''
+.de Sh
+.br
+.if t .Sp
+.ne 5
+.PP
+\fB\\$1\fR
+.PP
+..
+.de Sp
+.if t .sp .5v
+.if n .sp
+..
+.de Ip
+.br
+.ie \\n(.$>=3 .ne \\$3
+.el .ne 3
+.IP "\\$1" \\$2
+..
+.de Vb
+.ft CW
+.nf
+.ne \\$1
+..
+.de Ve
+.ft R
+
+.fi
+..
+'''
+'''
+'''     Set up \*(-- to give an unbreakable dash;
+'''     string Tr holds user defined translation string.
+'''     Bell System Logo is used as a dummy character.
+'''
+.tr \(*W-|\(bv\*(Tr
+.ie n \{\
+.ds -- \(*W-
+.ds PI pi
+.if (\n(.H=4u)&(1m=24u) .ds -- \(*W\h'-12u'\(*W\h'-12u'-\" diablo 10 pitch
+.if (\n(.H=4u)&(1m=20u) .ds -- \(*W\h'-12u'\(*W\h'-8u'-\" diablo 12 pitch
+.ds L" ""
+.ds R" ""
+'''   \*(M", \*(S", \*(N" and \*(T" are the equivalent of
+'''   \*(L" and \*(R", except that they are used on ".xx" lines,
+'''   such as .IP and .SH, which do another additional levels of
+'''   double-quote interpretation
+.ds M" """
+.ds S" """
+.ds N" """""
+.ds T" """""
+.ds L' '
+.ds R' '
+.ds M' '
+.ds S' '
+.ds N' '
+.ds T' '
+'br\}
+.el\{\
+.ds -- \(em\|
+.tr \*(Tr
+.ds L" ``
+.ds R" ''
+.ds M" ``
+.ds S" ''
+.ds N" ``
+.ds T" ''
+.ds L' `
+.ds R' '
+.ds M' `
+.ds S' '
+.ds N' `
+.ds T' '
+.ds PI \(*p
+'br\}
+.\"	If the F register is turned on, we'll generate
+.\"	index entries out stderr for the following things:
+.\"		TH	Title 
+.\"		SH	Header
+.\"		Sh	Subsection 
+.\"		Ip	Item
+.\"		X<>	Xref  (embedded
+.\"	Of course, you have to process the output yourself
+.\"	in some meaninful fashion.
+.if \nF \{
+.de IX
+.tm Index:\\$1\t\\n%\t"\\$2"
+..
+.nr % 0
+.rr F
+.\}
+.TH TS 1 "1.0.1e" "11/Feb/2013" "OpenSSL"
+.UC
+.if n .hy 0
+.if n .na
+.ds C+ C\v'-.1v'\h'-1p'\s-2+\h'-1p'+\s0\v'.1v'\h'-1p'
+.de CQ          \" put $1 in typewriter font
+.ft CW
+'if n "\c
+'if t \\&\\$1\c
+'if n \\&\\$1\c
+'if n \&"
+\\&\\$2 \\$3 \\$4 \\$5 \\$6 \\$7
+'.ft R
+..
+.\" @(#)ms.acc 1.5 88/02/08 SMI; from UCB 4.2
+.	\" AM - accent mark definitions
+.bd B 3
+.	\" fudge factors for nroff and troff
+.if n \{\
+.	ds #H 0
+.	ds #V .8m
+.	ds #F .3m
+.	ds #[ \f1
+.	ds #] \fP
+.\}
+.if t \{\
+.	ds #H ((1u-(\\\\n(.fu%2u))*.13m)
+.	ds #V .6m
+.	ds #F 0
+.	ds #[ \&
+.	ds #] \&
+.\}
+.	\" simple accents for nroff and troff
+.if n \{\
+.	ds ' \&
+.	ds ` \&
+.	ds ^ \&
+.	ds , \&
+.	ds ~ ~
+.	ds ? ?
+.	ds ! !
+.	ds /
+.	ds q
+.\}
+.if t \{\
+.	ds ' \\k:\h'-(\\n(.wu*8/10-\*(#H)'\'\h"|\\n:u"
+.	ds ` \\k:\h'-(\\n(.wu*8/10-\*(#H)'\`\h'|\\n:u'
+.	ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'^\h'|\\n:u'
+.	ds , \\k:\h'-(\\n(.wu*8/10)',\h'|\\n:u'
+.	ds ~ \\k:\h'-(\\n(.wu-\*(#H-.1m)'~\h'|\\n:u'
+.	ds ? \s-2c\h'-\w'c'u*7/10'\u\h'\*(#H'\zi\d\s+2\h'\w'c'u*8/10'
+.	ds ! \s-2\(or\s+2\h'-\w'\(or'u'\v'-.8m'.\v'.8m'
+.	ds / \\k:\h'-(\\n(.wu*8/10-\*(#H)'\z\(sl\h'|\\n:u'
+.	ds q o\h'-\w'o'u*8/10'\s-4\v'.4m'\z\(*i\v'-.4m'\s+4\h'\w'o'u*8/10'
+.\}
+.	\" troff and (daisy-wheel) nroff accents
+.ds : \\k:\h'-(\\n(.wu*8/10-\*(#H+.1m+\*(#F)'\v'-\*(#V'\z.\h'.2m+\*(#F'.\h'|\\n:u'\v'\*(#V'
+.ds 8 \h'\*(#H'\(*b\h'-\*(#H'
+.ds v \\k:\h'-(\\n(.wu*9/10-\*(#H)'\v'-\*(#V'\*(#[\s-4v\s0\v'\*(#V'\h'|\\n:u'\*(#]
+.ds _ \\k:\h'-(\\n(.wu*9/10-\*(#H+(\*(#F*2/3))'\v'-.4m'\z\(hy\v'.4m'\h'|\\n:u'
+.ds . \\k:\h'-(\\n(.wu*8/10)'\v'\*(#V*4/10'\z.\v'-\*(#V*4/10'\h'|\\n:u'
+.ds 3 \*(#[\v'.2m'\s-2\&3\s0\v'-.2m'\*(#]
+.ds o \\k:\h'-(\\n(.wu+\w'\(de'u-\*(#H)/2u'\v'-.3n'\*(#[\z\(de\v'.3n'\h'|\\n:u'\*(#]
+.ds d- \h'\*(#H'\(pd\h'-\w'~'u'\v'-.25m'\f2\(hy\fP\v'.25m'\h'-\*(#H'
+.ds D- D\\k:\h'-\w'D'u'\v'-.11m'\z\(hy\v'.11m'\h'|\\n:u'
+.ds th \*(#[\v'.3m'\s+1I\s-1\v'-.3m'\h'-(\w'I'u*2/3)'\s-1o\s+1\*(#]
+.ds Th \*(#[\s+2I\s-2\h'-\w'I'u*3/5'\v'-.3m'o\v'.3m'\*(#]
+.ds ae a\h'-(\w'a'u*4/10)'e
+.ds Ae A\h'-(\w'A'u*4/10)'E
+.ds oe o\h'-(\w'o'u*4/10)'e
+.ds Oe O\h'-(\w'O'u*4/10)'E
+.	\" corrections for vroff
+.if v .ds ~ \\k:\h'-(\\n(.wu*9/10-\*(#H)'\s-2\u~\d\s+2\h'|\\n:u'
+.if v .ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'\v'-.4m'^\v'.4m'\h'|\\n:u'
+.	\" for low resolution devices (crt and lpr)
+.if \n(.H>23 .if \n(.V>19 \
+\{\
+.	ds : e
+.	ds 8 ss
+.	ds v \h'-1'\o'\(aa\(ga'
+.	ds _ \h'-1'^
+.	ds . \h'-1'.
+.	ds 3 3
+.	ds o a
+.	ds d- d\h'-1'\(ga
+.	ds D- D\h'-1'\(hy
+.	ds th \o'bp'
+.	ds Th \o'LP'
+.	ds ae ae
+.	ds Ae AE
+.	ds oe oe
+.	ds Oe OE
+.\}
+.rm #[ #] #H #V #F C
+.SH "NAME"
+ts \- Time Stamping Authority tool (client/server)
+.SH "SYNOPSIS"
+\fBopenssl\fR \fBts\fR
+\fB\-query\fR
+[\fB\-rand\fR file:file...]
+[\fB\-config\fR configfile]
+[\fB\-data\fR file_to_hash]
+[\fB\-digest\fR digest_bytes]
+[\fB\-md2\fR|\fB\-md4\fR|\fB\-md5\fR|\fB\-sha\fR|\fB\-sha1\fR|\fB\-mdc2\fR|\fB\-ripemd160\fR|\fB...\fR]
+[\fB\-policy\fR object_id]
+[\fB\-no_nonce\fR]
+[\fB\-cert\fR]
+[\fB\-in\fR request.tsq]
+[\fB\-out\fR request.tsq]
+[\fB\-text\fR]
+.PP
+\fBopenssl\fR \fBts\fR
+\fB\-reply\fR
+[\fB\-config\fR configfile]
+[\fB\-section\fR tsa_section]
+[\fB\-queryfile\fR request.tsq]
+[\fB\-passin\fR password_src]
+[\fB\-signer\fR tsa_cert.pem]
+[\fB\-inkey\fR private.pem]
+[\fB\-chain\fR certs_file.pem]
+[\fB\-policy\fR object_id]
+[\fB\-in\fR response.tsr]
+[\fB\-token_in\fR]
+[\fB\-out\fR response.tsr]
+[\fB\-token_out\fR]
+[\fB\-text\fR]
+[\fB\-engine\fR id]
+.PP
+\fBopenssl\fR \fBts\fR
+\fB\-verify\fR
+[\fB\-data\fR file_to_hash]
+[\fB\-digest\fR digest_bytes]
+[\fB\-queryfile\fR request.tsq]
+[\fB\-in\fR response.tsr]
+[\fB\-token_in\fR]
+[\fB\-CApath\fR trusted_cert_path]
+[\fB\-CAfile\fR trusted_certs.pem]
+[\fB\-untrusted\fR cert_file.pem]
+.SH "DESCRIPTION"
+The \fBts\fR command is a basic Time Stamping Authority (TSA) client and server
+application as specified in RFC 3161 (Time-Stamp Protocol, TSP). A
+TSA can be part of a PKI deployment and its role is to provide long
+term proof of the existence of a certain datum before a particular
+time. Here is a brief description of the protocol:
+.Ip "1." 4
+The \s-1TSA\s0 client computes a one-way hash value for a data file and sends
+the hash to the \s-1TSA\s0.
+.Ip "2." 4
+The \s-1TSA\s0 attaches the current date and time to the received hash value,
+signs them and sends the time stamp token back to the client. By
+creating this token the \s-1TSA\s0 certifies the existence of the original
+data file at the time of response generation.
+.Ip "3." 4
+The \s-1TSA\s0 client receives the time stamp token and verifies the
+signature on it. It also checks if the token contains the same hash
+value that it had sent to the \s-1TSA\s0.
+.PP
+There is one \s-1DER\s0 encoded protocol data unit defined for transporting a time
+stamp request to the \s-1TSA\s0 and one for sending the time stamp response
+back to the client. The \fBts\fR command has three main functions:
+creating a time stamp request based on a data file,
+creating a time stamp response based on a request, verifying if a
+response corresponds to a particular request or a data file.
+.PP
+There is no support for sending the requests/responses automatically
+over \s-1HTTP\s0 or \s-1TCP\s0 yet as suggested in \s-1RFC\s0 3161. The users must send the
+requests either by ftp or e-mail.
+.SH "OPTIONS"
+.Sh "Time Stamp Request generation"
+The \fB\-query\fR switch can be used for creating and printing a time stamp
+request with the following options:
+.Ip "\fB\-rand\fR file:file..." 4
+The files containing random data for seeding the random number
+generator. Multiple files can be specified, the separator is \fB;\fR for
+\s-1MS\s0\-Windows, \fB,\fR for \s-1VMS\s0 and \fB:\fR for all other platforms. (Optional)
+.Ip "\fB\-config\fR configfile" 4
+The configuration file to use, this option overrides the
+\fB\s-1OPENSSL_CONF\s0\fR environment variable. Only the \s-1OID\s0 section
+of the config file is used with the \fB\-query\fR command. (Optional)
+.Ip "\fB\-data\fR file_to_hash" 4
+The data file for which the time stamp request needs to be
+created. stdin is the default if neither the \fB\-data\fR nor the \fB\-digest\fR
+parameter is specified. (Optional)
+.Ip "\fB\-digest\fR digest_bytes" 4
+It is possible to specify the message imprint explicitly without the data
+file. The imprint must be specified in a hexadecimal format, two characters
+per byte, the bytes optionally separated by colons (e.g. 1A:F6:01:... or
+1AF601...). The number of bytes must match the message digest algorithm 
+in use. (Optional)
+.Ip "\fB\-md2\fR|\fB\-md4\fR|\fB\-md5\fR|\fB\-sha\fR|\fB\-sha1\fR|\fB\-mdc2\fR|\fB\-ripemd160\fR|\fB...\fR" 4
+The message digest to apply to the data file, it supports all the message
+digest algorithms that are supported by the openssl \fBdgst\fR command.
+The default is \s-1SHA\s0\-1. (Optional)
+.Ip "\fB\-policy\fR object_id" 4
+The policy that the client expects the \s-1TSA\s0 to use for creating the
+time stamp token. Either the dotted \s-1OID\s0 notation or \s-1OID\s0 names defined
+in the config file can be used. If no policy is requested the \s-1TSA\s0 will
+use its own default policy. (Optional)
+.Ip "\fB\-no_nonce\fR" 4
+No nonce is specified in the request if this option is
+given. Otherwise a 64 bit long pseudo-random none is
+included in the request. It is recommended to use nonce to
+protect against replay-attacks. (Optional)
+.Ip "\fB\-cert\fR" 4
+The \s-1TSA\s0 is expected to include its signing certificate in the
+response. (Optional)
+.Ip "\fB\-in\fR request.tsq" 4
+This option specifies a previously created time stamp request in \s-1DER\s0
+format that will be printed into the output file. Useful when you need
+to examine the content of a request in human-readable
+.Sp
+format. (Optional)
+.Ip "\fB\-out\fR request.tsq" 4
+Name of the output file to which the request will be written. Default
+is stdout. (Optional)
+.Ip "\fB\-text\fR" 4
+If this option is specified the output is human-readable text format
+instead of \s-1DER\s0. (Optional)
+.Sh "Time Stamp Response generation"
+A time stamp response (TimeStampResp) consists of a response status
+and the time stamp token itself (ContentInfo), if the token generation was
+successful. The \fB\-reply\fR command is for creating a time stamp
+response or time stamp token based on a request and printing the
+response/token in human-readable format. If \fB\-token_out\fR is not
+specified the output is always a time stamp response (TimeStampResp),
+otherwise it is a time stamp token (ContentInfo).
+.Ip "\fB\-config\fR configfile" 4
+The configuration file to use, this option overrides the
+\fB\s-1OPENSSL_CONF\s0\fR environment variable. See \fB\s-1CONFIGURATION\s0 \s-1FILE\s0
+\s-1OPTIONS\s0\fR for configurable variables. (Optional)
+.Ip "\fB\-section\fR tsa_section" 4
+The name of the config file section conatining the settings for the
+response generation. If not specified the default \s-1TSA\s0 section is
+used, see \fB\s-1CONFIGURATION\s0 \s-1FILE\s0 \s-1OPTIONS\s0\fR for details. (Optional)
+.Ip "\fB\-queryfile\fR request.tsq" 4
+The name of the file containing a \s-1DER\s0 encoded time stamp request. (Optional)
+.Ip "\fB\-passin\fR password_src" 4
+Specifies the password source for the private key of the \s-1TSA\s0. See
+\fB\s-1PASS\s0 \s-1PHRASE\s0 \s-1ARGUMENTS\s0\fR in openssl(1). (Optional)
+.Ip "\fB\-signer\fR tsa_cert.pem" 4
+The signer certificate of the \s-1TSA\s0 in \s-1PEM\s0 format. The \s-1TSA\s0 signing
+certificate must have exactly one extended key usage assigned to it:
+timeStamping. The extended key usage must also be critical, otherwise
+the certificate is going to be refused. Overrides the \fBsigner_cert\fR
+variable of the config file. (Optional)
+.Ip "\fB\-inkey\fR private.pem" 4
+The signer private key of the \s-1TSA\s0 in \s-1PEM\s0 format. Overrides the
+\fBsigner_key\fR config file option. (Optional)
+.Ip "\fB\-chain\fR certs_file.pem" 4
+The collection of certificates in \s-1PEM\s0 format that will all
+be included in the response in addition to the signer certificate if
+the \fB\-cert\fR option was used for the request. This file is supposed to
+contain the certificate chain for the signer certificate from its
+issuer upwards. The \fB\-reply\fR command does not build a certificate
+chain automatically. (Optional)
+.Ip "\fB\-policy\fR object_id" 4
+The default policy to use for the response unless the client
+explicitly requires a particular \s-1TSA\s0 policy. The \s-1OID\s0 can be specified
+either in dotted notation or with its name. Overrides the
+\fBdefault_policy\fR config file option. (Optional)
+.Ip "\fB\-in\fR response.tsr" 4
+Specifies a previously created time stamp response or time stamp token
+(if \fB\-token_in\fR is also specified) in \s-1DER\s0 format that will be written
+to the output file. This option does not require a request, it is
+useful e.g. when you need to examine the content of a response or
+token or you want to extract the time stamp token from a response. If
+the input is a token and the output is a time stamp response a default
+\&'granted\*(R' status info is added to the token. (Optional)
+.Ip "\fB\-token_in\fR" 4
+This flag can be used together with the \fB\-in\fR option and indicates
+that the input is a \s-1DER\s0 encoded time stamp token (ContentInfo) instead
+of a time stamp response (TimeStampResp). (Optional)
+.Ip "\fB\-out\fR response.tsr" 4
+The response is written to this file. The format and content of the
+file depends on other options (see \fB\-text\fR, \fB\-token_out\fR). The default is
+stdout. (Optional)
+.Ip "\fB\-token_out\fR" 4
+The output is a time stamp token (ContentInfo) instead of time stamp
+response (TimeStampResp). (Optional)
+.Ip "\fB\-text\fR" 4
+If this option is specified the output is human-readable text format
+instead of \s-1DER\s0. (Optional)
+.Ip "\fB\-engine\fR id" 4
+Specifying an engine (by its unique \fBid\fR string) will cause \fBts\fR
+to attempt to obtain a functional reference to the specified engine,
+thus initialising it if needed. The engine will then be set as the default
+for all available algorithms. Default is builtin. (Optional)
+.Sh "Time Stamp Response verification"
+The \fB\-verify\fR command is for verifying if a time stamp response or time
+stamp token is valid and matches a particular time stamp request or
+data file. The \fB\-verify\fR command does not use the configuration file.
+.Ip "\fB\-data\fR file_to_hash" 4
+The response or token must be verified against file_to_hash. The file
+is hashed with the message digest algorithm specified in the token. 
+The \fB\-digest\fR and \fB\-queryfile\fR options must not be specified with this one.
+(Optional)
+.Ip "\fB\-digest\fR digest_bytes" 4
+The response or token must be verified against the message digest specified
+with this option. The number of bytes must match the message digest algorithm
+specified in the token. The \fB\-data\fR and \fB\-queryfile\fR options must not be
+specified with this one. (Optional)
+.Ip "\fB\-queryfile\fR request.tsq" 4
+The original time stamp request in \s-1DER\s0 format. The \fB\-data\fR and \fB\-digest\fR
+options must not be specified with this one. (Optional)
+.Ip "\fB\-in\fR response.tsr" 4
+The time stamp response that needs to be verified in \s-1DER\s0 format. (Mandatory)
+.Ip "\fB\-token_in\fR" 4
+This flag can be used together with the \fB\-in\fR option and indicates
+that the input is a \s-1DER\s0 encoded time stamp token (ContentInfo) instead
+of a time stamp response (TimeStampResp). (Optional)
+.Ip "\fB\-CApath\fR trusted_cert_path" 4
+The name of the directory containing the trused \s-1CA\s0 certificates of the
+client. See the similar option of verify(1) for additional
+details. Either this option or \fB\-CAfile\fR must be specified. (Optional)
+.Ip "\fB\-CAfile\fR trusted_certs.pem" 4
+The name of the file containing a set of trusted self-signed \s-1CA\s0 
+certificates in \s-1PEM\s0 format. See the similar option of 
+verify(1) for additional details. Either this option 
+or \fB\-CApath\fR must be specified.
+(Optional)
+.Ip "\fB\-untrusted\fR cert_file.pem" 4
+Set of additional untrusted certificates in \s-1PEM\s0 format which may be
+needed when building the certificate chain for the \s-1TSA\s0's signing
+certificate. This file must contain the \s-1TSA\s0 signing certificate and
+all intermediate \s-1CA\s0 certificates unless the response includes them.
+(Optional)
+.SH "CONFIGURATION FILE OPTIONS"
+The \fB\-query\fR and \fB\-reply\fR commands make use of a configuration file
+defined by the \fBOPENSSL_CONF\fR environment variable. See config(5)
+for a general description of the syntax of the config file. The
+\fB\-query\fR command uses only the symbolic OID names section
+and it can work without it. However, the \fB\-reply\fR command needs the
+config file for its operation.
+.PP
+When there is a command line switch equivalent of a variable the
+switch always overrides the settings in the config file.
+.Ip "\fBtsa\fR section, \fBdefault_tsa\fR	" 4
+This is the main section and it specifies the name of another section
+that contains all the options for the \fB\-reply\fR command. This default
+section can be overriden with the \fB\-section\fR command line switch. (Optional)
+.Ip "\fBoid_file\fR" 4
+See ca(1) for description. (Optional)
+.Ip "\fBoid_section\fR" 4
+See ca(1) for description. (Optional)
+.Ip "\fB\s-1RANDFILE\s0\fR" 4
+See ca(1) for description. (Optional)
+.Ip "\fBserial\fR" 4
+The name of the file containing the hexadecimal serial number of the
+last time stamp response created. This number is incremented by 1 for
+each response. If the file does not exist at the time of response
+generation a new file is created with serial number 1. (Mandatory)
+.Ip "\fBcrypto_device\fR" 4
+Specifies the OpenSSL engine that will be set as the default for 
+all available algorithms. The default value is builtin, you can specify 
+any other engines supported by OpenSSL (e.g. use chil for the NCipher \s-1HSM\s0).
+(Optional)
+.Ip "\fBsigner_cert\fR" 4
+\s-1TSA\s0 signing certificate in \s-1PEM\s0 format. The same as the \fB\-signer\fR
+command line option. (Optional)
+.Ip "\fBcerts\fR" 4
+A file containing a set of \s-1PEM\s0 encoded certificates that need to be
+included in the response. The same as the \fB\-chain\fR command line
+option. (Optional)
+.Ip "\fBsigner_key\fR" 4
+The private key of the \s-1TSA\s0 in \s-1PEM\s0 format. The same as the \fB\-inkey\fR
+command line option. (Optional)
+.Ip "\fBdefault_policy\fR" 4
+The default policy to use when the request does not mandate any
+policy. The same as the \fB\-policy\fR command line option. (Optional)
+.Ip "\fBother_policies\fR" 4
+Comma separated list of policies that are also acceptable by the \s-1TSA\s0
+and used only if the request explicitly specifies one of them. (Optional)
+.Ip "\fBdigests\fR" 4
+The list of message digest algorithms that the \s-1TSA\s0 accepts. At least
+one algorithm must be specified. (Mandatory)
+.Ip "\fBaccuracy\fR" 4
+The accuracy of the time source of the \s-1TSA\s0 in seconds, milliseconds
+and microseconds. E.g. secs:1, millisecs:500, microsecs:100. If any of
+the components is missing zero is assumed for that field. (Optional)
+.Ip "\fBclock_precision_digits\fR" 4
+Specifies the maximum number of digits, which represent the fraction of 
+seconds, that  need to be included in the time field. The trailing zeroes
+must be removed from the time, so there might actually be fewer digits,
+or no fraction of seconds at all. Supported only on \s-1UNIX\s0 platforms.
+The maximum value is 6, default is 0.
+(Optional)
+.Ip "\fBordering\fR" 4
+If this option is yes the responses generated by this \s-1TSA\s0 can always
+be ordered, even if the time difference between two responses is less
+than the sum of their accuracies. Default is no. (Optional)
+.Ip "\fBtsa_name\fR" 4
+Set this option to yes if the subject name of the \s-1TSA\s0 must be included in
+the \s-1TSA\s0 name field of the response. Default is no. (Optional)
+.Ip "\fBess_cert_id_chain\fR" 4
+The SignedData objects created by the \s-1TSA\s0 always contain the
+certificate identifier of the signing certificate in a signed
+attribute (see \s-1RFC\s0 2634, Enhanced Security Services). If this option
+is set to yes and either the \fBcerts\fR variable or the \fB\-chain\fR option
+is specified then the certificate identifiers of the chain will also
+be included in the SigningCertificate signed attribute. If this
+variable is set to no, only the signing certificate identifier is
+included. Default is no. (Optional)
+.SH "ENVIRONMENT VARIABLES"
+\fBOPENSSL_CONF\fR contains the path of the configuration file and can be
+overriden by the \fB\-config\fR command line option.
+.SH "EXAMPLES"
+All the examples below presume that \fBOPENSSL_CONF\fR is set to a proper
+configuration file, e.g. the example configuration file 
+openssl/apps/openssl.cnf will do.
+.Sh "Time Stamp Request"
+To create a time stamp request for design1.txt with \s-1SHA\s0\-1 
+without nonce and policy and no certificate is required in the response:
+.PP
+.Vb 2
+\&  openssl ts -query -data design1.txt -no_nonce \e
+\&        -out design1.tsq
+.Ve
+To create a similar time stamp request with specifying the message imprint
+explicitly:
+.PP
+.Vb 2
+\&  openssl ts -query -digest b7e5d3f93198b38379852f2c04e78d73abdd0f4b \e
+\&         -no_nonce -out design1.tsq
+.Ve
+To print the content of the previous request in human readable format:
+.PP
+.Vb 1
+\&  openssl ts -query -in design1.tsq -text
+.Ve
+To create a time stamp request which includes the \s-1MD\s0\-5 digest 
+of design2.txt, requests the signer certificate and nonce,
+specifies a policy id (assuming the tsa_policy1 name is defined in the
+\s-1OID\s0 section of the config file):
+.PP
+.Vb 2
+\&  openssl ts -query -data design2.txt -md5 \e
+\&        -policy tsa_policy1 -cert -out design2.tsq
+.Ve
+.Sh "Time Stamp Response"
+Before generating a response a signing certificate must be created for
+the \s-1TSA\s0 that contains the \fBtimeStamping\fR critical extended key usage extension
+without any other key usage extensions. You can add the
+\&'extendedKeyUsage = critical,timeStamping\*(R' line to the user certificate section
+of the config file to generate a proper certificate. See req(1),
+ca(1), x509(1) for instructions. The examples
+below assume that cacert.pem contains the certificate of the \s-1CA\s0,
+tsacert.pem is the signing certificate issued by cacert.pem and
+tsakey.pem is the private key of the \s-1TSA\s0.
+.PP
+To create a time stamp response for a request:
+.PP
+.Vb 2
+\&  openssl ts -reply -queryfile design1.tsq -inkey tsakey.pem \e
+\&        -signer tsacert.pem -out design1.tsr
+.Ve
+If you want to use the settings in the config file you could just write:
+.PP
+.Vb 1
+\&  openssl ts -reply -queryfile design1.tsq -out design1.tsr
+.Ve
+To print a time stamp reply to stdout in human readable format:
+.PP
+.Vb 1
+\&  openssl ts -reply -in design1.tsr -text
+.Ve
+To create a time stamp token instead of time stamp response:
+.PP
+.Vb 1
+\&  openssl ts -reply -queryfile design1.tsq -out design1_token.der -token_out
+.Ve
+To print a time stamp token to stdout in human readable format:
+.PP
+.Vb 1
+\&  openssl ts -reply -in design1_token.der -token_in -text -token_out
+.Ve
+To extract the time stamp token from a response:
+.PP
+.Vb 1
+\&  openssl ts -reply -in design1.tsr -out design1_token.der -token_out
+.Ve
+To add \*(L'granted\*(R' status info to a time stamp token thereby creating a
+valid response:
+.PP
+.Vb 1
+\&  openssl ts -reply -in design1_token.der -token_in -out design1.tsr
+.Ve
+.Sh "Time Stamp Verification"
+To verify a time stamp reply against a request:
+.PP
+.Vb 2
+\&  openssl ts -verify -queryfile design1.tsq -in design1.tsr \e
+\&        -CAfile cacert.pem -untrusted tsacert.pem
+.Ve
+To verify a time stamp reply that includes the certificate chain:
+.PP
+.Vb 2
+\&  openssl ts -verify -queryfile design2.tsq -in design2.tsr \e
+\&        -CAfile cacert.pem
+.Ve
+To verify a time stamp token against the original data file:
+  openssl ts \-verify \-data design2.txt \-in design2.tsr \e
+	\-CAfile cacert.pem
+.PP
+To verify a time stamp token against a message imprint:
+  openssl ts \-verify \-digest b7e5d3f93198b38379852f2c04e78d73abdd0f4b \e
+	 \-in design2.tsr \-CAfile cacert.pem
+.PP
+You could also look at the \*(L'test\*(R' directory for more examples.
+.SH "BUGS"
+If you find any bugs or you have suggestions please write to
+Zoltan Glozik <zglozik@opentsa.org>. Known issues:
+.Ip "\(bu No support for time stamps over \s-1SMTP\s0, though it is quite easy to implement an automatic e-mail based \s-1TSA\s0 with procmail(1)  and perl(1). \s-1HTTP\s0 server support is provided in the form of  a separate apache module. \s-1HTTP\s0 client support is provided by tsget(1). Pure \s-1TCP/IP\s0 protocol is not supported." 4
+.Ip "\(bu The file containing the last serial number of the \s-1TSA\s0 is not locked when being read or written. This is a problem if more than one instance of openssl(1) is trying to create a time stamp response at the same time. This is not an issue when using the apache server module, it does proper locking." 4
+.Ip "\(bu Look for the \s-1FIXME\s0 word in the source files." 4
+.Ip "\(bu The source code should really be reviewed by somebody else, too." 4
+.Ip "\(bu More testing is needed, I have done only some basic tests (see test/testtsa)." 4
+.SH "AUTHOR"
+Zoltan Glozik <zglozik@opentsa.org>, OpenTSA project (http://www.opentsa.org)
+.SH "SEE ALSO"
+tsget(1), openssl(1), req(1), 
+x509(1), ca(1), genrsa(1), 
+config(5)
+
+.rn }` ''
+.IX Title "TS 1"
+.IX Name "ts - Time Stamping Authority tool (client/server)"
+
+.IX Header "NAME"
+
+.IX Header "SYNOPSIS"
+
+.IX Header "DESCRIPTION"
+
+.IX Item "1."
+
+.IX Item "2."
+
+.IX Item "3."
+
+.IX Header "OPTIONS"
+
+.IX Subsection "Time Stamp Request generation"
+
+.IX Item "\fB\-rand\fR file:file..."
+
+.IX Item "\fB\-config\fR configfile"
+
+.IX Item "\fB\-data\fR file_to_hash"
+
+.IX Item "\fB\-digest\fR digest_bytes"
+
+.IX Item "\fB\-md2\fR|\fB\-md4\fR|\fB\-md5\fR|\fB\-sha\fR|\fB\-sha1\fR|\fB\-mdc2\fR|\fB\-ripemd160\fR|\fB...\fR"
+
+.IX Item "\fB\-policy\fR object_id"
+
+.IX Item "\fB\-no_nonce\fR"
+
+.IX Item "\fB\-cert\fR"
+
+.IX Item "\fB\-in\fR request.tsq"
+
+.IX Item "\fB\-out\fR request.tsq"
+
+.IX Item "\fB\-text\fR"
+
+.IX Subsection "Time Stamp Response generation"
+
+.IX Item "\fB\-config\fR configfile"
+
+.IX Item "\fB\-section\fR tsa_section"
+
+.IX Item "\fB\-queryfile\fR request.tsq"
+
+.IX Item "\fB\-passin\fR password_src"
+
+.IX Item "\fB\-signer\fR tsa_cert.pem"
+
+.IX Item "\fB\-inkey\fR private.pem"
+
+.IX Item "\fB\-chain\fR certs_file.pem"
+
+.IX Item "\fB\-policy\fR object_id"
+
+.IX Item "\fB\-in\fR response.tsr"
+
+.IX Item "\fB\-token_in\fR"
+
+.IX Item "\fB\-out\fR response.tsr"
+
+.IX Item "\fB\-token_out\fR"
+
+.IX Item "\fB\-text\fR"
+
+.IX Item "\fB\-engine\fR id"
+
+.IX Subsection "Time Stamp Response verification"
+
+.IX Item "\fB\-data\fR file_to_hash"
+
+.IX Item "\fB\-digest\fR digest_bytes"
+
+.IX Item "\fB\-queryfile\fR request.tsq"
+
+.IX Item "\fB\-in\fR response.tsr"
+
+.IX Item "\fB\-token_in\fR"
+
+.IX Item "\fB\-CApath\fR trusted_cert_path"
+
+.IX Item "\fB\-CAfile\fR trusted_certs.pem"
+
+.IX Item "\fB\-untrusted\fR cert_file.pem"
+
+.IX Header "CONFIGURATION FILE OPTIONS"
+
+.IX Item "\fBtsa\fR section, \fBdefault_tsa\fR	"
+
+.IX Item "\fBoid_file\fR"
+
+.IX Item "\fBoid_section\fR"
+
+.IX Item "\fB\s-1RANDFILE\s0\fR"
+
+.IX Item "\fBserial\fR"
+
+.IX Item "\fBcrypto_device\fR"
+
+.IX Item "\fBsigner_cert\fR"
+
+.IX Item "\fBcerts\fR"
+
+.IX Item "\fBsigner_key\fR"
+
+.IX Item "\fBdefault_policy\fR"
+
+.IX Item "\fBother_policies\fR"
+
+.IX Item "\fBdigests\fR"
+
+.IX Item "\fBaccuracy\fR"
+
+.IX Item "\fBclock_precision_digits\fR"
+
+.IX Item "\fBordering\fR"
+
+.IX Item "\fBtsa_name\fR"
+
+.IX Item "\fBess_cert_id_chain\fR"
+
+.IX Header "ENVIRONMENT VARIABLES"
+
+.IX Header "EXAMPLES"
+
+.IX Subsection "Time Stamp Request"
+
+.IX Subsection "Time Stamp Response"
+
+.IX Subsection "Time Stamp Verification"
+
+.IX Header "BUGS"
+
+.IX Item "\(bu No support for time stamps over \s-1SMTP\s0, though it is quite easy to implement an automatic e-mail based \s-1TSA\s0 with procmail(1)  and perl(1). \s-1HTTP\s0 server support is provided in the form of  a separate apache module. \s-1HTTP\s0 client support is provided by tsget(1). Pure \s-1TCP/IP\s0 protocol is not supported."
+
+.IX Item "\(bu The file containing the last serial number of the \s-1TSA\s0 is not locked when being read or written. This is a problem if more than one instance of openssl(1) is trying to create a time stamp response at the same time. This is not an issue when using the apache server module, it does proper locking."
+
+.IX Item "\(bu Look for the \s-1FIXME\s0 word in the source files."
+
+.IX Item "\(bu The source code should really be reviewed by somebody else, too."
+
+.IX Item "\(bu More testing is needed, I have done only some basic tests (see test/testtsa)."
+
+.IX Header "AUTHOR"
+
+.IX Header "SEE ALSO"
+
