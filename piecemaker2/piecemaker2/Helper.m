@@ -120,7 +120,7 @@
         NSDictionary *result = [Helper runCommand:command];
         
     } else if ([action isEqual: @"stop"]) {
-        command = [NSString stringWithFormat:@"cd app/api && rake daemon[stop], nil];
+        command = [NSString stringWithFormat:@"cd app/api && rake daemon[stop]", nil];
         NSDictionary *result = [Helper runCommand:command];
     }
     

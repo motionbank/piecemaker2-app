@@ -100,6 +100,9 @@
 
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
+    NSLog(@"Trying to shutdown api");
+    [Helper api:@"stop" quitOnError:FALSE];
+    
     NSLog(@"Trying to shutdown postgres server");
     [Helper postgresql:@"stop" quitOnError:FALSE];
 }
