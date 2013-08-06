@@ -112,6 +112,20 @@
     }
 }
 
++(void)api:(NSString *)action quitOnError:(Boolean)quit {
+    NSString *command = nil;
+    
+    if([action isEqual: @"start"]) {
+        command = [NSString stringWithFormat:@"cd app/api && rake daemon[start]", nil];
+        NSDictionary *result = [Helper runCommand:command];
+        
+    } else if ([action isEqual: @"stop"]) {
+        command = [NSString stringWithFormat:@"cd app/api && rake daemon[stop], nil];
+        NSDictionary *result = [Helper runCommand:command];
+    }
+    
+
+}
 
 + (Boolean)postgresql:(NSString *)action quitOnError:(Boolean)quit {
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
@@ -155,9 +169,46 @@
     } else {
         return false;
     }
+    return false;
 }
 
-
++(void)createConfigYml:(NSString*)filename sample:(NSString*)sampleFile user:(NSString*)user port:(NSString *)port quitOnError:(Boolean)quit {
+    
+    NSLog(@"Creating config.yml file.", nil);
+    
+    NSError *error;
+    NSString *stringFromFile;
+    stringFromFile = [[NSString alloc] initWithContentsOfFile:sampleFile encoding:NSUTF8StringEncoding error:&error];
+    if(error) {
+        NSLog(@"Error reading file:\n%@", error);
+        [Helper showAlert:@"API Config Error (700)"
+                  message:[NSString stringWithFormat:@"Unable to open configuration file in %@.", sampleFile]
+            detailMessage:[error localizedDescription]
+                     quit:quit];
+    }
+    
+    // replace strings
+    stringFromFile = [stringFromFile stringByReplacingOccurrencesOfString:@"port      : 5432"
+                                    withString:[NSString stringWithFormat:@"port      : %@", port]];
+    
+    stringFromFile = [stringFromFile stringByReplacingOccurrencesOfString:@"username  : XXX"
+                                    withString:[NSString stringWithFormat:@"username  : %@", user]];
+    
+    
+    stringFromFile = [stringFromFile stringByReplacingOccurrencesOfString:@"password  : XXX"
+                                    withString:[NSString stringWithFormat:@"password  : ", nil]];
+    
+    // write file back
+    error = nil;
+    [stringFromFile writeToFile:filename atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if(error) {
+        NSLog(@"Error writing file:\n%@", error);
+        [Helper showAlert:@"API Config Error (701)"
+                  message:[NSString stringWithFormat:@"Unable to update configuration file in %@.", filename]
+            detailMessage:[error localizedDescription]
+                     quit:quit];
+    }
+}
 
 
 +(void)updatePostgresqlConf:(NSString* )filename quitOnError:(Boolean)quit port:(NSString *)port {

@@ -21,6 +21,10 @@
 
 +(void)updatePostgresqlConf:(NSString* )filename quitOnError:(Boolean)quit port:(NSString *)port;
 
++(void)createConfigYml:(NSString*)filename sample:(NSString*)sampleFile user:(NSString*)user port:(NSString *)port quitOnError:(Boolean)quit;
+
 + (void)createDatabaseIfNotExist:(NSString*) database;
+
++(void)api:(NSString *)action quitOnError:(Boolean)quit;
 
 @end
