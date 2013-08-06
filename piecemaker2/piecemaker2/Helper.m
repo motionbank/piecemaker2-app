@@ -118,8 +118,33 @@
     NSString *command = nil;
     
     if([action isEqual: @"start"]) {
-        command = [NSString stringWithFormat:@"cd app/api && rake daemon[start]", nil];
-        NSDictionary *result = [Helper runCommand:command waitUntilExit:FALSE];
+        //command = [NSString stringWithFormat:@"cd app/api && rake daemon[start]", nil];
+        //NSDictionary *result = [Helper runCommand:command waitUntilExit:FALSE];
+        
+        NSString *workingDir = [[NSBundle mainBundle] bundlePath];
+        NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
+        NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
+        
+        NSMutableDictionary *env = [[NSMutableDictionary alloc] init];
+        [env setObject:[bin stringByAppendingString:@":/usr/bin:/usr/sbin:/bin"] forKey:@"PATH"];
+        [env setObject:[resourcesDir stringByAppendingString:@""] forKey:@"HOME"];
+        
+        NSTask *task = [[NSTask alloc] init];
+        [task setCurrentDirectoryPath:[resourcesDir stringByAppendingString:@"/app/api"]];
+        [task setEnvironment:env];
+        
+        [task setLaunchPath: @"/bin/bash"];
+        
+        NSArray *arguments = [NSArray arrayWithObjects:
+                              @"-c" ,
+                              [NSString stringWithFormat:@"%@", @"rake daemon[start]"],
+                              nil];
+        [task setArguments: arguments];
+        
+        //[task setLaunchPath:@"rake"];
+        //[task setArguments:[NSArray arrayWithObjects:[NSString stringWithFormat:@"daemon[start]"], nil]];
+        [task launch];
+        
     } else if ([action isEqual: @"stop"]) {
         command = [NSString stringWithFormat:@"cd app/api && rake daemon[stop]", nil];
         NSDictionary *result = [Helper runCommand:command waitUntilExit:FALSE];
