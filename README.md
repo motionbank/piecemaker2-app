@@ -47,6 +47,9 @@ make install
 # initial api config and gem installation
 cd app/api/
 cp config/config.sample.yml config/config.yml
+sed -i '' -e "s/username  : XXX/username  : $(whoami)/" config/config.yml
+sed -i '' -e "s/password  : XXX/password  : /" config/config.yml
+sed -i '' -e "s/port      : 5432/port      : 50725/" config/config.yml
 ../../local/bin/bundle install
 
 ````
