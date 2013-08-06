@@ -1313,7 +1313,6 @@
 							<string key="NSFrame">{{14, 377}, {67, 32}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="390889893">
@@ -1346,8 +1345,8 @@
 							<string key="NSAntiCompressionPriority">{250, 750}</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="830733939">
-								<int key="NSCellFlags">-2074083327</int>
-								<int key="NSCellFlags2">272629760</int>
+								<int key="NSCellFlags">-2073034687</int>
+								<int key="NSCellFlags2">272630784</int>
 								<string key="NSContents"/>
 								<reference key="NSSupport" ref="622447268"/>
 								<string key="NSCellIdentifier">_NS:9</string>
@@ -1380,7 +1379,7 @@
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="930485283"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -3443,6 +3442,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">AppDelegate</string>
 					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">testButton:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">testButton:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">testButton:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="testButton">NSButton</string>
 						<string key="textField">NSTextField</string>

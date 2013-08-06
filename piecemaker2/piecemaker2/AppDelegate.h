@@ -12,7 +12,7 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
-//@property (weak) IBOutlet NSButton *testButton;
-//@property (weak) IBOutlet NSTextField *textField;
+@property (weak) IBOutlet NSButton *testButton;
+@property (weak) IBOutlet NSTextField *textField;
 
 @end

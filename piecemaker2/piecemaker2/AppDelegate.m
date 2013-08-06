@@ -10,8 +10,8 @@
 #import "Helper.h"
 
 @implementation AppDelegate
-//@synthesize testButton = _testButton;
-//@synthesize textField = _textField;
+@synthesize testButton = _testButton;
+@synthesize textField = _textField;
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
@@ -26,7 +26,7 @@
     // debugging area
     // (dont forget to comment-out the following lines)
     // ------------------------------------------------
-    if(1==1) {
+    if(1==2) {
         error = nil;
         [fileManager removeItemAtPath:[resourcesDir stringByAppendingString:@"/local/var/pqsql"] error:&error];
         if(error) {
@@ -109,51 +109,14 @@
 
 
 
-/*
-
-
-}
 
 
 
 
 -(IBAction)testButton:(id)sender {
-    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
-    NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
-    // NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
-    
-    NSString *ruby = [resourcesDir stringByAppendingString:@"/local/bin/ruby"];
-    
-    // NSString *node = [NSString stringWithFormat:@"cd %@ && ./local/bin/node", resourcesDir];
-    
-    _textField.stringValue = [NSString stringWithFormat:@"workingDir:\n%@\n\nwhich ruby:\n%@\n\nstdout:\n%@", workingDir, ruby, @"waiting..."];
-    
-    NSTask *task;
-    task = [[NSTask alloc] init];
-    [task setLaunchPath: ruby];
-
-    NSArray *arguments;
-    arguments = [NSArray arrayWithObjects: [resourcesDir stringByAppendingString:@"/app/test.rb"], nil];
-    [task setArguments: arguments];
-    
-    NSPipe *pipe;
-    pipe = [NSPipe pipe];
-    [task setStandardOutput: pipe];
-    
-    NSFileHandle *file;
-    file = [pipe fileHandleForReading];
-    
-    [task launch];
-    
-    NSData *data;
-    data = [file readDataToEndOfFile];
-    
-    NSString *taskOutput;
-    taskOutput = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-    NSLog (@"task returned:\n%@", taskOutput);
-    
-    _textField.stringValue = [NSString stringWithFormat:@"workingDir:\n%@\n\nwhich ruby:\n%@\n\nstdout:\n%@", workingDir, ruby, taskOutput];
+    NSDictionary *result = [Helper runCommand:@"cd app/api && rake spec:now" waitUntilExit:TRUE];
+    _textField.stringValue = [NSString stringWithFormat:@"%@", [result valueForKey:@"result"]];
 }
-*/
+
 
 @end

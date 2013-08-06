@@ -92,5 +92,8 @@ sed -i '' -e "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/"
    $ ps aux | grep postgres
    $ kill %ID%
    ```
-
+ * ```
+   $ ps aux | grep ruby
+   $ kill %ID%
+   ```
 
