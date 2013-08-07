@@ -47,6 +47,8 @@ Click Start and wait some seconds. The API will now load. This may take a while,
 
 ## Development
 
+__FYI__ Find the actual .app file in ```piecemaker2/DerivedData/piecemaker2/Build/Products/Debug/piecemaker2.app```.
+
 ### Building piecemaker2.app
 
 Ruby is compiled with the help of [ruby-build](https://github.com/sstephenson/ruby-build). Install with ```brew install ruby-build```.
