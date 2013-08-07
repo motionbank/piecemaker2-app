@@ -25,13 +25,19 @@ namespace :compile do
            "make && make install"
   end
 
-  desc "install bundler"
+  desc "install bundler and gems"
   task :gems do
+    # delete Gemfile.lock in app/api if exists
+    if File.exist?("piecemaker2/app/api/Gemfile.lock")
+      File.delete("piecemaker2/app/api/Gemfile.lock") 
+    end
+    
     system "cd piecemaker2;" + 
            "./local/bin/gem install bundler;" +
            "cd app/api;" + 
-           "../../local/bin/bundle install --disable-shared-gems"
+           "../../local/bin/bundle install --clean"
   end
+
 
   desc "compile all"
   task :all do

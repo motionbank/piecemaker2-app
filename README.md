@@ -2,25 +2,63 @@
 
 __requires Mac OS 10.8 (64-bit)__
 
-Download [piecemaker2.dmg](https://github.com/motionbank/piecemaker2-app/raw/master/piecemaker2.dmg), 
-open the app, click the "Test" button. It should print something like this:
+## Installation and Usage
 
-```
-workingDir:
-/Users/mattes/Developer/piecemaker2-app/piecemaker2.app
+Download [piecemaker2.dmg](https://github.com/motionbank/piecemaker2-app/raw/master/piecemaker2.dmg) and mount the .dmp file by clicking on it.
 
-which ruby:
-/Users/mattes/Developer/piecemaker2-app/piecemaker2.app/Contents/Resources/local/bin/ruby
+Drag and drop the Piecemaker2.app to your Mac (i.e. Desktop or Applications directory).
 
-stdout:
-Hello, Ruby!
-```
+Unmount the .dmg file in Finder and start the Piecemaker2.app, which you just drag & dropped to your Mac.
+
+Select the location for your data directory. You may want to create a new directory for this, i.e. on your Desktop.
+
+Click Start and wait some seconds. The API will now load. This may take a while, if this is a fresh data directory.
 
 
-## Compiling for .app
+## Troubleshooting
 
-We are going to compile ruby with [ruby-build](https://github.com/sstephenson/ruby-build). Install with ```brew install ruby-build```.
+ * __How-to re-create databases?__  
+   Quit the app, if running. Delete ```local/var/pgsql/data``` in the .app package resources. Restart app.
 
+ * __The app crashed. It seems as if i can't connect to the DB anymore?!__  
+   Make sure there is no orphaned postgresql server process.  
+   ```
+   $ ps aux | grep postgres
+   $ kill %ID%
+   ```
+
+ * __Ruby process__  
+   ```
+   $ ps aux | grep ruby
+   $ kill %ID%
+   ```
+
+ * __Finding logs in ...__  
+   ```
+   piecemaker2.app/Contents/Resources/app/api/logs
+   piecemaker2.app/Contents/Resources/local/var/pgsql/
+   ```
+
+ * __DMG file issues__  
+   ! The .app won't run, when started within the original .dmg file.
+
+
+
+
+## Development
+
+### Building piecemaker2.app
+
+Ruby is compiled with the help of [ruby-build](https://github.com/sstephenson/ruby-build). Install with ```brew install ruby-build```.
+
+ 1) ```rake compile:all``` (or see ```rake``` for sub tasks)
+ 2) Build piecemaker2.app with XCode
+ 3) 
+ 4) ```rake dmg```
+
+
+
+-----------------
 
 ```
 # set prefix variable
@@ -43,13 +81,6 @@ make install
 
 # install bundler
 ./local/bin/gem install bundler
-
-# initial api config and gem installation
-cd app/api/
-cp config/config.sample.yml config/config.yml
-sed -i '' -e "s/username  : XXX/username  : $(whoami)/" config/config.yml
-sed -i '' -e "s/password  : XXX/password  : /" config/config.yml
-sed -i '' -e "s/port      : 5432/port      : 50725/" config/config.yml
 
 ../../local/bin/bundle install --disable-shared-gems
 
@@ -82,30 +113,5 @@ sed -i '' -e "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/"
 
 ````
 
-## Troubleshooting
 
- * __How-to re-create databases?__  
-   Quit the app, if running. Delete ```local/var/pgsql/data``` in the .app package resources. Restart app.
-
- * __The app crashed. It seems as if i can't connect to the DB anymore?!__  
-   Make sure there is no orphaned postgresql server process.  
-   ```
-   $ ps aux | grep postgres
-   $ kill %ID%
-   ```
-
- * __Ruby process__  
-   ```
-   $ ps aux | grep ruby
-   $ kill %ID%
-   ```
-
- * __Finding logs in ...__  
-   ```
-   piecemaker2.app/Contents/Resources/app/api/logs
-   piecemaker2.app/Contents/Resources/local/var/pgsql/
-   ```
-
- * __DMG file issues__  
-   ! The .app won't run, when started within the original .dmg file.
 
