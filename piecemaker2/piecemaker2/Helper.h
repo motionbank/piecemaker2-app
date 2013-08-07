@@ -27,5 +27,6 @@
 + (void)createDatabaseIfNotExist:(NSString*) database;
 
 +(void)api:(NSString *)action quitOnError:(Boolean)quit;
++(void)frontendHttpServer:(NSString *)action quitOnError:(Boolean)quit;
 
 @end

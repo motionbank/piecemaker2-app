@@ -179,6 +179,10 @@ NSUserDefaults* defaults;
     // ---------
     [Helper api:@"start" quitOnError:TRUE];
     
+    // start frontend http server
+    // --------------------------
+    [Helper frontendHttpServer:@"start" quitOnError:TRUE];
+    
     
     [self ready];
 }
@@ -189,6 +193,9 @@ NSUserDefaults* defaults;
     
     NSLog(@"Trying to shutdown api");
     [Helper api:@"stop" quitOnError:FALSE];
+    
+    NSLog(@"Trying to shutdown frontend http server");
+    [Helper frontendHttpServer:@"stop" quitOnError:FALSE];
     
     NSLog(@"shutdown postgres server");
     [Helper postgresql:@"stop" quitOnError:FALSE];

@@ -181,6 +181,39 @@ int apiMaxStartRetries = 5;
 }
 
 
+int frontendHttpServerStartRetries = 0;
+int frontendHttpServerMaxStartRetries = 5;
++(void)frontendHttpServer:(NSString *)action quitOnError:(Boolean)quit {
+    
+    if([action isEqual: @"start"]) {
+        if(frontendHttpServerStartRetries > frontendHttpServerMaxStartRetries) {
+            // damn it
+            [Helper showAlert:@"Frontend HTTP Server Error (900)"
+                      message:[NSString stringWithFormat:@"Unable to start HTTP Server.", nil]
+                detailMessage:@""
+                         quit:quit];
+        }
+        
+        [self runCommandAndGetExitCode:
+         [NSString stringWithFormat:@"cd app/frontend && rake daemon[start]", nil]];
+        
+        int code = [self runCommandAndGetExitCode:
+                    [NSString stringWithFormat:@"cd app/frontend && rake daemon[status]", nil]];
+        if(code > 0) {
+            frontendHttpServerStartRetries++;
+            [NSThread sleepForTimeInterval:2];
+            [self api:action quitOnError:quit];
+        } else {
+            frontendHttpServerStartRetries = 0;
+        }
+    } else if ([action isEqual: @"stop"]) {
+        [self runCommandAndGetExitCode:
+         [NSString stringWithFormat:@"cd app/frontend && rake daemon[stop]", nil]];
+    }
+    
+}
+
+
 int postgresqlStartRetries = 0;
 int postgresqlMaxStartRetries = 5;
 + (void)postgresql:(NSString *)action quitOnError:(Boolean)quit {
