@@ -21,6 +21,7 @@
 @synthesize recorderController = _recorderController;
 @synthesize recorderMenuItem = _recorderMenuItem;
 
+NSUserDefaults* defaults;
 
 // menu item events
 // ----------------
@@ -62,6 +63,8 @@
     // verify URL ...
     // @todo
     if([_path URL]) {
+        [defaults setURL:[_path URL] forKey:@"dataDir"];
+        
         [_startingBtn setEnabled:TRUE];
     } else {
         [_startingBtn setEnabled:FALSE];
@@ -69,11 +72,16 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
-    [self updateStartButtonState];
+    [_startingBtn setEnabled:FALSE];
     
     // actually, setEnable would make more sense here, but its not working
     [_recorderMenuItem setHidden:TRUE];
     [_apiMenuItem setHidden:TRUE];
+    
+    
+    defaults = [NSUserDefaults standardUserDefaults];
+    [_path setURL:[defaults URLForKey:@"dataDir"]];
+    [self updateStartButtonState];
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
