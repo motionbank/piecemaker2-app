@@ -20,12 +20,12 @@ Click Start and wait some seconds. The API will now load. This may take a while,
  * __I got an error and the App quits!__  
    This is alpha software. Submit an issue [here](https://github.com/motionbank/piecemaker2-app/issues).
 
-   Sometimes it helps, to kill all ```ruby``` and ```postgres``` processes:
+   Sometimes it helps to kill all ```ruby``` and ```postgres``` processes:
 
    ```
    $ ps aux | grep postgres
    $ ps aux | grep ruby
-   $ kill %ID%
+   $ kill %PID%
    ```
 
  * __Where are log files?__  
@@ -34,13 +34,14 @@ Click Start and wait some seconds. The API will now load. This may take a while,
    piecemaker2.app/Contents/Resources/app/frontend/rack_http_server.log
    [your data dir]/pqsqllog.log
    ```
-   
+
    Please consider to open ```/Applications/Utilities/Console.app``` before
    starting the actual Piecemaker2.app. Search for ```piecemaker2``` to get
    realtime in-app logs.
 
  * __Missing write permissions?!__  
    Please don't run Piecemaker2.app from within the .dmg file.
+
 
 
 -----------------
@@ -59,60 +60,13 @@ Ruby is compiled with the help of [ruby-build](https://github.com/sstephenson/ru
 
 
 
+
+
+
+
 -----------------
 
-```
-# set prefix variable
-cd piecemaker2-app/piecemaker2
-prefix=$(pwd)/local
-
-
-# compile ruby
-CONFIGURE_OPTS="--disable-install-doc"
-ruby-build 2.0.0-p247 $prefix
-
-
-# compile PostgreSQL
-# http://www.postgresql.org/ftp/source/
-cd postgresql-9.2.4
-./configure --prefix=$prefix
-make
-make install
-
-
-# install bundler
-./local/bin/gem install bundler
-
-../../local/bin/bundle install --disable-shared-gems
-
-````
-
-
-
-## Setup during installation
-
-````
-# setup PostgreSQL
-# no other PostgreSQL instance should be running
-# if you get an error like 'FATAL:  could not create shared memory segment: Cannot allocate memory', make sure to quit all other running PostgreSQL processes
-
-mkdir -p local/var/pgsql/data
-./local/bin/initdb -D local/var/pgsql/data 
-
-# update postgresql.conf
-sed -i '' -e 's/#port = 5432/port = 50725/' local/var/pgsql/data/postgresql.conf
-sed -i '' -e "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/" local/var/pgsql/data/postgresql.conf
-
-# start postgresql server with data dir
-./local/bin/postgres -D local/var/pgsql/data
-
-# create databases in another proceess while server is running
-./local/bin/createdb --host=localhost --port=50725 piecemaker2_test | ..prod,dev
-
-# optional: connect with psql client
-./local/bin/psql --host=localhost --port=50725 piecemaker2_dev
-
-````
+[Some old readme stuff](https://github.com/motionbank/piecemaker2-app/tree/9844e2f8dba950c83f65eac1e01593ae97d7b0cc)
 
 
 
