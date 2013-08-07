@@ -159,6 +159,7 @@ int apiMaxStartRetries = 5;
                       message:[NSString stringWithFormat:@"Unable to start API.", nil]
                 detailMessage:@""
                          quit:quit];
+            return;
         }
         
         [self runCommandAndGetExitCode:
@@ -192,6 +193,7 @@ int frontendHttpServerMaxStartRetries = 5;
                       message:[NSString stringWithFormat:@"Unable to start HTTP Server.", nil]
                 detailMessage:@""
                          quit:quit];
+            return;
         }
         
         [self runCommandAndGetExitCode:
@@ -230,6 +232,7 @@ int postgresqlMaxStartRetries = 5;
                       message:[NSString stringWithFormat:@"Unable to start PostgreSQL.", nil]
                 detailMessage:@""
                          quit:quit];
+            return;
         }
         
         [self runCommandAndGetExitCode:

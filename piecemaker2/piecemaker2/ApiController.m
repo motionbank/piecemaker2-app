@@ -21,7 +21,7 @@
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
-        [[_apiview mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://github.com/motionbank/piecemaker2-app"]]];
+
     }
     
     return self;
@@ -32,6 +32,8 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    [[_apiview mainFrame] loadRequest:[NSURLRequest requestWithURL:
+                                       [NSURL URLWithString:@"http://0.0.0.0:50726/index.html"]]];
 }
 
 @end
