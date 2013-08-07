@@ -16,6 +16,13 @@
 		396EA7BD178F3181003319B1 /* local in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7BC178F3018003319B1 /* local */; };
 		396EA7C0178F3202003319B1 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7BE178F31B1003319B1 /* app */; };
 		AD1C936017B15517001A2026 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1C935F17B15517001A2026 /* Helper.m */; };
+		AD1C936217B1BEC3001A2026 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1C936117B1BEC3001A2026 /* WebKit.framework */; };
+		ADFF479217B236A700ADB99F /* DeveloperController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFF479017B236A700ADB99F /* DeveloperController.m */; };
+		ADFF479317B236A700ADB99F /* DeveloperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADFF479117B236A700ADB99F /* DeveloperController.xib */; };
+		ADFF479717B2370B00ADB99F /* RecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFF479517B2370B00ADB99F /* RecorderController.m */; };
+		ADFF479817B2370B00ADB99F /* RecorderController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADFF479617B2370B00ADB99F /* RecorderController.xib */; };
+		ADFF479C17B2378600ADB99F /* ApiController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFF479A17B2378600ADB99F /* ApiController.m */; };
+		ADFF479D17B2378600ADB99F /* ApiController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADFF479B17B2378600ADB99F /* ApiController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +43,16 @@
 		396EA7BE178F31B1003319B1 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; path = app; sourceTree = "<group>"; };
 		AD1C935E17B15517001A2026 /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		AD1C935F17B15517001A2026 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
+		AD1C936117B1BEC3001A2026 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		ADFF478F17B236A700ADB99F /* DeveloperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeveloperController.h; sourceTree = "<group>"; };
+		ADFF479017B236A700ADB99F /* DeveloperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeveloperController.m; sourceTree = "<group>"; };
+		ADFF479117B236A700ADB99F /* DeveloperController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeveloperController.xib; sourceTree = "<group>"; };
+		ADFF479417B2370B00ADB99F /* RecorderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderController.h; sourceTree = "<group>"; };
+		ADFF479517B2370B00ADB99F /* RecorderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderController.m; sourceTree = "<group>"; };
+		ADFF479617B2370B00ADB99F /* RecorderController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecorderController.xib; sourceTree = "<group>"; };
+		ADFF479917B2378600ADB99F /* ApiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiController.h; sourceTree = "<group>"; };
+		ADFF479A17B2378600ADB99F /* ApiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiController.m; sourceTree = "<group>"; };
+		ADFF479B17B2378600ADB99F /* ApiController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApiController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1C936217B1BEC3001A2026 /* WebKit.framework in Frameworks */,
 				396EA798178F2E06003319B1 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,6 +71,7 @@
 		396EA78B178F2E06003319B1 = {
 			isa = PBXGroup;
 			children = (
+				AD1C936117B1BEC3001A2026 /* WebKit.framework */,
 				396EA7BE178F31B1003319B1 /* app */,
 				396EA7BC178F3018003319B1 /* local */,
 				396EA79D178F2E06003319B1 /* piecemaker2 */,
@@ -91,6 +110,15 @@
 		396EA79D178F2E06003319B1 /* piecemaker2 */ = {
 			isa = PBXGroup;
 			children = (
+				ADFF478F17B236A700ADB99F /* DeveloperController.h */,
+				ADFF479017B236A700ADB99F /* DeveloperController.m */,
+				ADFF479117B236A700ADB99F /* DeveloperController.xib */,
+				ADFF479417B2370B00ADB99F /* RecorderController.h */,
+				ADFF479517B2370B00ADB99F /* RecorderController.m */,
+				ADFF479617B2370B00ADB99F /* RecorderController.xib */,
+				ADFF479917B2378600ADB99F /* ApiController.h */,
+				ADFF479A17B2378600ADB99F /* ApiController.m */,
+				ADFF479B17B2378600ADB99F /* ApiController.xib */,
 				396EA7A9178F2E06003319B1 /* AppDelegate.h */,
 				396EA7AA178F2E06003319B1 /* AppDelegate.m */,
 				396EA7AC178F2E07003319B1 /* MainMenu.xib */,
@@ -169,6 +197,9 @@
 				396EA7AE178F2E07003319B1 /* MainMenu.xib in Resources */,
 				396EA7BD178F3181003319B1 /* local in Resources */,
 				396EA7C0178F3202003319B1 /* app in Resources */,
+				ADFF479317B236A700ADB99F /* DeveloperController.xib in Resources */,
+				ADFF479817B2370B00ADB99F /* RecorderController.xib in Resources */,
+				ADFF479D17B2378600ADB99F /* ApiController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +213,9 @@
 				396EA7A4178F2E06003319B1 /* main.m in Sources */,
 				396EA7AB178F2E06003319B1 /* AppDelegate.m in Sources */,
 				AD1C936017B15517001A2026 /* Helper.m in Sources */,
+				ADFF479217B236A700ADB99F /* DeveloperController.m in Sources */,
+				ADFF479717B2370B00ADB99F /* RecorderController.m in Sources */,
+				ADFF479C17B2378600ADB99F /* ApiController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

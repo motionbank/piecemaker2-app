@@ -10,11 +10,45 @@
 #import "Helper.h"
 
 @implementation AppDelegate
-@synthesize testButton = _testButton;
-@synthesize textField = _textField;
+@synthesize progressInd = _progressInd;
+@synthesize startingBtn = _startingBtn;
+@synthesize path = _path;
 
+
+- (IBAction)pathUpdated:(id)sender {
+    [_path setURL:[[_path clickedPathComponentCell] URL]];
+    [self updateStartButtonState];
+}
+- (IBAction)startingBtnClicked:(id)sender {
+    [_progressInd startAnimation:self];
+    [_startingBtn setTitle:@"Starting now"];
+    [self start];
+}
+
+
+
+-(void)start {
+    [_startingBtn setEnabled:FALSE];
+    [_path setEnabled:FALSE];
+}
+
+
+-(void)updateStartButtonState {
+    // verify URL ...
+    // @todo
+    if([_path URL]) {
+        [_startingBtn setEnabled:TRUE];
+    } else {
+        [_startingBtn setEnabled:FALSE];
+    }
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    [self updateStartButtonState];
+
+
+    return;
+    
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
     NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
     
@@ -100,6 +134,8 @@
 
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
+    return;
+    
     NSLog(@"Trying to shutdown api");
     [Helper api:@"stop" quitOnError:FALSE];
     
@@ -113,10 +149,7 @@
 
 
 
--(IBAction)testButton:(id)sender {
-    NSDictionary *result = [Helper runCommand:@"cd app/api && rake spec:now" waitUntilExit:TRUE];
-    _textField.stringValue = [NSString stringWithFormat:@"%@", [result valueForKey:@"result"]];
-}
+
 
 
 @end

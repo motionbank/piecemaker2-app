@@ -8,11 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
+
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
 
-@property (weak) IBOutlet NSButton *testButton;
-@property (weak) IBOutlet NSTextField *textField;
+@property (assign) IBOutlet NSProgressIndicator *progressInd;
+@property (assign) IBOutlet NSButton *startingBtn;
+@property (assign) IBOutlet NSPathControl *path;
+
 
 @end
