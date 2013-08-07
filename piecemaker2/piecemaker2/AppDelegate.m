@@ -85,6 +85,10 @@ NSUserDefaults* defaults;
 }
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
+    [_apiController close];
+    [_recorderController close];
+    [_developerController close];
+    [_window setIsVisible:FALSE];
     [self stop];
 }
 
@@ -116,20 +120,7 @@ NSUserDefaults* defaults;
     NSString *dataDir = [[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""];
     NSString *postgresDataDir = [dataDir stringByAppendingString:@"pqsql"];
     
-    // debugging area
-    // (dont forget to comment-out the following lines)
-    // ------------------------------------------------
-    if(1==2) {
-        error = nil;
-        [fileManager removeItemAtPath:[resourcesDir stringByAppendingString:@"/local/var/pqsql"] error:&error];
-        if(error) {
-            NSLog(@"removing data dir failed:\n%@", error);
-        }
-    }
-    // ------------------------------------------------
-    
-    
-    
+
     // first, make sure the connection settings in config.yml are correct
     // config.yml exists?
     NSString *configYml = [resourcesDir stringByAppendingString:@"/app/api/config/config.yml"];
@@ -170,7 +161,7 @@ NSUserDefaults* defaults;
     
     // lets start the postgres server now
     // ----------------------------------
-    // [Helper postgresql:@"start" quitOnError:TRUE];
+    [Helper postgresql:@"start" quitOnError:TRUE];
     
     
     // see if tables exist? ... and create if not
@@ -195,13 +186,12 @@ NSUserDefaults* defaults;
 
 // stop api
 -(void)stop {
-    return;
     
     NSLog(@"Trying to shutdown api");
     // [Helper api:@"stop" quitOnError:FALSE];
     
-    NSLog(@"Trying to shutdown postgres server");
-    // [Helper postgresql:@"stop" quitOnError:FALSE];
+    NSLog(@"shutdown postgres server");
+    [Helper postgresql:@"stop" quitOnError:FALSE];
 }
 
 

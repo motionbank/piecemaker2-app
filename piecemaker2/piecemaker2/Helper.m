@@ -35,13 +35,10 @@
     
     NSLog(@"run command: %@", commandToRun);
     
-    if(waitUntilExit) {
-        [task waitUntilExit];
-    }
-    
     NSPipe *pipe;
     pipe = [NSPipe pipe];
     [task setStandardOutput: pipe];
+    [task setStandardError: pipe];
     
     NSFileHandle *file;
     file = [pipe fileHandleForReading];
@@ -54,7 +51,7 @@
     NSString *output;
     output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
     
-    [task terminate];
+    // [task terminate];
     
     
     // workaround for error:
@@ -64,13 +61,16 @@
     // BUT: "waitUntilExit: This method first checks to see if the receiver is still running using isRunning. Then it polls the current run loop using NSDefaultRunLoopMode until the task completes."
     // ... strange!
     
-    [NSThread sleepForTimeInterval:1.0];
-    if([task isRunning]) {
-        [NSThread sleepForTimeInterval:5.0];
-    }
+    //[NSThread sleepForTimeInterval:0.2];
+    //if([task isRunning]) {
+    //    [NSThread sleepForTimeInterval:1.0];
+    //}
     
     // should the error still appear in the logs: restart the app!
     
+    if(waitUntilExit) {
+        [task waitUntilExit];
+    }
     
     NSNumber *exitCode = [NSNumber numberWithInt:[task terminationStatus]];
     NSNumber *pid = [NSNumber numberWithInt:[task processIdentifier]];
@@ -84,6 +84,34 @@
     
     return dictionary;
 }
+
+
++(int)runCommandAndGetExitCode:(NSString*) command {
+    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
+    NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
+    NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
+    
+    NSMutableDictionary *env = [[NSMutableDictionary alloc] init];
+    [env setObject:[bin stringByAppendingString:@":/usr/bin:/usr/sbin:/bin"] forKey:@"PATH"];
+    [env setObject:[resourcesDir stringByAppendingString:@""] forKey:@"HOME"];
+    
+    NSTask *task = [[NSTask alloc] init];
+    [task setCurrentDirectoryPath:resourcesDir];
+    [task setEnvironment:env];
+    
+    [task setLaunchPath: @"/bin/bash"];
+    
+    NSArray *arguments = [NSArray arrayWithObjects:
+                          @"-c" ,
+                          command,
+                          nil];
+    
+    [task setArguments: arguments];
+    [task launch];
+    [task waitUntilExit];
+    return [task terminationStatus];
+}
+
 
 
 
@@ -153,49 +181,29 @@
 
 }
 
-+ (Boolean)postgresql:(NSString *)action quitOnError:(Boolean)quit {
-    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
-    NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
-    NSString *dataDir = [resourcesDir stringByAppendingString:@"/local/var/pqsql/data"];
-    NSString *logFile = [resourcesDir stringByAppendingString:@"/local/var/pqsql/log.log"];
+
+
++ (void)postgresql:(NSString *)action quitOnError:(Boolean)quit {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    NSString *command = nil;
+    NSString *dataDir = [[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""];
+    NSString *postgresDataDir = [dataDir stringByAppendingString:@"pqsql"];
+    NSString *logFile = [postgresDataDir stringByAppendingString:@"log.log"];
     
     if([action isEqual: @"start"]) {
-        command = [NSString stringWithFormat:@"pg_ctl start -l '%@' -D '%@'", logFile, dataDir];
-    } else if ([action isEqual: @"stop"]) {
-        command = [NSString stringWithFormat:@"pg_ctl stop -l '%@' -D '%@'", logFile, dataDir];
-    }
-    
-    if(command) {
-        NSDictionary *result = [Helper runCommand:command waitUntilExit:TRUE];
-        if([[result valueForKey:@"code"] intValue] > 0) {
-            [Helper showAlert:@"PostgreSQL Error (500)"
-                      message:[NSString stringWithFormat:@"Unable to %@ PostgreSQL.", action]
-                detailMessage:[result valueForKey:@"result"]
-                         quit:quit];
-            return false;
-        } else {
-            
-            // be sure, the server is running ...
-            if([action isEqual: @"start"]) {
-                command = [NSString stringWithFormat:@"pg_ctl status -l '%@' -D '%@'", logFile, dataDir];
-                NSDictionary *result = [Helper runCommand:command waitUntilExit:TRUE];
-                if([[result valueForKey:@"code"] intValue] > 0) {
-                    // try to start again
-                    [NSThread sleepForTimeInterval:10.0];
-                    [Helper postgresql:@"start" quitOnError:quit];
-                } else {
-                    return true;
-                }
-            } else {
-                return true;
-            }
+        [self runCommandAndGetExitCode:
+            [NSString stringWithFormat:@"pg_ctl start -w -l '%@' -D '%@'", logFile, postgresDataDir]];
+        
+        int code = [self runCommandAndGetExitCode:
+                    [NSString stringWithFormat:@"pg_ctl status -w -l '%@' -D '%@'", logFile, postgresDataDir]];
+        if(code > 0) {
+            [NSThread sleepForTimeInterval:2];
+            [self postgresql:action quitOnError:quit];
         }
-    } else {
-        return false;
+    } else if ([action isEqual: @"stop"]) {
+        [self runCommandAndGetExitCode:
+            [NSString stringWithFormat:@"pg_ctl stop -w -l '%@' -D '%@'", logFile, postgresDataDir]];
     }
-    return false;
 }
 
 +(void)createConfigYml:(NSString*)filename sample:(NSString*)sampleFile user:(NSString*)user port:(NSString *)port quitOnError:(Boolean)quit {
