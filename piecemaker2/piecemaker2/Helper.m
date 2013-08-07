@@ -206,6 +206,7 @@
     }
 }
 
+
 +(void)createConfigYml:(NSString*)filename sample:(NSString*)sampleFile user:(NSString*)user port:(NSString *)port quitOnError:(Boolean)quit {
     
     NSLog(@"Creating config.yml file.", nil);
