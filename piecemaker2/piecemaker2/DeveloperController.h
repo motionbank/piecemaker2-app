@@ -11,7 +11,8 @@
 
 @interface DeveloperController : NSWindowController
 
-@property (assign) IBOutlet NSScrollView *output;
+@property (unsafe_unretained) IBOutlet NSTextView *output;
+
 - (IBAction)resetIndex:(id)sender;
 
 - (IBAction)sendCommand:(id)sender;

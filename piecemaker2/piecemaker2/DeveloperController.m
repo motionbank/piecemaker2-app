@@ -42,25 +42,37 @@
                                        [NSURL URLWithString:@"http://0.0.0.0:50726/index.html"]]];
 }
 
-- (IBAction)sendCommand:(NSTextField*)sender {
-    
+- (IBAction)sendCommand:(id)sender {
     NSDictionary *result = [Helper runCommand:[sender stringValue] waitUntilExit:TRUE];
-    [sender setStringValue:@""];
-    
-    [_output insertText:[result valueForKey:@"result"]];
-
-    // [result value
+    [_output setString:[result valueForKey:@"result"]];
 }
 
 - (IBAction)clearBtn:(id)sender {
-
+    [_output setString:@""];
 }
 
 - (IBAction)getEnvInfoBtn:(id)sender {
-    [_output insertText:@"ENV"];
+
+
+    NSDictionary *result = [Helper runCommand:@"pwd" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ pwd returned:\n%@\n\n", [result valueForKey:@"result"]]];
+  
+    result = [Helper runCommand:@"which ruby" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ which ruby returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    
+    result = [Helper runCommand:@"ruby -v" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ ruby -v returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    
+    result = [Helper runCommand:@"which rake" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ which rake returned:\n%@\n\n", [result valueForKey:@"result"]]];
+
+    result = [Helper runCommand:@"cd app/api && bundle show pg" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ cd app/api && bundle show pg returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    
 }
 
 - (IBAction)runSpecsBtn:(id)sender {
-    [_output insertText:@"specs"];
+    NSDictionary *result = [Helper runCommand:@"cd app/api && rake spec:now" waitUntilExit:TRUE];
+    [_output setString:[result valueForKey:@"result"]];
 }
 @end
