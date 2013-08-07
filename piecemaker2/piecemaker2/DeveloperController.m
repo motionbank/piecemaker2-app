@@ -7,6 +7,7 @@
 //
 
 #import "DeveloperController.h"
+#import "Helper.h"
 
 @interface DeveloperController ()
 
@@ -21,6 +22,8 @@
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
+        NSLog(@"%@", [Helper runCommand:@"which rake" waitUntilExit:TRUE]);
+        NSLog(@"%@", [Helper runCommand:@"cd app/api && bundle show pg" waitUntilExit:TRUE]);
     }
     
     return self;
@@ -34,11 +37,14 @@
 }
 
 - (IBAction)clearBtn:(id)sender {
+
 }
 
 - (IBAction)getEnvInfoBtn:(id)sender {
+    [_output insertText:@"ENV"];
 }
 
 - (IBAction)runSpecsBtn:(id)sender {
+    [_output insertText:@"specs"];
 }
 @end

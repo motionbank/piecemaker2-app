@@ -19,6 +19,7 @@
     NSMutableDictionary *env = [[NSMutableDictionary alloc] init];
     [env setObject:[bin stringByAppendingString:@":/usr/bin:/usr/sbin:/bin"] forKey:@"PATH"];
     [env setObject:[resourcesDir stringByAppendingString:@""] forKey:@"HOME"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0/gems"] forKey:@"BUNDLE_PATH"];
 
     
     NSTask *task;
@@ -90,6 +91,8 @@
     NSMutableDictionary *env = [[NSMutableDictionary alloc] init];
     [env setObject:[bin stringByAppendingString:@":/usr/bin:/usr/sbin:/bin"] forKey:@"PATH"];
     [env setObject:[resourcesDir stringByAppendingString:@""] forKey:@"HOME"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0/gems"] forKey:@"BUNDLE_PATH"];
+    
     
     NSTask *task = [[NSTask alloc] init];
     [task setCurrentDirectoryPath:resourcesDir];
