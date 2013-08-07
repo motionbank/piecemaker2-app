@@ -17,30 +17,30 @@ Click Start and wait some seconds. The API will now load. This may take a while,
 
 ## Troubleshooting
 
- * __How-to re-create databases?__  
-   Quit the app, if running. Delete ```local/var/pgsql/data``` in the .app package resources. Restart app.
+ * __I got an error and the App quits!__  
+   This is alpha software. Submit an issue [here](https://github.com/motionbank/piecemaker2-app/issues).
 
- * __The app crashed. It seems as if i can't connect to the DB anymore?!__  
-   Make sure there is no orphaned postgresql server process.  
+   Sometimes it helps, to kill all ```ruby``` and ```postgres``` processes:
+
    ```
    $ ps aux | grep postgres
-   $ kill %ID%
-   ```
-
- * __Ruby process__  
-   ```
    $ ps aux | grep ruby
    $ kill %ID%
    ```
 
- * __Finding logs in ...__  
+ * __Where are log files?__  
    ```
-   piecemaker2.app/Contents/Resources/app/api/logs
-   piecemaker2.app/Contents/Resources/local/var/pgsql/
+   piecemaker2.app/Contents/Resources/app/api/log/daemon_production.log
+   piecemaker2.app/Contents/Resources/app/frontend/rack_http_server.log
+   [your data dir]/pqsqllog.log
    ```
+   
+   Please consider to open ```/Applications/Utilities/Console.app``` before
+   starting the actual Piecemaker2.app. Search for ```piecemaker2``` to get
+   realtime in-app logs.
 
- * __DMG file issues__  
-   ! The .app won't run, when started within the original .dmg file.
+ * __Missing write permissions?!__  
+   Please don't run Piecemaker2.app from within the .dmg file.
 
 
 -----------------
