@@ -143,6 +143,23 @@
 }
 
 +(void)api:(NSString *)action quitOnError:(Boolean)quit {
+    
+    if([action isEqual: @"start"]) {
+        [self runCommandAndGetExitCode:
+         [NSString stringWithFormat:@"cd app/api && rake daemon[start]", nil]];
+        
+        int code = [self runCommandAndGetExitCode:
+                    [NSString stringWithFormat:@"cd app/api && rake daemon[status]", nil]];
+        if(code > 0) {
+            [NSThread sleepForTimeInterval:2];
+            [self api:action quitOnError:quit];
+        }
+    } else if ([action isEqual: @"stop"]) {
+        [self runCommandAndGetExitCode:
+         [NSString stringWithFormat:@"cd app/api && rake daemon[stop]", nil]];
+    }
+    
+    /*
     NSString *command = nil;
     
     if([action isEqual: @"start"]) {
@@ -177,6 +194,7 @@
         command = [NSString stringWithFormat:@"cd app/api && rake daemon[stop]", nil];
         NSDictionary *result = [Helper runCommand:command waitUntilExit:FALSE];
     }
+    */
     
 
 }
