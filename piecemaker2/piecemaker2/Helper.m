@@ -19,7 +19,10 @@
     NSMutableDictionary *env = [[NSMutableDictionary alloc] init];
     [env setObject:[bin stringByAppendingString:@":/usr/bin:/usr/sbin:/bin"] forKey:@"PATH"];
     [env setObject:[resourcesDir stringByAppendingString:@""] forKey:@"HOME"];
-    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0/gems"] forKey:@"BUNDLE_PATH"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0"] forKey:@"BUNDLE_PATH"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/bin"] forKey:@"BUNDLE_BIN"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0"] forKey:@"GEM_HOME"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0"] forKey:@"GEM_PATH"];
 
     
     NSTask *task;
@@ -91,7 +94,11 @@
     NSMutableDictionary *env = [[NSMutableDictionary alloc] init];
     [env setObject:[bin stringByAppendingString:@":/usr/bin:/usr/sbin:/bin"] forKey:@"PATH"];
     [env setObject:[resourcesDir stringByAppendingString:@""] forKey:@"HOME"];
-    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0/gems"] forKey:@"BUNDLE_PATH"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0"] forKey:@"BUNDLE_PATH"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/bin"] forKey:@"BUNDLE_BIN"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0"] forKey:@"GEM_HOME"];
+    [env setObject:[resourcesDir stringByAppendingString:@"/local/lib/ruby/gems/2.0.0"] forKey:@"GEM_PATH"];
+    
     
     
     NSTask *task = [[NSTask alloc] init];

@@ -10,8 +10,9 @@
 
 @interface DeveloperController : NSWindowController
 
-@property (assign) IBOutlet NSTextView *output;
+@property (assign) IBOutlet NSScrollView *output;
 
+- (IBAction)sendCommand:(id)sender;
 - (IBAction)clearBtn:(id)sender;
 - (IBAction)getEnvInfoBtn:(id)sender;
 - (IBAction)runSpecsBtn:(id)sender;
