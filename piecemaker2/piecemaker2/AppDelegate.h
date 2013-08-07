@@ -8,6 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class DeveloperController;
+@class ApiController;
+@class RecorderController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
@@ -16,6 +19,20 @@
 @property (assign) IBOutlet NSProgressIndicator *progressInd;
 @property (assign) IBOutlet NSButton *startingBtn;
 @property (assign) IBOutlet NSPathControl *path;
+
+@property (assign) IBOutlet NSMenuItem *recorderMenuItem;
+
+@property (assign) IBOutlet NSMenuItem *developerMenuItem;
+
+@property (assign) IBOutlet NSMenuItem *apiMenuItem;
+
+
+@property DeveloperController *developerController;
+@property ApiController *apiController;
+@property RecorderController *recorderController;
+
+
+
 
 
 @end

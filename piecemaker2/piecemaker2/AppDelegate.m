@@ -8,13 +8,44 @@
 
 #import "AppDelegate.h"
 #import "Helper.h"
+#import "DeveloperController.h"
+#import "ApiController.h"
+#import "RecorderController.h"
 
 @implementation AppDelegate
 @synthesize progressInd = _progressInd;
 @synthesize startingBtn = _startingBtn;
 @synthesize path = _path;
+@synthesize developerController = _developerController;
+@synthesize apiController = _apiController;
+@synthesize recorderController = _recorderController;
+@synthesize recorderMenuItem = _recorderMenuItem;
 
 
+// menu item events
+// ----------------
+- (IBAction)showDownloads:(id)sender {
+    if(!_developerController) {
+        _developerController = [[DeveloperController alloc] initWithWindowNibName:@"DeveloperController"];
+    }
+    [_developerController showWindow:self];
+}
+- (IBAction)showApi:(id)sender {
+    if(!_apiController) {
+        _apiController = [[ApiController alloc] initWithWindowNibName:@"ApiController"];
+    }
+    [_apiController showWindow:self];
+}
+- (IBAction)showRecorder:(id)sender {
+    if(!_recorderController) {
+        _recorderController = [[RecorderController alloc] initWithWindowNibName:@"RecorderController"];
+    }
+    [_recorderController showWindow:self];
+}
+
+
+// path selection (and start button) events
+// ----------------------------------------
 - (IBAction)pathUpdated:(id)sender {
     [_path setURL:[[_path clickedPathComponentCell] URL]];
     [self updateStartButtonState];
@@ -22,17 +53,11 @@
 - (IBAction)startingBtnClicked:(id)sender {
     [_progressInd startAnimation:self];
     [_startingBtn setTitle:@"Starting now"];
-    [self start];
-}
-
-
-
--(void)start {
     [_startingBtn setEnabled:FALSE];
     [_path setEnabled:FALSE];
+    
+    [self start];
 }
-
-
 -(void)updateStartButtonState {
     // verify URL ...
     // @todo
@@ -45,8 +70,36 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     [self updateStartButtonState];
+    
+    // actually, setEnable would make more sense here, but its not working
+    [_recorderMenuItem setHidden:TRUE];
+    [_apiMenuItem setHidden:TRUE];
+}
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [self stop];
+}
+
+// api is ready
+-(void)ready {
+    // actually, setEnable would make more sense here, but its not working
+    [_recorderMenuItem setHidden:FALSE];
+    [_apiMenuItem setHidden:FALSE];
+    
+    [_window setIsVisible:FALSE];
+    [self showApi:self];
+}
 
 
+
+
+// Startup process
+// ===============
+
+
+// start api
+-(void)start {
+    [self ready];
     return;
     
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
@@ -83,7 +136,7 @@
     
     // data dir exists?
     // ----------------
-
+    
     if(![fileManager fileExistsAtPath:dataDir]) {
         // data dir is missing ... create new directory now
         error = nil;
@@ -128,12 +181,11 @@
     // start api
     // ---------
     [Helper api:@"start" quitOnError:TRUE];
-    
 }
 
 
-
-- (void)applicationWillTerminate:(NSNotification *)notification {
+// stop api
+-(void)stop {
     return;
     
     NSLog(@"Trying to shutdown api");
@@ -142,14 +194,6 @@
     NSLog(@"Trying to shutdown postgres server");
     [Helper postgresql:@"stop" quitOnError:FALSE];
 }
-
-
-
-
-
-
-
-
 
 
 @end
