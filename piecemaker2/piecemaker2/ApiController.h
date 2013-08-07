@@ -12,5 +12,6 @@
 @interface ApiController : NSWindowController
 
 @property (assign) IBOutlet WebView *apiview;
+- (IBAction)resetIndexHtml:(id)sender;
 
 @end

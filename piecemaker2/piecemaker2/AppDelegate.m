@@ -25,17 +25,19 @@ NSUserDefaults* defaults;
 
 // menu item events
 // ----------------
-- (IBAction)showDownloads:(id)sender {
+- (IBAction)showDeveloper:(id)sender {
     if(!_developerController) {
         _developerController = [[DeveloperController alloc] initWithWindowNibName:@"DeveloperController"];
     }
     [_developerController showWindow:self];
+    [_developerController setWebView:[_apiController apiview]];
 }
 - (IBAction)showApi:(id)sender {
     if(!_apiController) {
         _apiController = [[ApiController alloc] initWithWindowNibName:@"ApiController"];
     }
     [_apiController showWindow:self];
+    // [_apiController resetIndexHtml:nil];
 }
 - (IBAction)showRecorder:(id)sender {
     if(!_recorderController) {

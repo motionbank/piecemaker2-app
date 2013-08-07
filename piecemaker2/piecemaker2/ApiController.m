@@ -32,8 +32,14 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    [self resetIndexHtml:nil];
+}
+
+- (IBAction)resetIndexHtml:(id)sender {
     [[_apiview mainFrame] loadRequest:[NSURLRequest requestWithURL:
                                        [NSURL URLWithString:@"http://0.0.0.0:50726/index.html"]]];
+    
 }
+
 
 @end

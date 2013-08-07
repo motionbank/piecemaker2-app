@@ -16,7 +16,7 @@
 @implementation DeveloperController
 
 @synthesize output = _output;
-
+@synthesize webView = _webView;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -35,6 +35,11 @@
     [super windowDidLoad];
     
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+}
+
+- (IBAction)resetIndex:(id)sender {
+    [[_webView mainFrame] loadRequest:[NSURLRequest requestWithURL:
+                                       [NSURL URLWithString:@"http://0.0.0.0:50726/index.html"]]];
 }
 
 - (IBAction)sendCommand:(NSTextField*)sender {
