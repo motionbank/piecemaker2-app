@@ -168,3 +168,25 @@ LOG:  autovacuum launcher started
 LOG:  database system is ready to accept connections
 LOG:  received smart shutdown request
 LOG:  autovacuum launcher shutting down
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
+FATAL:  data directory "/Users/admin/Documents/GitHub_Repos/piecemaker2-app/piecemaker2.app/Contents/Resources/local/var/pqsql/data" has group or world access
+DETAIL:  Permissions should be u=rwx (0700).
