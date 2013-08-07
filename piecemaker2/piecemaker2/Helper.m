@@ -237,12 +237,9 @@
 }
 
 
-+(void)updatePostgresqlConf:(NSString* )filename quitOnError:(Boolean)quit port:(NSString *)port {
-    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
-    NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
-    
++(void)updatePostgresqlConf:(NSString* )filename quitOnError:(Boolean)quit port:(NSString *)port {    
     NSString *stringFromFile;
-    NSString *stringFilepath = [resourcesDir stringByAppendingString:filename];
+    NSString *stringFilepath = filename;
     NSError *error;
     stringFromFile = [[NSString alloc] initWithContentsOfFile:stringFilepath encoding:NSUTF8StringEncoding error:&error];
     if(error) {

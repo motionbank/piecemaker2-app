@@ -107,16 +107,14 @@ NSUserDefaults* defaults;
 
 // start api
 -(void)start {
-    [self ready];
-    return;
     
     NSString *workingDir = [[NSBundle mainBundle] bundlePath];
     NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
     
     NSError *error;
     NSFileManager *fileManager= [NSFileManager defaultManager];
-    NSString *dataDir = [resourcesDir stringByAppendingString:@"/local/var/pqsql/data"];
-    
+    NSString *dataDir = [[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""];
+    NSString *postgresDataDir = [dataDir stringByAppendingString:@"pqsql"];
     
     // debugging area
     // (dont forget to comment-out the following lines)
@@ -145,41 +143,41 @@ NSUserDefaults* defaults;
     // data dir exists?
     // ----------------
     
-    if(![fileManager fileExistsAtPath:dataDir]) {
+    if(![fileManager fileExistsAtPath:postgresDataDir]) {
         // data dir is missing ... create new directory now
         error = nil;
-        if(![fileManager createDirectoryAtPath:dataDir withIntermediateDirectories:YES attributes:nil error:&error]) {
-            NSLog(@"Failed to create data dir \"%@\". Error: %@", dataDir, error);
+        if(![fileManager createDirectoryAtPath:postgresDataDir withIntermediateDirectories:YES attributes:nil error:&error]) {
+            NSLog(@"Failed to create postgres data dir \"%@\". Error: %@", dataDir, error);
             [Helper showAlert:@"PostgreSQL Init Error (100)"
-                      message:[NSString stringWithFormat:@"Unable to create data directory in %@", dataDir]
+                      message:[NSString stringWithFormat:@"Unable to create postgres data directory in %@", postgresDataDir]
                 detailMessage:nil
                          quit:TRUE];
         }
         
         // use this new directory as data dir for postgresql
-        NSDictionary *result = [Helper runCommand:@"initdb --auth=trust -D local/var/pqsql/data" waitUntilExit:TRUE];
+        NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"initdb --auth=trust -D '%@'", postgresDataDir] waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Init Error (101)"
-                      message:[NSString stringWithFormat:@"Unable to init data dir in %@", dataDir]
+                      message:[NSString stringWithFormat:@"Unable to init postgres data dir in %@", postgresDataDir]
                 detailMessage:[result valueForKey:@"result"]
                          quit:TRUE];
         }
         
         // we then need to update postgresql.conf
-        [Helper updatePostgresqlConf:@"/local/var/pqsql/data/postgresql.conf" quitOnError:TRUE port:@"50725"];
+        [Helper updatePostgresqlConf:[NSString stringWithFormat:@"%@/postgresql.conf", postgresDataDir] quitOnError:TRUE port:@"50725"];
     }
     
     
     // lets start the postgres server now
     // ----------------------------------
-    [Helper postgresql:@"start" quitOnError:TRUE];
+    // [Helper postgresql:@"start" quitOnError:TRUE];
     
     
     // see if tables exist? ... and create if not
     // ------------------------------------------
-    [Helper createDatabaseIfNotExist:@"prod"];
-    [Helper createDatabaseIfNotExist:@"test"];
-    [Helper createDatabaseIfNotExist:@"dev"];
+    // [Helper createDatabaseIfNotExist:@"prod"];
+    // [Helper createDatabaseIfNotExist:@"test"];
+    // [Helper createDatabaseIfNotExist:@"dev"];
     
     
     // ------------------------------------------------------------------------
@@ -188,7 +186,10 @@ NSUserDefaults* defaults;
     
     // start api
     // ---------
-    [Helper api:@"start" quitOnError:TRUE];
+    // [Helper api:@"start" quitOnError:TRUE];
+    
+    
+    [self ready];
 }
 
 
@@ -197,10 +198,10 @@ NSUserDefaults* defaults;
     return;
     
     NSLog(@"Trying to shutdown api");
-    [Helper api:@"stop" quitOnError:FALSE];
+    // [Helper api:@"stop" quitOnError:FALSE];
     
     NSLog(@"Trying to shutdown postgres server");
-    [Helper postgresql:@"stop" quitOnError:FALSE];
+    // [Helper postgresql:@"stop" quitOnError:FALSE];
 }
 
 
