@@ -31,7 +31,7 @@ namespace :compile do
     if File.exist?("piecemaker2/app/api/Gemfile.lock")
       File.delete("piecemaker2/app/api/Gemfile.lock") 
     end
-    
+
     system "cd piecemaker2;" + 
            "./local/bin/gem install bundler;" +
            "cd app/api;" + 
@@ -52,18 +52,20 @@ end
 desc "create .dmg file from piecemaker.app"
 task :dmg do
 
+  puts "Creating .dmg file. This will take while..."
+
   # create tmp dir
   TMP_DIR = Pathname.new(Dir.mktmpdir)
   WORKING_DIR = Pathname.new(Dir.pwd)
 
   # copy piecemaker app to tmp dir
-  system("cp -r #{WORKING_DIR + 'piecemaker2.app'} #{TMP_DIR}")
+  system("cp -r #{WORKING_DIR + 'piecemaker2/DerivedData/piecemaker2/Build/Products/Debug/piecemaker2.app'} #{TMP_DIR}")
 
   # remove existing piecemaker2.dmg
   system("rm -rf '#{WORKING_DIR + 'piecemaker2.dmg'}'")
 
-  # remove postgres data dir
-  system("rm -rf #{TMP_DIR + 'piecemaker2.app/Contents/Resources/local/var/pqsql'}")
+  # remove anything in local/var
+  system("rm -rf #{TMP_DIR + 'piecemaker2.app/Contents/Resources/local/var/'}")
 
   # build dmg
   system("hdiutil create -fs HFS+ -volname 'Piecemaker2' \

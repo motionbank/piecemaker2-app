@@ -43,7 +43,7 @@ Click Start and wait some seconds. The API will now load. This may take a while,
    ! The .app won't run, when started within the original .dmg file.
 
 
-
+-----------------
 
 ## Development
 
@@ -51,10 +51,9 @@ Click Start and wait some seconds. The API will now load. This may take a while,
 
 Ruby is compiled with the help of [ruby-build](https://github.com/sstephenson/ruby-build). Install with ```brew install ruby-build```.
 
- 1) ```rake compile:all``` (or see ```rake``` for sub tasks)
- 1) Build piecemaker2.app with XCode
- 1) 
- 1) ```rake dmg```
+  1) ```rake compile:all``` (or see ```rake``` for sub tasks)  
+  2) Build piecemaker2.app with XCode  
+  3) ```rake dmg```   
 
 
 
