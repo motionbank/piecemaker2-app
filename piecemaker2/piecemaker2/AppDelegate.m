@@ -166,9 +166,9 @@ NSUserDefaults* defaults;
     
     // see if tables exist? ... and create if not
     // ------------------------------------------
-    // [Helper createDatabaseIfNotExist:@"prod"];
-    // [Helper createDatabaseIfNotExist:@"test"];
-    // [Helper createDatabaseIfNotExist:@"dev"];
+    [Helper createDatabaseIfNotExist:@"prod"];
+    [Helper createDatabaseIfNotExist:@"test"];
+    [Helper createDatabaseIfNotExist:@"dev"];
     
     
     // ------------------------------------------------------------------------
@@ -177,7 +177,7 @@ NSUserDefaults* defaults;
     
     // start api
     // ---------
-    // [Helper api:@"start" quitOnError:TRUE];
+    [Helper api:@"start" quitOnError:TRUE];
     
     
     [self ready];
@@ -188,7 +188,7 @@ NSUserDefaults* defaults;
 -(void)stop {
     
     NSLog(@"Trying to shutdown api");
-    // [Helper api:@"stop" quitOnError:FALSE];
+    [Helper api:@"stop" quitOnError:FALSE];
     
     NSLog(@"shutdown postgres server");
     [Helper postgresql:@"stop" quitOnError:FALSE];

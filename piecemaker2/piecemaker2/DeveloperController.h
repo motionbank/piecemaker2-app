@@ -10,4 +10,9 @@
 
 @interface DeveloperController : NSWindowController
 
+@property (weak) IBOutlet NSScrollView *output;
+
+- (IBAction)clearBtn:(id)sender;
+- (IBAction)getEnvInfoBtn:(id)sender;
+- (IBAction)runSpecsBtn:(id)sender;
 @end

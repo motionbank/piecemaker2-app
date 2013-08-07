@@ -51,9 +51,6 @@
     NSString *output;
     output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
     
-    // [task terminate];
-    
-    
     // workaround for error:
     // [NSConcreteTask terminationStatus]: task still running
     // https://developer.apple.com/library/mac/#documentation/cocoa/Reference/Foundation/Classes/NSTask_Class/Reference/Reference.html
@@ -75,8 +72,7 @@
     NSNumber *exitCode = [NSNumber numberWithInt:[task terminationStatus]];
     NSNumber *pid = [NSNumber numberWithInt:[task processIdentifier]];
     
-    NSLog(@"command exit code: %@", exitCode);
-    NSLog(@"command result:\n%@", output);
+    NSLog(@"command exit code (%@), result: %@", exitCode, output);
 
     NSArray *keys = [NSArray arrayWithObjects:@"code", @"result", @"pid", @"env", @"pwd", nil];
     NSArray *objects = [NSArray arrayWithObjects:exitCode, output, pid, env, resourcesDir,  nil];
@@ -142,65 +138,41 @@
     }
 }
 
+int apiStartRetries = 0;
+int apiMaxStartRetries = 5;
 +(void)api:(NSString *)action quitOnError:(Boolean)quit {
     
     if([action isEqual: @"start"]) {
+        if(apiStartRetries > apiMaxStartRetries) {
+            // damn it
+            [Helper showAlert:@"API Error (900)"
+                      message:[NSString stringWithFormat:@"Unable to start API.", nil]
+                detailMessage:@""
+                         quit:quit];
+        }
+        
         [self runCommandAndGetExitCode:
          [NSString stringWithFormat:@"cd app/api && rake daemon[start]", nil]];
         
         int code = [self runCommandAndGetExitCode:
                     [NSString stringWithFormat:@"cd app/api && rake daemon[status]", nil]];
         if(code > 0) {
+            apiStartRetries++;
             [NSThread sleepForTimeInterval:2];
             [self api:action quitOnError:quit];
+        } else {
+            apiStartRetries = 0;
         }
     } else if ([action isEqual: @"stop"]) {
         [self runCommandAndGetExitCode:
          [NSString stringWithFormat:@"cd app/api && rake daemon[stop]", nil]];
     }
-    
-    /*
-    NSString *command = nil;
-    
-    if([action isEqual: @"start"]) {
-        //command = [NSString stringWithFormat:@"cd app/api && rake daemon[start]", nil];
-        //NSDictionary *result = [Helper runCommand:command waitUntilExit:FALSE];
-        
-        NSString *workingDir = [[NSBundle mainBundle] bundlePath];
-        NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
-        NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
-        
-        NSMutableDictionary *env = [[NSMutableDictionary alloc] init];
-        [env setObject:[bin stringByAppendingString:@":/usr/bin:/usr/sbin:/bin"] forKey:@"PATH"];
-        [env setObject:[resourcesDir stringByAppendingString:@""] forKey:@"HOME"];
-        
-        NSTask *task = [[NSTask alloc] init];
-        [task setCurrentDirectoryPath:[resourcesDir stringByAppendingString:@"/app/api"]];
-        [task setEnvironment:env];
-        
-        [task setLaunchPath: @"/bin/bash"];
-        
-        NSArray *arguments = [NSArray arrayWithObjects:
-                              @"-c" ,
-                              [NSString stringWithFormat:@"%@", @"rake daemon[start]"],
-                              nil];
-        [task setArguments: arguments];
-        
-        //[task setLaunchPath:@"rake"];
-        //[task setArguments:[NSArray arrayWithObjects:[NSString stringWithFormat:@"daemon[start]"], nil]];
-        [task launch];
-        
-    } else if ([action isEqual: @"stop"]) {
-        command = [NSString stringWithFormat:@"cd app/api && rake daemon[stop]", nil];
-        NSDictionary *result = [Helper runCommand:command waitUntilExit:FALSE];
-    }
-    */
-    
 
 }
 
 
-
+int postgresqlStartRetries = 0;
+int postgresqlMaxStartRetries = 5;
 + (void)postgresql:(NSString *)action quitOnError:(Boolean)quit {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -209,20 +181,32 @@
     NSString *logFile = [postgresDataDir stringByAppendingString:@"log.log"];
     
     if([action isEqual: @"start"]) {
+        if(postgresqlStartRetries > postgresqlMaxStartRetries) {
+            // damn it
+            [Helper showAlert:@"PostgreSQL Error (950)"
+                      message:[NSString stringWithFormat:@"Unable to start PostgreSQL.", nil]
+                detailMessage:@""
+                         quit:quit];
+        }
+        
         [self runCommandAndGetExitCode:
             [NSString stringWithFormat:@"pg_ctl start -w -l '%@' -D '%@'", logFile, postgresDataDir]];
         
         int code = [self runCommandAndGetExitCode:
                     [NSString stringWithFormat:@"pg_ctl status -w -l '%@' -D '%@'", logFile, postgresDataDir]];
         if(code > 0) {
+            postgresqlStartRetries++;
             [NSThread sleepForTimeInterval:2];
             [self postgresql:action quitOnError:quit];
+        } else {
+            postgresqlStartRetries = 0;
         }
     } else if ([action isEqual: @"stop"]) {
         [self runCommandAndGetExitCode:
             [NSString stringWithFormat:@"pg_ctl stop -w -l '%@' -D '%@'", logFile, postgresDataDir]];
     }
 }
+
 
 
 +(void)createConfigYml:(NSString*)filename sample:(NSString*)sampleFile user:(NSString*)user port:(NSString *)port quitOnError:(Boolean)quit {
