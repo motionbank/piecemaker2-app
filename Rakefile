@@ -26,7 +26,7 @@ namespace :dev do
 
 
   desc "replace global app/frontend with git repo"
-  task :api_to_git do
+  task :frontend_to_git do
 
     puts "Please specify Git URL:"
     puts "[https://github.com/motionbank/piecemaker2-frontend.git]"
