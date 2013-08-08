@@ -60,22 +60,26 @@
     [_output setEditable:TRUE];
 
     NSDictionary *result = [Helper runCommand:@"pwd" waitUntilExit:TRUE];
-    [_output insertText:[NSString stringWithFormat:@"$ pwd returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    [_output insertText:[NSString stringWithFormat:@"$ pwd\n%@\n", [result valueForKey:@"result"]]];
   
     result = [Helper runCommand:@"which ruby" waitUntilExit:TRUE];
-    [_output insertText:[NSString stringWithFormat:@"$ which ruby returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    [_output insertText:[NSString stringWithFormat:@"$ which ruby\n%@\n", [result valueForKey:@"result"]]];
     
     result = [Helper runCommand:@"ruby -v" waitUntilExit:TRUE];
-    [_output insertText:[NSString stringWithFormat:@"$ ruby -v returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    [_output insertText:[NSString stringWithFormat:@"$ ruby -v\n%@\n", [result valueForKey:@"result"]]];
     
     result = [Helper runCommand:@"which rake" waitUntilExit:TRUE];
-    [_output insertText:[NSString stringWithFormat:@"$ which rake returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    [_output insertText:[NSString stringWithFormat:@"$ which rake\n%@\n", [result valueForKey:@"result"]]];
+    
+    result = [Helper runCommand:@"which bundle" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ which bundle\n%@\n", [result valueForKey:@"result"]]];
 
     result = [Helper runCommand:@"cd app/api && bundle show pg" waitUntilExit:TRUE];
-    [_output insertText:[NSString stringWithFormat:@"$ cd app/api && bundle show pg returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    [_output insertText:[NSString stringWithFormat:@"$ cd app/api && bundle show pg\n%@\n",
+                         [result valueForKey:@"result"]]];
     
     result = [Helper runCommand:@"gem env" waitUntilExit:TRUE];
-    [_output insertText:[NSString stringWithFormat:@"$ gem env returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    [_output insertText:[NSString stringWithFormat:@"$ gem env\n%@\n", [result valueForKey:@"result"]]];
     
     [_output setEditable:FALSE];
 }

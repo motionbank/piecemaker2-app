@@ -120,7 +120,7 @@ NSUserDefaults* defaults;
     
     NSError *error;
     NSFileManager *fileManager= [NSFileManager defaultManager];
-    NSString *dataDir = [[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""];
+    NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
     NSString *postgresDataDir = [dataDir stringByAppendingString:@"pqsql"];
     
 

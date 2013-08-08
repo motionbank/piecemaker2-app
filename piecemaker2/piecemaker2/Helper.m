@@ -222,7 +222,7 @@ int postgresqlMaxStartRetries = 5;
 + (void)postgresql:(NSString *)action quitOnError:(Boolean)quit {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    NSString *dataDir = [[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""];
+    NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
     NSString *postgresDataDir = [dataDir stringByAppendingString:@"pqsql"];
     NSString *logFile = [postgresDataDir stringByAppendingString:@"log.log"];
     
