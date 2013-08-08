@@ -44,15 +44,20 @@
 
 - (IBAction)sendCommand:(id)sender {
     NSDictionary *result = [Helper runCommand:[sender stringValue] waitUntilExit:TRUE];
-    [_output setString:[result valueForKey:@"result"]];
+    
+    [_output setEditable:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ %@\n%@\n", [sender stringValue], [result valueForKey:@"result"]]];
+    [_output setEditable:FALSE];
 }
 
 - (IBAction)clearBtn:(id)sender {
+    [_output setEditable:TRUE];
     [_output setString:@""];
+    [_output setEditable:FALSE];
 }
 
 - (IBAction)getEnvInfoBtn:(id)sender {
-
+    [_output setEditable:TRUE];
 
     NSDictionary *result = [Helper runCommand:@"pwd" waitUntilExit:TRUE];
     [_output insertText:[NSString stringWithFormat:@"$ pwd returned:\n%@\n\n", [result valueForKey:@"result"]]];
@@ -69,10 +74,17 @@
     result = [Helper runCommand:@"cd app/api && bundle show pg" waitUntilExit:TRUE];
     [_output insertText:[NSString stringWithFormat:@"$ cd app/api && bundle show pg returned:\n%@\n\n", [result valueForKey:@"result"]]];
     
+    result = [Helper runCommand:@"gem env" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ gem env returned:\n%@\n\n", [result valueForKey:@"result"]]];
+    
+    [_output setEditable:FALSE];
 }
 
 - (IBAction)runSpecsBtn:(id)sender {
     NSDictionary *result = [Helper runCommand:@"cd app/api && rake spec:now" waitUntilExit:TRUE];
+    
+    [_output setEditable:TRUE];
     [_output setString:[result valueForKey:@"result"]];
+    [_output setEditable:FALSE];
 }
 @end
