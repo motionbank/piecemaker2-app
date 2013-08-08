@@ -60,17 +60,61 @@ namespace :compile do
            "/Applications/Piecemaker2.app/Contents/Resources")
   end
 
+  desc "merge freshly build Piecemaker2.app with /Applications/Piecemaker2.app"
+  task :merge_app do
+    Rake::Task['compile:create_app_folder'].execute    
+
+    fresh_app = Dir.pwd + "/piecemaker2/DerivedData/piecemaker2/Build/Products/Debug/piecemaker2.app"
+
+    global_app = "/Applications/Piecemaker2.app"
+
+    system("cp #{fresh_app}/Contents/Info.plist " + 
+           "#{global_app}/Contents")
+
+    system("cp -R #{fresh_app}/Contents/MacOS " + 
+           "#{global_app}/Contents")
+
+    system("cp #{fresh_app}/Contents/PkgInfo " + 
+           "#{global_app}/Contents")
+
+    system("cp #{fresh_app}/Contents/Resources/ApiController.nib " + 
+           "#{global_app}/Contents/Resources")
+
+    system("cp #{fresh_app}/Contents/Resources/DeveloperController.nib " + 
+           "#{global_app}/Contents/Resources")
+
+    system("cp #{fresh_app}/Contents/Resources/RecorderController.nib " + 
+           "#{global_app}/Contents/Resources")
+
+    system("cp -R #{fresh_app}/Contents/Resources/en.lproj " + 
+           "#{global_app}/Contents/Resources")
+
+  end
+
   desc "install bundler and gems"
   task :gems do
-    # delete Gemfile.lock in app/api if exists
-    if File.exist?("piecemaker2/app/api/Gemfile.lock")
-      File.delete("piecemaker2/app/api/Gemfile.lock") 
-    end
+    # # delete Gemfile.lock in app/api if exists
+    # if File.exist?("piecemaker2/app/api/Gemfile.lock")
+    #   File.delete("piecemaker2/app/api/Gemfile.lock") 
+    # end
 
-    system "cd piecemaker2/app/api;" + 
-      "../../local/bin/gem install bundler;" +
-      "../../local/bin/bundle install --no-deployment --shebang ../../local/bin/ruby && " +
-      "../../local/bin/bundle install --deployment --shebang ../../local/bin/ruby;"
+    # system "cd piecemaker2/app/api;" + 
+    #   "../../local/bin/gem install bundler;" +
+    #   "../../local/bin/bundle install --no-deployment --shebang ../../local/bin/ruby && " +
+    #   "../../local/bin/bundle install --deployment --shebang ../../local/bin/ruby;"
+
+    Rake::Task['compile:create_app_folder'].execute    
+
+    gemlock_file = "/Applications/Piecemaker2.app/Contents/Resources/app/api/Gemfile.lock"
+    File.delete(gemlock_file) if File.exist?(gemlock_file)
+
+    system "cd /Applications/Piecemaker2.app/Contents/Resources/app/api; " +
+    "PATH=/Applications/Piecemaker2.app/Contents/Resources/local/bin:$PATH; " +
+    "gem install bundler; " + # VERY IMPORTANT!!
+    "bundle install --clean"
+    # "bundle install --no-deployment --clean; " +
+    # "bundle install --deployment; "
+
   end
 
   namespace :all do
@@ -81,6 +125,7 @@ namespace :compile do
       Rake::Task['compile:ruby'].execute
       Rake::Task['compile:postgres'].execute
       Rake::Task['compile:copy_api_and_frontend'].execute
+      Rake::Task['compile:gems'].execute
 
       puts "---------------------"
       puts "---------------------"
@@ -89,11 +134,7 @@ namespace :compile do
 
     desc "compile after xcode"
     task :after_xcode do
-      # merge freshly build Piecemaker2.app with
-      # /Applications/Piecemaker2.app
-
-
-      Rake::Task['compile:gems'].execute
+      Rake::Task['compile:merge_app'].execute
     end
 
   end
