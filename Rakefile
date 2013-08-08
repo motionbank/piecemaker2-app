@@ -112,47 +112,51 @@ namespace :compile do
     "PATH=/Applications/Piecemaker2.app/Contents/Resources/local/bin:$PATH; " +
     "gem install bundler; " + # VERY IMPORTANT!!
     "bundle install --clean"
-    # "bundle install --no-deployment --clean; " +
-    # "bundle install --deployment; "
 
   end
 
-  namespace :all do
-
-    desc "compile before xcode"
-    task :before_xcode do
+  desc "compile all"
+  task :all do
       Rake::Task['compile:create_app_folder'].execute
       Rake::Task['compile:ruby'].execute
       Rake::Task['compile:postgres'].execute
       Rake::Task['compile:copy_api_and_frontend'].execute
       Rake::Task['compile:gems'].execute
 
-      puts "---------------------"
-      puts "---------------------"
-      puts "Now compile Piecemaker2.app with XCode!"
-    end
-
-    desc "compile after xcode"
-    task :after_xcode do
-      Rake::Task['compile:merge_app'].execute
-    end
-
+      puts ""
+      puts ""
+      puts "-----------------------------------------------------"
+      puts "-----------------------------------------------------"
+      puts "Now compile Piecemaker2.app with XCode and test it."
+      puts ""
+      puts "You can test the locally created Piecemaker2.app or"
+      puts "if you want to test the global Piecemaker2.app in"
+      puts "in /Applications, run 'rake compile:merge_app'."
+      puts ""
+      puts "Once you are ready to create the final Piecemaker2.app"
+      puts "package, run 'rake dmg'."
+      puts ""
+      puts "-----------------------------------------------------"
+      puts "-----------------------------------------------------"
+      puts ""
   end
 
 end
 
 
-desc "create .dmg file from piecemaker.app"
+desc "create .dmg file from piecemaker.app in /Applications directory"
 task :dmg do
 
   puts "Creating .dmg file. This will take while..."
+
+  Rake::Task['compile:merge_app'].execute
 
   # create tmp dir
   TMP_DIR = Pathname.new(Dir.mktmpdir)
   WORKING_DIR = Pathname.new(Dir.pwd)
 
   # copy piecemaker app to tmp dir
-  system("cp -r #{WORKING_DIR + 'piecemaker2/DerivedData/piecemaker2/Build/Products/Debug/piecemaker2.app'} #{TMP_DIR}")
+  system("cp -r /Applications/Piecemaker2.app #{TMP_DIR}")
 
   # remove existing piecemaker2.dmg
   system("rm -rf '#{WORKING_DIR + 'piecemaker2.dmg'}'")
@@ -162,10 +166,6 @@ task :dmg do
 
   # remove existing config.yml
   system("rm  #{TMP_DIR + 'piecemaker2.app/Contents/Resources/app/api/config/config.yml'}")
-
-  # remove "global gems" since we are using gems in vendor directory
-  # save about 50MB!
-  system("rm -rf #{TMP_DIR + 'piecemaker2.app/Contents/Resources/local/lib/ruby/gems'}")
 
 
   # build dmg
