@@ -103,11 +103,14 @@ __FYI__ Find the actual .app file in ```piecemaker2/DerivedData/piecemaker2/Buil
 Ruby is compiled with the help of [ruby-build](https://github.com/sstephenson/ruby-build). Install with ```brew install ruby-build```.
 
   1) ```rake compile:all``` (or see ```rake``` for compile sub tasks)  
+
   2) Build clean piecemaker2.app with XCode 
+
   3) You can test the locally created Piecemaker2.app or 
      if you want to test the global Piecemaker2.app in
      in /Applications, run 'rake compile:merge_app'.
-  3) ```rake dmg``` to distribute the final .app in a .dmg file.  
+
+  4) ```rake dmg``` to distribute the final .app in a .dmg file.  
 
 
 

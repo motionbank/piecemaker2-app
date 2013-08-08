@@ -5,6 +5,46 @@ task :default do
   exec("rake -T")
 end  
 
+namespace :dev do
+  desc "replace global app/api with git repo"
+  task :api_to_git do
+
+    puts "Please specify Git URL:"
+    puts "[https://github.com/motionbank/piecemaker2-api.git]"
+
+    url = STDIN.gets.to_s.chomp
+    if url == "" 
+      puts "empty url... quitting"
+      exit 1
+    end
+
+    system "" +
+      "rm -rf /Applications/Piecemaker2.app/Contents/Resources/app/api && " +
+      "git clone #{url} " +
+        "/Applications/Piecemaker2.app/Contents/Resources/app/api"
+  end
+
+
+  desc "replace global app/frontend with git repo"
+  task :api_to_git do
+
+    puts "Please specify Git URL:"
+    puts "[https://github.com/motionbank/piecemaker2-frontend.git]"
+
+    url = STDIN.gets.to_s.chomp
+    if url == "" 
+      puts "empty url... quitting"
+      exit 1
+    end
+
+    system "" +
+      "rm -rf /Applications/Piecemaker2.app/Contents/Resources/app/frontend && " +
+      "git clone #{url} " +
+        "/Applications/Piecemaker2.app/Contents/Resources/app/frontend"
+  end
+end
+
+
 namespace :compile do
 
   desc "create /Applications/Piecemaker2.app folders"
