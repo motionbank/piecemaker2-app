@@ -7,22 +7,48 @@ end
 
 namespace :compile do
 
+  desc "create /Applications/Piecemaker2.app folders"
+  task :create_app_folder do
+    path = "/Applications/Piecemaker2.app/Contents/Resources/local"
+    system("mkdir -p #{path}") unless Dir.exist?(path)
+  end
+
   desc "compile ruby"
   task :ruby do
+    # compiling portable ruby
+    # https://github.com/sstephenson/ruby-build/issues/42
     # http://yehudakatz.com/2012/06/
-    system "cd piecemaker2;" +
+    
+    # system "cd piecemaker2;" +
+    #        "prefix=$(pwd)/local;" +
+    #        'CONFIGURE_OPTS="--enable-load-relative --disable-install-doc";' + 
+    #        "ruby-build 2.0.0-p247 $prefix;"
+
+    Rake::Task['compile:create_app_folder'].execute
+
+    system "cd /Applications/Piecemaker2.app/Contents/Resources;" +
            "prefix=$(pwd)/local;" +
-           'CONFIGURE_OPTS="--enable-load-relative --disable-install-doc";' + 
+           'CONFIGURE_OPTS="--enable-load-relative --disable-shared --disable-install-doc";' + 
            "ruby-build 2.0.0-p247 $prefix;"
+
   end
 
   desc "compile postgresql"
   task :postgres do
     # http://www.postgresql.org/ftp/source/
-    system "cd piecemaker2;" +
+    # system "cd piecemaker2;" +
+    #        "prefix=$(pwd)/local;" +
+    #        "cd ../postgresql-9.2.4;" + 
+    #        "./configure --prefix=$prefix;" +
+    #        "make && make install"
+
+    Rake::Task['compile:create_app_folder'].execute
+
+    postgres_source_path = Dir.pwd + "/piecemaker2/postgresql-9.2.4"
+    system "cd /Applications/Piecemaker2.app/Contents/Resources;" +
            "prefix=$(pwd)/local;" +
-           "cd ../postgresql-9.2.4;" + 
-           "./configure --prefix=$prefix" +
+           "cd #{postgres_source_path};" + 
+           "./configure --prefix=$prefix;" +
            "make && make install"
   end
 
@@ -39,13 +65,30 @@ namespace :compile do
       "../../local/bin/bundle install --deployment --shebang ../../local/bin/ruby;"
   end
 
+  namespace :all do
 
-  desc "compile all"
-  task :all do
-    Rake::Task['compile:ruby'].execute
-    Rake::Task['compile:postgres'].execute
-    Rake::Task['compile:gems'].execute
+    desc "compile before xcode"
+    task :before_xcode do
+      Rake::Task['compile:create_app_folder'].execute
+      Rake::Task['compile:ruby'].execute
+      Rake::Task['compile:postgres'].execute
+
+      puts "---------------------"
+      puts "---------------------"
+      puts "Now compile Piecemaker2.app with XCode!"
+    end
+
+    desc "compile after xcode"
+    task :after_xcode do
+      # merge freshly build Piecemaker2.app with
+      # /Applications/Piecemaker2.app
+
+
+      Rake::Task['compile:gems'].execute
+    end
+
   end
+
 
 end
 
@@ -67,6 +110,9 @@ task :dmg do
 
   # remove anything in local/var
   system("rm -rf #{TMP_DIR + 'piecemaker2.app/Contents/Resources/local/var/'}")
+
+  # remove existing config.yml
+  system("rm  #{TMP_DIR + 'piecemaker2.app/Contents/Resources/app/api/config/config.yml'}")
 
   # remove "global gems" since we are using gems in vendor directory
   # save about 50MB!

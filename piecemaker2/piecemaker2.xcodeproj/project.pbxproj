@@ -13,10 +13,10 @@
 		396EA7A8178F2E06003319B1 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7A6178F2E06003319B1 /* Credits.rtf */; };
 		396EA7AB178F2E06003319B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 396EA7AA178F2E06003319B1 /* AppDelegate.m */; };
 		396EA7AE178F2E07003319B1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7AC178F2E07003319B1 /* MainMenu.xib */; };
-		396EA7BD178F3181003319B1 /* local in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7BC178F3018003319B1 /* local */; };
 		396EA7C0178F3202003319B1 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7BE178F31B1003319B1 /* app */; };
 		AD1C936017B15517001A2026 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1C935F17B15517001A2026 /* Helper.m */; };
 		AD1C936217B1BEC3001A2026 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1C936117B1BEC3001A2026 /* WebKit.framework */; };
+		AD42663A17B3B5C200F2F51B /* local in Resources */ = {isa = PBXBuildFile; fileRef = AD42663917B3B5BF00F2F51B /* local */; };
 		ADFF479217B236A700ADB99F /* DeveloperController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFF479017B236A700ADB99F /* DeveloperController.m */; };
 		ADFF479317B236A700ADB99F /* DeveloperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADFF479117B236A700ADB99F /* DeveloperController.xib */; };
 		ADFF479717B2370B00ADB99F /* RecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFF479517B2370B00ADB99F /* RecorderController.m */; };
@@ -39,11 +39,11 @@
 		396EA7A9178F2E06003319B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		396EA7AA178F2E06003319B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		396EA7AD178F2E07003319B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		396EA7BC178F3018003319B1 /* local */ = {isa = PBXFileReference; lastKnownFileType = folder; path = local; sourceTree = "<group>"; };
 		396EA7BE178F31B1003319B1 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; path = app; sourceTree = "<group>"; };
 		AD1C935E17B15517001A2026 /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		AD1C935F17B15517001A2026 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		AD1C936117B1BEC3001A2026 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		AD42663917B3B5BF00F2F51B /* local */ = {isa = PBXFileReference; lastKnownFileType = file; name = local; path = ../../../../../Applications/Piecemaker2.app/Contents/Resources/local; sourceTree = "<group>"; };
 		ADFF478F17B236A700ADB99F /* DeveloperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeveloperController.h; sourceTree = "<group>"; };
 		ADFF479017B236A700ADB99F /* DeveloperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeveloperController.m; sourceTree = "<group>"; };
 		ADFF479117B236A700ADB99F /* DeveloperController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeveloperController.xib; sourceTree = "<group>"; };
@@ -71,9 +71,9 @@
 		396EA78B178F2E06003319B1 = {
 			isa = PBXGroup;
 			children = (
+				AD42663917B3B5BF00F2F51B /* local */,
 				AD1C936117B1BEC3001A2026 /* WebKit.framework */,
 				396EA7BE178F31B1003319B1 /* app */,
-				396EA7BC178F3018003319B1 /* local */,
 				396EA79D178F2E06003319B1 /* piecemaker2 */,
 				396EA796178F2E06003319B1 /* Frameworks */,
 				396EA795178F2E06003319B1 /* Products */,
@@ -148,8 +148,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 396EA7B1178F2E07003319B1 /* Build configuration list for PBXNativeTarget "piecemaker2" */;
 			buildPhases = (
-				396EA790178F2E06003319B1 /* Sources */,
 				396EA791178F2E06003319B1 /* Frameworks */,
+				396EA790178F2E06003319B1 /* Sources */,
 				396EA792178F2E06003319B1 /* Resources */,
 			);
 			buildRules = (
@@ -192,10 +192,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD42663A17B3B5C200F2F51B /* local in Resources */,
 				396EA7A2178F2E06003319B1 /* InfoPlist.strings in Resources */,
 				396EA7A8178F2E06003319B1 /* Credits.rtf in Resources */,
 				396EA7AE178F2E07003319B1 /* MainMenu.xib in Resources */,
-				396EA7BD178F3181003319B1 /* local in Resources */,
 				396EA7C0178F3202003319B1 /* app in Resources */,
 				ADFF479317B236A700ADB99F /* DeveloperController.xib in Resources */,
 				ADFF479817B2370B00ADB99F /* RecorderController.xib in Resources */,

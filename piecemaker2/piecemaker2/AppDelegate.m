@@ -162,8 +162,8 @@ NSUserDefaults* defaults;
         // assuming that this is the first install...
         // run "gem install bundler" once
         // this is kind of a work-around, because of PATH issues
-        NSLog(@"gem install bundler - work-around for PATH issues", nil);
-        [Helper runCommand:[NSString stringWithFormat:@"gem install bundler", nil] waitUntilExit:TRUE];
+        //NSLog(@"gem install bundler - work-around for PATH issues", nil);
+        //[Helper runCommand:[NSString stringWithFormat:@"gem install bundler", nil] waitUntilExit:TRUE];
     }
     
     

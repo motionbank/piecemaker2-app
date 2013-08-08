@@ -123,14 +123,14 @@
 
 
 + (void)createDatabaseIfNotExist:(NSString*) database {
-    NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"psql --port=50725 --list | grep piecemaker2_%@", database] waitUntilExit:TRUE];
+    NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"psql --port=50725 --host=localhost --list | grep piecemaker2_%@", database] waitUntilExit:TRUE];
     if([[result valueForKey:@"code"] intValue] == 0 && [[result valueForKey:@"result"] length] > 0) {
         // database exist
         NSLog(@"database 'piecemaker2_%@' exists", database);        
     } else {
         // create database
         NSLog(@"database 'piecemaker2_%@' does not exist", database);
-        NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"createdb --port=50725 piecemaker2_%@", database] waitUntilExit:TRUE];
+        NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"createdb --port=50725 --host=localhost piecemaker2_%@", database] waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Error (502)"
                       message:[NSString stringWithFormat:@"Unable to create database 'piecemaker2_%@'.", database]
