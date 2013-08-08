@@ -114,7 +114,8 @@ NSUserDefaults* defaults;
 // start api
 -(void)start {
     
-    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
+    // NSString *workingDir = [[NSBundle mainBundle] bundlePath];
+    NSString *workingDir = @"/Applications/Piecemaker2.app";
     NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
     
     NSError *error;

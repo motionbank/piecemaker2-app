@@ -52,6 +52,14 @@ namespace :compile do
            "make && make install"
   end
 
+  desc "copy piecemaker2/app to /Applications/Piecemaker2.app"
+  task :copy_api_and_frontend do
+    Rake::Task['compile:create_app_folder'].execute
+
+    system("cp -R piecemaker2/app " +
+           "/Applications/Piecemaker2.app/Contents/Resources")
+  end
+
   desc "install bundler and gems"
   task :gems do
     # delete Gemfile.lock in app/api if exists
@@ -72,6 +80,7 @@ namespace :compile do
       Rake::Task['compile:create_app_folder'].execute
       Rake::Task['compile:ruby'].execute
       Rake::Task['compile:postgres'].execute
+      Rake::Task['compile:copy_api_and_frontend'].execute
 
       puts "---------------------"
       puts "---------------------"

@@ -13,10 +13,8 @@
 		396EA7A8178F2E06003319B1 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7A6178F2E06003319B1 /* Credits.rtf */; };
 		396EA7AB178F2E06003319B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 396EA7AA178F2E06003319B1 /* AppDelegate.m */; };
 		396EA7AE178F2E07003319B1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7AC178F2E07003319B1 /* MainMenu.xib */; };
-		396EA7C0178F3202003319B1 /* app in Resources */ = {isa = PBXBuildFile; fileRef = 396EA7BE178F31B1003319B1 /* app */; };
 		AD1C936017B15517001A2026 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = AD1C935F17B15517001A2026 /* Helper.m */; };
 		AD1C936217B1BEC3001A2026 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD1C936117B1BEC3001A2026 /* WebKit.framework */; };
-		AD42663A17B3B5C200F2F51B /* local in Resources */ = {isa = PBXBuildFile; fileRef = AD42663917B3B5BF00F2F51B /* local */; };
 		ADFF479217B236A700ADB99F /* DeveloperController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFF479017B236A700ADB99F /* DeveloperController.m */; };
 		ADFF479317B236A700ADB99F /* DeveloperController.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADFF479117B236A700ADB99F /* DeveloperController.xib */; };
 		ADFF479717B2370B00ADB99F /* RecorderController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADFF479517B2370B00ADB99F /* RecorderController.m */; };
@@ -192,11 +190,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD42663A17B3B5C200F2F51B /* local in Resources */,
 				396EA7A2178F2E06003319B1 /* InfoPlist.strings in Resources */,
 				396EA7A8178F2E06003319B1 /* Credits.rtf in Resources */,
 				396EA7AE178F2E07003319B1 /* MainMenu.xib in Resources */,
-				396EA7C0178F3202003319B1 /* app in Resources */,
 				ADFF479317B236A700ADB99F /* DeveloperController.xib in Resources */,
 				ADFF479817B2370B00ADB99F /* RecorderController.xib in Resources */,
 				ADFF479D17B2378600ADB99F /* ApiController.xib in Resources */,

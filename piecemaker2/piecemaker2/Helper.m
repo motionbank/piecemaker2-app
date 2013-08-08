@@ -12,7 +12,7 @@
 
 
 + (NSDictionary*)runCommand:(NSString*) commandToRun waitUntilExit:(Boolean)waitUntilExit {
-    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
+    NSString *workingDir = @"/Applications/Piecemaker2.app";
     NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
     NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
     
@@ -87,7 +87,7 @@
 
 
 +(int)runCommandAndGetExitCode:(NSString*) command {
-    NSString *workingDir = [[NSBundle mainBundle] bundlePath];
+    NSString *workingDir = @"/Applications/Piecemaker2.app";
     NSString *resourcesDir = [workingDir stringByAppendingString:@"/Contents/Resources"];
     NSString *bin = [resourcesDir stringByAppendingString:@"/local/bin"];
     
