@@ -8,10 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Webkit/WebKit.h>
+#import "RecorderController.h"
 
 @interface ApiController : NSWindowController
 
 @property (assign) IBOutlet WebView *apiview;
 - (IBAction)resetIndexHtml:(id)sender;
 
+
+@property (assign) RecorderController *recorderController;
 @end

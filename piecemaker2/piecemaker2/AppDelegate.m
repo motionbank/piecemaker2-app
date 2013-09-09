@@ -34,16 +34,9 @@ NSUserDefaults* defaults;
     [_developerController setRecorderController:_recorderController];
 }
 - (IBAction)showApi:(id)sender {
-    if(!_apiController) {
-        _apiController = [[ApiController alloc] initWithWindowNibName:@"ApiController"];
-    }
     [_apiController showWindow:self];
-    // [_apiController resetIndexHtml:nil];
 }
 - (IBAction)showRecorder:(id)sender {
-    if(!_recorderController) {
-        _recorderController = [[RecorderController alloc] initWithWindowNibName:@"RecorderController"];
-    }
     [_recorderController showWindow:self];
 }
 
@@ -77,9 +70,22 @@ NSUserDefaults* defaults;
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
     [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:@"WebKitDeveloperExtras"];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    if(!_recorderController) {
+        _recorderController = [[RecorderController alloc] initWithWindowNibName:@"RecorderController"];
+    }
+    
+    if(!_apiController) {
+        _apiController = [[ApiController alloc] initWithWindowNibName:@"ApiController"];
+       [_apiController setRecorderController:_recorderController];
+    }
+    
+
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+
+    
     [_startingBtn setEnabled:FALSE];
     
     // actually, setEnable would make more sense here, but its not working
@@ -109,6 +115,7 @@ NSUserDefaults* defaults;
     [_apiMenuItem setHidden:FALSE];
     
     [_window setIsVisible:FALSE];
+    [self showRecorder:self];
     [self showApi:self];
 }
 

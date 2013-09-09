@@ -15,15 +15,13 @@
 @implementation ApiController
 
 @synthesize apiview = _apiview;
+@synthesize recorderController = _recorderController;
 
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
-        
-        WebPreferences *prefs = [_apiview preferences];
-        [prefs setUsesPageCache:NO];
     }
     
     return self;
@@ -43,5 +41,55 @@
     
 }
 
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource {
+    request = [NSURLRequest requestWithURL:[request URL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:[request timeoutInterval]];
+    return request;
+}
+
+
+//this returns a nice name for the method in the JavaScript environment
++(NSString*)webScriptNameForSelector:(SEL)sel
+{
+    if(sel == @selector(recorderJavaScriptString:))
+        return @"recorder";
+    return nil;
+}
+
+//this allows JavaScript to call the -logJavaScriptString: method
++ (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
+{
+    if(sel == @selector(recorderJavaScriptString:))
+        return NO;
+    return YES;
+}
+
+//this is a simple log command
+- (void)recorderJavaScriptString:(NSString*) action
+{
+    NSLog(@"recorderJS: %@", action);
+    if([action isEqualToString:@"start"]) {
+        NSLog(@"triggering starting recorder", nil);
+        [_recorderController startRecorder];
+    } else if ([action isEqualToString:@"stop"]) {
+        NSLog(@"triggering stopping recorder", nil);
+        [_recorderController stopRecorder];
+    }
+}
+
+- (void)awakeFromNib
+{
+    //set this class as the web view's frame load delegate
+    //we will then be notified when the scripting environment
+    //becomes available in the page
+    [_apiview setFrameLoadDelegate:self];
+}
+
+//this is called as soon as the script environment is ready in the webview
+- (void)webView:(WebView *)sender didClearWindowObject:(WebScriptObject *)windowScriptObject forFrame:(WebFrame *)frame
+{
+    //add the controller to the script environment
+    //the "Cocoa" object will now be available to JavaScript
+    [windowScriptObject setValue:self forKey:@"PiecemakerBridge"];
+}
 
 @end
