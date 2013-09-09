@@ -73,6 +73,11 @@ NSUserDefaults* defaults;
     }
 }
 
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+    [[NSUserDefaults standardUserDefaults] setBool:TRUE forKey:@"WebKitDeveloperExtras"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     [_startingBtn setEnabled:FALSE];
     
