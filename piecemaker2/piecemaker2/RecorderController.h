@@ -14,10 +14,10 @@
     
     QTCaptureSession            *mCaptureSession;
     QTCaptureMovieFileOutput    *mCaptureMovieFileOutput;
-    QTCaptureDeviceInput        *mCaptureDeviceInput;
+    QTCaptureDeviceInput        *mCaptureVideoDeviceInput;
+    QTCaptureDeviceInput        *mCaptureAudioDeviceInput;
 }
 
-- (IBAction)startRecording:(id)sender;
-- (IBAction)stopRecording:(id)sender;
-
+-(void)startRecorder;
+-(void)stopRecorder;
 @end

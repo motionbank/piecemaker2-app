@@ -37,59 +37,71 @@
     BOOL success = NO;
     NSError *error;
 
-    QTCaptureDevice *device = [QTCaptureDevice defaultInputDeviceWithMediaType:QTMediaTypeVideo];
-    if (device) {
-        success = [device open:&error];
+    QTCaptureDevice *videoDevice = [QTCaptureDevice defaultInputDeviceWithMediaType:QTMediaTypeVideo];
+    success = [videoDevice open:&error];
+    if (!success) {
+        videoDevice = [QTCaptureDevice defaultInputDeviceWithMediaType:QTMediaTypeMuxed];
+        success = [videoDevice open:&error];
+    }
+    if (!success) {
+        videoDevice = nil;
+    }
+    if (videoDevice) {
+        mCaptureVideoDeviceInput = [[QTCaptureDeviceInput alloc] initWithDevice:videoDevice];
+        success = [mCaptureSession addInput:mCaptureVideoDeviceInput error:&error];
         if (!success) {
         }
-        mCaptureDeviceInput = [[QTCaptureDeviceInput alloc] initWithDevice:device];
-        success = [mCaptureSession addInput:mCaptureDeviceInput error:&error];
-        if (!success) {
-            // Handle error
+             
+        if (![videoDevice hasMediaType:QTMediaTypeSound] && ![videoDevice hasMediaType:QTMediaTypeMuxed]) {
+                 
+            QTCaptureDevice *audioDevice = [QTCaptureDevice defaultInputDeviceWithMediaType:QTMediaTypeSound];
+            success = [audioDevice open:&error];
+                 
+            if (!success) {
+                audioDevice = nil;
+            }
+                 
+            if (audioDevice) {
+                mCaptureAudioDeviceInput = [[QTCaptureDeviceInput alloc] initWithDevice:audioDevice];
+                     
+                success = [mCaptureSession addInput:mCaptureAudioDeviceInput error:&error];
+                if (!success) {
+                }
+            }
         }
-        
         mCaptureMovieFileOutput = [[QTCaptureMovieFileOutput alloc] init];
         success = [mCaptureSession addOutput:mCaptureMovieFileOutput error:&error];
         if (!success) {
         }
-        [mCaptureMovieFileOutput setDelegate:self];
-        
-        NSEnumerator *connectionEnumerator = [[mCaptureMovieFileOutput connections] objectEnumerator];
-        QTCaptureConnection *connection;
-        
-        while ((connection = [connectionEnumerator nextObject])) {
-            NSString *mediaType = [connection mediaType];
-            QTCompressionOptions *compressionOptions = nil;
-            if ([mediaType isEqualToString:QTMediaTypeVideo]) {
-                compressionOptions = [QTCompressionOptions compressionOptionsWithIdentifier:@"QTCompressionOptions240SizeH264Video"];
-            } else if ([mediaType isEqualToString:QTMediaTypeSound]) {
-                compressionOptions = [QTCompressionOptions compressionOptionsWithIdentifier:@"QTCompressionOptionsHighQualityAACAudio"];
-            }
-            
-            [mCaptureMovieFileOutput setCompressionOptions:compressionOptions forConnection:connection];
-            
-            [mCaptureView setCaptureSession:mCaptureSession];
-        }
+        [mCaptureView setCaptureSession:mCaptureSession];
+             
         [mCaptureSession startRunning];
     }
+         
 }
+
 
 - (void)windowWillClose:(NSNotification *)notification
 {
     [mCaptureSession stopRunning];
-    [[mCaptureDeviceInput device] close];
+    if ([[mCaptureVideoDeviceInput device] isOpen])
+        [[mCaptureVideoDeviceInput device] close];
+    if ([[mCaptureAudioDeviceInput device] isOpen])
+        [[mCaptureAudioDeviceInput device] close];
 }
 
-
-
-- (IBAction)startRecording:(id)sender
+-(void)startRecorder
 {
-      [mCaptureMovieFileOutput recordToOutputFileURL:[NSURL fileURLWithPath:@"/Users/Shared/My Recorded Movie.mov"]];
+    NSLog(@"Start Recorder", nil);
+    [mCaptureMovieFileOutput recordToOutputFileURL:[NSURL fileURLWithPath:@"/Users/Shared/My Recorded Movie.mov"]];
 }
-- (IBAction)stopRecording:(id)sender
+
+-(void)stopRecorder
 {
-     [mCaptureMovieFileOutput recordToOutputFileURL:nil];
+     NSLog(@"Stop Recorder", nil);
+    [mCaptureMovieFileOutput recordToOutputFileURL:nil];
 }
+
 
 - (void)captureOutput:(QTCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL forConnections:(NSArray *)connections dueToError:(NSError *)error
 {

@@ -17,6 +17,7 @@
 
 @synthesize output = _output;
 @synthesize webView = _webView;
+@synthesize recorderController = _recorderController;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -91,4 +92,38 @@
     [_output setString:[result valueForKey:@"result"]];
     [_output setEditable:FALSE];
 }
+
+- (IBAction)pullApi:(id)sender {
+    NSDictionary *result = [Helper runCommand:@"cd app/api && git pull" waitUntilExit:TRUE];
+    
+    [_output setEditable:TRUE];
+    [_output setString:[result valueForKey:@"result"]];
+    [_output setEditable:FALSE];
+}
+
+- (IBAction)pullFrontend:(id)sender {
+    NSDictionary *result = [Helper runCommand:@"cd app/frontend && git pull" waitUntilExit:TRUE];
+    
+    [_output setEditable:TRUE];
+    [_output setString:[result valueForKey:@"result"]];
+    [_output setEditable:FALSE];
+}
+- (IBAction)createSuperAdmin:(id)sender {
+    [_output setEditable:TRUE];
+    
+    NSDictionary *result = [Helper runCommand:@"cd app/api && rake db:create_super_admin[prod]" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"%@\n", [result valueForKey:@"result"]]];
+ 
+    [_output setEditable:FALSE];
+}
+
+- (IBAction)startRecording:(id)sender {
+    [_recorderController startRecorder];
+}
+
+- (IBAction)stopRecording:(id)sender {
+    [_recorderController stopRecorder];
+}
+
+
 @end

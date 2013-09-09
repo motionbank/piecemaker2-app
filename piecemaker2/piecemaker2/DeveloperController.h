@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Webkit/WebKit.h>
+#import "RecorderController.h"
 
 @interface DeveloperController : NSWindowController
 
@@ -19,7 +20,14 @@
 - (IBAction)clearBtn:(id)sender;
 - (IBAction)getEnvInfoBtn:(id)sender;
 - (IBAction)runSpecsBtn:(id)sender;
+- (IBAction)pullApi:(id)sender;
+- (IBAction)pullFrontend:(id)sender;
+- (IBAction)startRecording:(id)sender;
+- (IBAction)stopRecording:(id)sender;
+- (IBAction)createSuperAdmin:(id)sender;
+
 
 @property (assign) WebView *webView;
+@property (assign) RecorderController *recorderController;
 
 @end

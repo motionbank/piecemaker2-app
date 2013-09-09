@@ -101,6 +101,8 @@ NSUserDefaults* defaults;
 
 // api is ready
 -(void)ready {
+    _developerController.recorderController = _recorderController;
+    
     // actually, setEnable would make more sense here, but its not working
     [_recorderMenuItem setHidden:FALSE];
     [_apiMenuItem setHidden:FALSE];
