@@ -7,7 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <QTKit/QTKit.h>
 
-@interface RecorderController : NSWindowController
+@interface RecorderController : NSWindowController {
+    IBOutlet QTCaptureView *mCaptureView;
+}
+
+- (IBAction)startRecording:(id)sender;
+- (IBAction)stopRecording:(id)sender;
 
 @end
