@@ -112,7 +112,8 @@ Ruby is compiled with the help of [ruby-build](https://github.com/sstephenson/ru
 
   4) ```rake dmg``` to distribute the final .app in a .dmg file.  
 
-
+## For Frontend-Developers
+[FRONTEND-dev](FRONTEND-DEV.md)
 
 
 
