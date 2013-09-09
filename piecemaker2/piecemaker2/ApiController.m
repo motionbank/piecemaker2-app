@@ -21,7 +21,9 @@
     self = [super initWithWindow:window];
     if (self) {
         // Initialization code here.
-
+        
+        WebPreferences *prefs = [_apiview preferences];
+        [prefs setUsesPageCache:NO];
     }
     
     return self;

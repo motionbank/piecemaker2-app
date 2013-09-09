@@ -98,13 +98,14 @@
 
 -(void)stopRecorder
 {
-     NSLog(@"Stop Recorder", nil);
+    NSLog(@"Stop Recorder", nil);
     [mCaptureMovieFileOutput recordToOutputFileURL:nil];
 }
 
 
 - (void)captureOutput:(QTCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL forConnections:(NSArray *)connections dueToError:(NSError *)error
 {
+    NSLog(@"I finished recording ...", nil);
     [[NSWorkspace sharedWorkspace] openURL:outputFileURL];
 }
 
