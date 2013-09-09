@@ -17,6 +17,8 @@
 @synthesize apiview = _apiview;
 @synthesize recorderController = _recorderController;
 
+NSUserDefaults* defaults;
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
@@ -64,7 +66,7 @@
 }
 
 //this is a simple log command
-- (void)recorderJavaScriptString:(NSString*) action
+- (NSString*)recorderJavaScriptString:(NSString*) action
 {
     NSLog(@"recorderJS: %@", action);
     if([action isEqualToString:@"start"]) {
@@ -73,7 +75,34 @@
     } else if ([action isEqualToString:@"stop"]) {
         NSLog(@"triggering stopping recorder", nil);
         [_recorderController stopRecorder];
+    } else if ([action isEqualToString:@"fetch"]) {
+        NSLog(@"fetching videos", nil);
+        
+        NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
+        NSString *movDir = [dataDir stringByAppendingString:@"mov"];
+        
+        NSFileManager *filemgr;
+        NSArray *filelist;
+        int count;
+        int i;
+        
+        filemgr = [NSFileManager defaultManager];
+        filelist = [filemgr contentsOfDirectoryAtPath:movDir error: nil];
+        
+        count = [filelist count];
+        NSString *returnString = @"";
+        
+        for (i = 0; i < count; i++) {
+            returnString = [returnString stringByAppendingString:[filelist objectAtIndex: i]];
+            returnString = [returnString stringByAppendingString:@";"];
+        }
+        
+        // [".DS_Store", "1378734727.351129.mov", "1378734779.011412.mov", "1378734848.425225.mov", ""]
+        // @todo remove some files like .DS_Store or empty files
+        return returnString;
     }
+    
+    return @"";
 }
 
 - (void)awakeFromNib
