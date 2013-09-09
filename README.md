@@ -124,4 +124,5 @@ Ruby is compiled with the help of [ruby-build](https://github.com/sstephenson/ru
 [Some old readme stuff](https://github.com/motionbank/piecemaker2-app/tree/9844e2f8dba950c83f65eac1e01593ae97d7b0cc)
 
 
-
+http://www.evermeet.cx/ffmpeg/
+http://wiki.webmproject.org/ffmpeg

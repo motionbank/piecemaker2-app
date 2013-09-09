@@ -121,6 +121,11 @@ NSUserDefaults* defaults;
     filename = [filename stringByAppendingString:@".mov"];
     
     [mCaptureMovieFileOutput recordToOutputFileURL:[NSURL fileURLWithPath:filename]];
+    
+    // FFmpeg VP8 Encoding Options
+    // http://wiki.webmproject.org/ffmpeg
+    
+    // ffmpeg -i /Users/mattes/piecemaker2_dat/mov/1378734848.425225.mov -ab 96k   -vcodec libx264   -level 21 -refs 2 -b 345k -bt 345k   -threads 0 -s 640x360 /Users/mattes/piecemaker2_dat/mov/1378734848.425225.mp4
 }
 
 -(void)stopRecorder
