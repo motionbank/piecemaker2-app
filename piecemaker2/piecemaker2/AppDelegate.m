@@ -31,6 +31,7 @@ NSUserDefaults* defaults;
     }
     [_developerController showWindow:self];
     [_developerController setWebView:[_apiController apiview]];
+    [_developerController setRecorderController:_recorderController];
 }
 - (IBAction)showApi:(id)sender {
     if(!_apiController) {
@@ -101,7 +102,7 @@ NSUserDefaults* defaults;
 
 // api is ready
 -(void)ready {
-    _developerController.recorderController = _recorderController;
+    
     
     // actually, setEnable would make more sense here, but its not working
     [_recorderMenuItem setHidden:FALSE];
