@@ -183,6 +183,19 @@ namespace :compile do
 
 end
 
+desc "upload .dmg file to server"
+task :upload_dmg do
+  puts "FTP-Host: "
+  host = STDIN.gets.strip
+
+  puts "Username: "
+  username = STDIN.gets.strip
+
+  puts "Password: "
+  password = STDIN.gets.strip
+
+  system("lftp -e 'set ssl:verify-certificate no; put piecemaker2.dmg; bye' -u #{username},#{password} #{host}")
+end
 
 desc "create .dmg file from piecemaker.app in /Applications directory"
 task :dmg do
@@ -213,6 +226,9 @@ task :dmg do
 
   # remove openssl man pages
   system("rm -rf #{TMP_DIR + 'piecemaker2.app/Contents/Resources/local/openssl/ssl/man'}")
+
+  # include some symlinks
+  system("ln -s /Applications #{TMP_DIR}/Applications")
 
   # build dmg
   system("hdiutil create -fs HFS+ -volname 'Piecemaker2' \
