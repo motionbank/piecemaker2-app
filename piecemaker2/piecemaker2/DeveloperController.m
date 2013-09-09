@@ -94,7 +94,7 @@
 }
 
 - (IBAction)pullApi:(id)sender {
-    NSDictionary *result = [Helper runCommand:@"cd app/api && git pull" waitUntilExit:TRUE];
+    NSDictionary *result = [Helper runCommand:@"cd app/api && git pull && bundle update" waitUntilExit:TRUE];
     
     [_output setEditable:TRUE];
     [_output setString:[result valueForKey:@"result"]];
