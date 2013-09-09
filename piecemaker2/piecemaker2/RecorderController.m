@@ -14,6 +14,8 @@
 
 @implementation RecorderController
 
+NSUserDefaults* defaults;
+
 - (id)initWithWindow:(NSWindow *)window
 {
     self = [super initWithWindow:window];
@@ -74,7 +76,22 @@
         if (!success) {
         }
         [mCaptureView setCaptureSession:mCaptureSession];
-             
+        
+        NSEnumerator *connectionEnumerator = [[mCaptureMovieFileOutput connections] objectEnumerator];
+        QTCaptureConnection *connection;
+        
+        while ((connection = [connectionEnumerator nextObject])) {
+            NSString *mediaType = [connection mediaType];
+            QTCompressionOptions *compressionOptions = nil;
+            if ([mediaType isEqualToString:QTMediaTypeVideo]) {
+                compressionOptions = [QTCompressionOptions compressionOptionsWithIdentifier:@"QTCompressionOptions240SizeH264Video"];
+            } else if ([mediaType isEqualToString:QTMediaTypeSound]) {
+                compressionOptions = [QTCompressionOptions compressionOptionsWithIdentifier:@"QTCompressionOptionsHighQualityAACAudio"];
+            }
+            
+            [mCaptureMovieFileOutput setCompressionOptions:compressionOptions forConnection:connection];
+        }
+        
         [mCaptureSession startRunning];
     }
          
@@ -93,7 +110,17 @@
 -(void)startRecorder
 {
     NSLog(@"Start Recorder", nil);
-    [mCaptureMovieFileOutput recordToOutputFileURL:[NSURL fileURLWithPath:@"/Users/Shared/My Recorded Movie.mov"]];
+    NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
+    NSString *movDir = [dataDir stringByAppendingString:@"mov"];
+    
+    NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
+    NSNumber *timeStampObj = [NSNumber numberWithDouble: timeStamp];
+    
+    NSString *filename = [movDir stringByAppendingString:@"/"];
+    filename = [filename stringByAppendingString:[timeStampObj stringValue]];
+    filename = [filename stringByAppendingString:@".mov"];
+    
+    [mCaptureMovieFileOutput recordToOutputFileURL:[NSURL fileURLWithPath:filename]];
 }
 
 -(void)stopRecorder
@@ -103,11 +130,13 @@
 }
 
 
+/*
 - (void)captureOutput:(QTCaptureFileOutput *)captureOutput didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL forConnections:(NSArray *)connections dueToError:(NSError *)error
 {
     NSLog(@"I finished recording ...", nil);
     [[NSWorkspace sharedWorkspace] openURL:outputFileURL];
 }
+*/
 
 
 @end
