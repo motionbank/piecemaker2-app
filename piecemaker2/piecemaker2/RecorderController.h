@@ -11,6 +11,10 @@
 
 @interface RecorderController : NSWindowController {
     IBOutlet QTCaptureView *mCaptureView;
+    
+    QTCaptureSession            *mCaptureSession;
+    QTCaptureMovieFileOutput    *mCaptureMovieFileOutput;
+    QTCaptureDeviceInput        *mCaptureDeviceInput;
 }
 
 - (IBAction)startRecording:(id)sender;
