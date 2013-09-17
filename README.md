@@ -4,7 +4,7 @@ __requires Mac OS 10.8 (64-bit)__
 
 ## Installation and Usage
 
-Download [piecemaker2.dmg](http://pm2.motionbank.org/piecemaker2.dmg) and mount the .dmp file by clicking on it.
+Download [piecemaker2.dmg](http://pm2.motionbank.org/piecemaker2.dmg) and mount the .dmg file by clicking on it.
 
 __IMPORTANT: Drag and drop the Piecemaker2.app into the /Applications directory__. 
 Be careful, that you really use ```/Applications``` and not ```/Users/xyz/Applications```. The latter won't work.
