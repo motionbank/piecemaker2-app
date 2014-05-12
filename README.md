@@ -102,6 +102,8 @@ __FYI__ Find the actual .app file in ```piecemaker2/DerivedData/piecemaker2/Buil
 
 Ruby is compiled with the help of [ruby-build](https://github.com/sstephenson/ruby-build). Install with ```brew install ruby-build```.
 
+  0) ```git submodule update --init --recursive``` to load the [api](https://github.com/motionbank/piecemaker2-api) and [frontend](https://github.com/motionbank/piecemaker2-frontend)
+
   1) ```rake compile:all``` (or see ```rake``` for compile sub tasks)  
 
   2) Build clean piecemaker2.app with XCode 

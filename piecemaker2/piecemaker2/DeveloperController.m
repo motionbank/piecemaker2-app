@@ -86,7 +86,7 @@
 }
 
 - (IBAction)runSpecsBtn:(id)sender {
-    NSDictionary *result = [Helper runCommand:@"cd app/api && rake spec:now" waitUntilExit:TRUE];
+    NSDictionary *result = [Helper runCommand:@"cd app/api && bundle exec rake spec:now" waitUntilExit:TRUE];
     
     [_output setEditable:TRUE];
     [_output setString:[result valueForKey:@"result"]];
@@ -111,7 +111,7 @@
 - (IBAction)createSuperAdmin:(id)sender {
     [_output setEditable:TRUE];
     
-    NSDictionary *result = [Helper runCommand:@"cd app/api && rake db:create_super_admin[prod]" waitUntilExit:TRUE];
+    NSDictionary *result = [Helper runCommand:@"cd app/api && bundle exec rake db:create_super_admin[prod]" waitUntilExit:TRUE];
     [_output insertText:[NSString stringWithFormat:@"%@\n", [result valueForKey:@"result"]]];
  
     [_output setEditable:FALSE];

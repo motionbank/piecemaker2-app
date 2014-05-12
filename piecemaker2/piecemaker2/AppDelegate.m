@@ -197,8 +197,6 @@ NSUserDefaults* defaults;
     
     // ------------------------------------------------------------------------
     
-    
-    
     // start api
     // ---------
     [Helper api:@"start" quitOnError:TRUE];
@@ -224,6 +222,8 @@ NSUserDefaults* defaults;
     NSLog(@"shutdown postgres server");
     [Helper postgresql:@"stop" quitOnError:FALSE];
 }
+
+
 
 
 @end

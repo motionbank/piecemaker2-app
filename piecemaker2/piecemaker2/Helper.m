@@ -173,10 +173,10 @@ int apiMaxStartRetries = 5;
         }
         
         [self runCommandAndGetExitCode:
-         [NSString stringWithFormat:@"cd app/api && rake daemon[start]", nil]];
+         [NSString stringWithFormat:@"cd app/api && bundle exec rake daemon[start]", nil]];
         
         int code = [self runCommandAndGetExitCode:
-                    [NSString stringWithFormat:@"cd app/api && rake daemon[status]", nil]];
+                    [NSString stringWithFormat:@"cd app/api && bundle exec rake daemon[status]", nil]];
         if(code > 0) {
             apiStartRetries++;
             [NSThread sleepForTimeInterval:2];
@@ -186,7 +186,7 @@ int apiMaxStartRetries = 5;
         }
     } else if ([action isEqual: @"stop"]) {
         [self runCommandAndGetExitCode:
-         [NSString stringWithFormat:@"cd app/api && rake daemon[stop]", nil]];
+         [NSString stringWithFormat:@"cd app/api && bundle exec rake daemon[stop]", nil]];
     }
 
 }
