@@ -139,7 +139,7 @@
         }
         
         // init database
-        result = [Helper runCommand:[NSString stringWithFormat:@"cd app/api && rake db:migrate[%@]", database] waitUntilExit:TRUE];
+        result = [Helper runCommand:[NSString stringWithFormat:@"cd app/api && bundle exec rake db:migrate[%@]", database] waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Error (503)"
                       message:[NSString stringWithFormat:@"Unable to init database 'piecemaker2_%@'.", database]
@@ -148,7 +148,7 @@
         }
         
         // create first super admin
-        result = [Helper runCommand:[NSString stringWithFormat:@"cd app/api && rake db:create_super_admin[%@,'juli@example.com']", database] waitUntilExit:TRUE];
+        result = [Helper runCommand:[NSString stringWithFormat:@"cd app/api && bundle exec rake db:create_super_admin[%@,'juli@example.com']", database] waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Error (512)"
                       message:[NSString stringWithFormat:@"Unable to create super admin in database 'piecemaker2_%@'.", database]
@@ -171,6 +171,8 @@ int apiMaxStartRetries = 5;
                          quit:quit];
             return;
         }
+        
+        //[self runCommand:@"cd app/api && which rake" waitUntilExit:TRUE];
         
         [self runCommandAndGetExitCode:
          [NSString stringWithFormat:@"cd app/api && bundle exec rake daemon[start]", nil]];
@@ -232,8 +234,8 @@ int postgresqlMaxStartRetries = 5;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
-    NSString *postgresDataDir = [dataDir stringByAppendingString:@"pqsql"];
-    NSString *logFile = [postgresDataDir stringByAppendingString:@"log.log"];
+    NSString *postgresDataDir = [dataDir stringByAppendingString:@"/pqsql"];
+    NSString *logFile = [postgresDataDir stringByAppendingString:@"/log.log"];
     
     if([action isEqual: @"start"]) {
         if(postgresqlStartRetries > postgresqlMaxStartRetries) {

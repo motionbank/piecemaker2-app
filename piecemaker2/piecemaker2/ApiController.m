@@ -79,7 +79,7 @@ NSUserDefaults* defaults;
         NSLog(@"fetching videos", nil);
         
         NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
-        NSString *movDir = [dataDir stringByAppendingString:@"mov"];
+        NSString *movDir = [dataDir stringByAppendingString:@"/mov"];
         
         NSFileManager *filemgr;
         NSArray *filelist;

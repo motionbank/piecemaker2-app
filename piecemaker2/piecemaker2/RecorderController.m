@@ -118,7 +118,7 @@ NSUserDefaults* defaults;
     
     NSString *filename = [movDir stringByAppendingString:@"/"];
     filename = [filename stringByAppendingString:[timeStampObj stringValue]];
-    filename = [filename stringByAppendingString:@".mov"];
+    filename = [filename stringByAppendingString:@".mp4"];
     
     [mCaptureMovieFileOutput recordToOutputFileURL:[NSURL fileURLWithPath:filename]];
     
