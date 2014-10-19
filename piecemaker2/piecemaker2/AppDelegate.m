@@ -169,7 +169,7 @@ NSUserDefaults* defaults;
         }
         
         // use this new directory as data dir for postgresql
-        NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"initdb --auth=trust -D '%@'", postgresDataDir] waitUntilExit:TRUE];
+        NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"initdb --encoding=UTF8 --auth=trust -D '%@'", postgresDataDir] waitUntilExit:TRUE];
         if([[result valueForKey:@"code"] intValue] > 0) {
             [Helper showAlert:@"PostgreSQL Init Error (101)"
                       message:[NSString stringWithFormat:@"Unable to init postgres data dir in %@", postgresDataDir]

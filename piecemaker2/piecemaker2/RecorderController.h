@@ -10,14 +10,20 @@
 #import <QTKit/QTKit.h>
 
 @interface RecorderController : NSWindowController {
+    
     IBOutlet QTCaptureView *mCaptureView;
     
     QTCaptureSession            *mCaptureSession;
     QTCaptureMovieFileOutput    *mCaptureMovieFileOutput;
     QTCaptureDeviceInput        *mCaptureVideoDeviceInput;
     QTCaptureDeviceInput        *mCaptureAudioDeviceInput;
+    
+    NSString                    *currentFileName;
+    BOOL                        isRecording;
 }
 
--(void)startRecorder;
+-(NSString*)startRecorder;
 -(void)stopRecorder;
+-(BOOL)isRecording;
+
 @end

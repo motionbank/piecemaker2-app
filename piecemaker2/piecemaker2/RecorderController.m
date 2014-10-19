@@ -94,7 +94,7 @@ NSUserDefaults* defaults;
         
         [mCaptureSession startRunning];
     }
-         
+    
 }
 
 
@@ -107,31 +107,63 @@ NSUserDefaults* defaults;
         [[mCaptureAudioDeviceInput device] close];
 }
 
--(void)startRecorder
+-(NSString*)startRecorder
 {
     NSLog(@"Start Recorder", nil);
-    NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
-    NSString *movDir = [dataDir stringByAppendingString:@"mov"];
     
-    NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
-    NSNumber *timeStampObj = [NSNumber numberWithDouble: timeStamp];
+    if ( !isRecording && currentFileName != nil ) {
+        
+        NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString]
+                                    stringByReplacingOccurrencesOfString:@"file://localhost"
+                                    withString:@""]
+                                            stringByReplacingOccurrencesOfString:@"%20"
+                                            withString:@" "];
+        
+        NSString *movDir = [dataDir stringByAppendingString:@"mov"];
+        
+        NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
+        NSNumber *timeStampObj = [NSNumber numberWithDouble: timeStamp];
+        
+        NSString *filename = [timeStampObj stringValue];
+        filename = [filename stringByAppendingString:@".mp4"];
+        
+        currentFileName = [NSString stringWithString:filename];
+        
+        NSString *filePath = [[movDir stringByAppendingString:@"/"] stringByAppendingString:filename];
+        
+        NSLog(@"Recording to: %s", [filePath UTF8String]);
+        [mCaptureMovieFileOutput recordToOutputFileURL:[NSURL fileURLWithPath:filePath]];
+        
+        // FFmpeg VP8 Encoding Options
+        // http://wiki.webmproject.org/ffmpeg
+        
+        // ffmpeg -i /Users/mattes/piecemaker2_dat/mov/1378734848.425225.mov -ab 96k   -vcodec libx264   -level 21 -refs 2 -b 345k -bt 345k   -threads 0 -s 640x360 /Users/mattes/piecemaker2_dat/mov/1378734848.425225.mp4
+        
+        [[self window] setTitle:@"[•] Recorder"];
+        
+        isRecording = TRUE;
+        
+    } else {
+        NSLog( @"... recording is already recording to file %s", [currentFileName UTF8String] );
+    }
     
-    NSString *filename = [movDir stringByAppendingString:@"/"];
-    filename = [filename stringByAppendingString:[timeStampObj stringValue]];
-    filename = [filename stringByAppendingString:@".mp4"];
-    
-    [mCaptureMovieFileOutput recordToOutputFileURL:[NSURL fileURLWithPath:filename]];
-    
-    // FFmpeg VP8 Encoding Options
-    // http://wiki.webmproject.org/ffmpeg
-    
-    // ffmpeg -i /Users/mattes/piecemaker2_dat/mov/1378734848.425225.mov -ab 96k   -vcodec libx264   -level 21 -refs 2 -b 345k -bt 345k   -threads 0 -s 640x360 /Users/mattes/piecemaker2_dat/mov/1378734848.425225.mp4
+    return currentFileName;
+}
+
+-(BOOL)isRecording
+{
+    return isRecording;
 }
 
 -(void)stopRecorder
 {
+    currentFileName = nil;
+    isRecording = TRUE;
+    
     NSLog(@"Stop Recorder", nil);
     [mCaptureMovieFileOutput recordToOutputFileURL:nil];
+    
+    [[self window] setTitle:@"Recorder"];
 }
 
 

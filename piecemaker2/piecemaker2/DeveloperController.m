@@ -74,10 +74,16 @@
     
     result = [Helper runCommand:@"which bundle" waitUntilExit:TRUE];
     [_output insertText:[NSString stringWithFormat:@"$ which bundle\n%@\n", [result valueForKey:@"result"]]];
+    
+    result = [Helper runCommand:@"cd app/api && git log -1" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ app/api last commit:\n---\n%@---\n", [result valueForKey:@"result"]]];
 
     result = [Helper runCommand:@"cd app/api && bundle show pg" waitUntilExit:TRUE];
     [_output insertText:[NSString stringWithFormat:@"$ cd app/api && bundle show pg\n%@\n",
                          [result valueForKey:@"result"]]];
+    
+    result = [Helper runCommand:@"cd app/frontend && git log -1" waitUntilExit:TRUE];
+    [_output insertText:[NSString stringWithFormat:@"$ app/frontend last commit:\n---\n%@---\n", [result valueForKey:@"result"]]];
     
     result = [Helper runCommand:@"gem env" waitUntilExit:TRUE];
     [_output insertText:[NSString stringWithFormat:@"$ gem env\n%@\n", [result valueForKey:@"result"]]];

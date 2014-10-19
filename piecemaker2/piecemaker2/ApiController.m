@@ -48,35 +48,44 @@ NSUserDefaults* defaults;
     return request;
 }
 
-
-//this returns a nice name for the method in the JavaScript environment
+// return a "nice name" for a JS method
 +(NSString*)webScriptNameForSelector:(SEL)sel
 {
-    if(sel == @selector(recorderJavaScriptString:))
+    if(sel == @selector(jsRecorderMethod:))
         return @"recorder";
     return nil;
 }
 
-//this allows JavaScript to call the -logJavaScriptString: method
+// allow for JS to call method (by hiding it from WebScript)
 + (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
 {
-    if(sel == @selector(recorderJavaScriptString:))
+    if(sel == @selector(jsRecorderMethod:))
         return NO;
     return YES;
 }
 
-//this is a simple log command
-- (NSString*)recorderJavaScriptString:(NSString*) action
+- (NSString*)jsRecorderMethod:(NSString*) action
 {
-    NSLog(@"recorderJS: %@", action);
+    NSLog(@"jsRecorderMethod: %@", action);
+    
     if([action isEqualToString:@"start"]) {
-        NSLog(@"triggering starting recorder", nil);
-        [_recorderController startRecorder];
+        
+        NSLog(@"jsRecorderMethod: triggering starting recorder", nil);
+        return [_recorderController startRecorder];
+    
     } else if ([action isEqualToString:@"stop"]) {
-        NSLog(@"triggering stopping recorder", nil);
+        
+        NSLog(@"jsRecorderMethod: triggering stopping recorder", nil);
         [_recorderController stopRecorder];
+        
+    } else if ([action isEqualToString:@"isRecording"]) {
+    
+        NSLog(@"jsRecorderMethod: check is recording");
+        return [_recorderController isRecording] ? @"true" : @"false";
+    
     } else if ([action isEqualToString:@"fetch"]) {
-        NSLog(@"fetching videos", nil);
+        
+        NSLog(@"jsRecorderMethod: fetching videos", nil);
         
         NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString] stringByReplacingOccurrencesOfString:@"file://localhost" withString:@""] stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
         NSString *movDir = [dataDir stringByAppendingString:@"/mov"];
@@ -84,21 +93,16 @@ NSUserDefaults* defaults;
         NSFileManager *filemgr;
         NSArray *filelist;
         int count;
-        int i;
         
         filemgr = [NSFileManager defaultManager];
         filelist = [filemgr contentsOfDirectoryAtPath:movDir error: nil];
         
-        count = [filelist count];
-        NSString *returnString = @"";
+        NSPredicate *mp4Predicate = [NSPredicate predicateWithFormat:@"SELF endswith[c] '.mp4'"];
+        NSArray *endsWithMP4 = [filelist filteredArrayUsingPredicate:mp4Predicate];
         
-        for (i = 0; i < count; i++) {
-            returnString = [returnString stringByAppendingString:[filelist objectAtIndex: i]];
-            returnString = [returnString stringByAppendingString:@";"];
-        }
+        count = (int)[endsWithMP4 count];
+        NSString *returnString = [endsWithMP4 componentsJoinedByString: @";"];
         
-        // [".DS_Store", "1378734727.351129.mov", "1378734779.011412.mov", "1378734848.425225.mov", ""]
-        // @todo remove some files like .DS_Store or empty files
         return returnString;
     }
     

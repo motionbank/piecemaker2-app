@@ -25,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10955E0F19F141A3007C32D4 /* REFS.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = REFS.md; sourceTree = "<group>"; };
 		396EA794178F2E06003319B1 /* piecemaker2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = piecemaker2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		396EA797178F2E06003319B1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		396EA79A178F2E06003319B1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -72,6 +73,7 @@
 		396EA78B178F2E06003319B1 = {
 			isa = PBXGroup;
 			children = (
+				10955E0F19F141A3007C32D4 /* REFS.md */,
 				AD938D3317DDE6CA005C85DF /* QTKit.framework */,
 				AD42663917B3B5BF00F2F51B /* local */,
 				AD1C936117B1BEC3001A2026 /* WebKit.framework */,
