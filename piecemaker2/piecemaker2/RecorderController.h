@@ -19,7 +19,7 @@
     QTCaptureDeviceInput        *mCaptureAudioDeviceInput;
     
     NSString                    *currentFileName;
-    BOOL                        isRecording;
+    BOOL                        _isRecording;
 }
 
 -(NSString*)startRecorder;

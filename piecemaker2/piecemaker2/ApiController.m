@@ -44,7 +44,9 @@ NSUserDefaults* defaults;
 }
 
 - (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource {
-    request = [NSURLRequest requestWithURL:[request URL] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:[request timeoutInterval]];
+    request = [NSURLRequest requestWithURL : [request URL]
+                               cachePolicy : NSURLRequestReloadIgnoringLocalCacheData
+                           timeoutInterval : [request timeoutInterval]];
     return request;
 }
 
@@ -108,6 +110,14 @@ NSUserDefaults* defaults;
     
     return @"";
 }
+
+//- (void)webView:(WebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame {
+//    NSAlert *alert = [[NSAlert alloc] init];
+//    [alert addButtonWithTitle:@"OK"];
+//    [alert setMessageText:message];
+//    [alert runModal];
+//    //[alert release];
+//}
 
 - (void)awakeFromNib
 {

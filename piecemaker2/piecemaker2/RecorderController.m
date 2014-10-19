@@ -18,9 +18,9 @@ NSUserDefaults* defaults;
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
+    self = [super initWithWindow : window];
     if (self) {
-        // Initialization code here.
+        _isRecording = FALSE;
     }
     
     return self;
@@ -111,7 +111,7 @@ NSUserDefaults* defaults;
 {
     NSLog(@"Start Recorder", nil);
     
-    if ( !isRecording && currentFileName != nil ) {
+    if ( !_isRecording ) {
         
         NSString *dataDir = [[[[defaults URLForKey:@"dataDir"] absoluteString]
                                     stringByReplacingOccurrencesOfString:@"file://localhost"
@@ -141,7 +141,7 @@ NSUserDefaults* defaults;
         
         [[self window] setTitle:@"[•] Recorder"];
         
-        isRecording = TRUE;
+        _isRecording = TRUE;
         
     } else {
         NSLog( @"... recording is already recording to file %s", [currentFileName UTF8String] );
@@ -152,13 +152,13 @@ NSUserDefaults* defaults;
 
 -(BOOL)isRecording
 {
-    return isRecording;
+    return _isRecording;
 }
 
 -(void)stopRecorder
 {
     currentFileName = nil;
-    isRecording = TRUE;
+    _isRecording = FALSE;
     
     NSLog(@"Stop Recorder", nil);
     [mCaptureMovieFileOutput recordToOutputFileURL:nil];
