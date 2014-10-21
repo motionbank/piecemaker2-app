@@ -9,7 +9,11 @@
 #import "ApiController.h"
 
 @interface ApiController ()
+@end
 
+@interface WebPreferences (WebPreferencesPrivate)
+- (void)_setLocalStorageDatabasePath:(NSString *)path;
+- (void) setLocalStorageEnabled: (BOOL) localStorageEnabled;
 @end
 
 @implementation ApiController
@@ -119,12 +123,26 @@ NSUserDefaults* defaults;
 //    //[alert release];
 //}
 
+//- (BOOL)webView:(WebView *)sender runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WebFrame *)frame {
+//    NSInteger result = NSRunInformationalAlertPanel(NSLocalizedString(@"JavaScript", @""),  // title
+//                        message,                // message
+//                        NSLocalizedString(@"OK", @""),      // default button
+//                        NSLocalizedString(@"Cancel", @""),    // alt button
+//                        nil);
+//    return NSAlertDefaultReturn == result;
+//}
+
 - (void)awakeFromNib
 {
     //set this class as the web view's frame load delegate
     //we will then be notified when the scripting environment
     //becomes available in the page
+    
     [_apiview setFrameLoadDelegate:self];
+    
+    WebPreferences* prefs = [_apiview preferences];
+    [prefs _setLocalStorageDatabasePath:@"~/Library/Application Support/Piecemaker2App"];
+    [prefs setLocalStorageEnabled:YES];
 }
 
 //this is called as soon as the script environment is ready in the webview
