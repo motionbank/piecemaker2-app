@@ -38,16 +38,39 @@ NSUserDefaults* defaults;
     mCaptureSession = [[QTCaptureSession alloc] init];
     BOOL success = NO;
     NSError *error;
+    
+    // print out capture devices, more here:
+    // http://www.subfurther.com/blog/2007/12/04/capturing-from-multiple-devices-with-qtkit/
+    
+    NSArray* devicesWithMediaType = [QTCaptureDevice inputDevicesWithMediaType:QTMediaTypeVideo];
+    NSArray* devicesWithMuxType = [QTCaptureDevice inputDevicesWithMediaType:QTMediaTypeMuxed];
+    NSMutableSet* devicesSet = [NSMutableSet setWithArray: devicesWithMediaType];
+    [devicesSet addObjectsFromArray: devicesWithMuxType];
+    NSEnumerator *enumerator = [devicesSet objectEnumerator];
+    id value;
+    QTCaptureDevice *videoDevice;
+    while ((value = [enumerator nextObject])) {
+        QTCaptureDevice *device = (QTCaptureDevice*) value;
+        NSLog(@"Found device: %@", [device localizedDisplayName]);
+        if ( [[device localizedDisplayName] isEqualToString:@"USB Camera"] ) {
+            videoDevice = device;
+        }
+    }
 
-    QTCaptureDevice *videoDevice = [QTCaptureDevice defaultInputDeviceWithMediaType:QTMediaTypeVideo];
+    if ( videoDevice == nil ) {
+        videoDevice = [QTCaptureDevice defaultInputDeviceWithMediaType:QTMediaTypeVideo];
+    }
     success = [videoDevice open:&error];
+    
     if (!success) {
         videoDevice = [QTCaptureDevice defaultInputDeviceWithMediaType:QTMediaTypeMuxed];
         success = [videoDevice open:&error];
     }
+    
     if (!success) {
         videoDevice = nil;
     }
+    
     if (videoDevice) {
         mCaptureVideoDeviceInput = [[QTCaptureDeviceInput alloc] initWithDevice:videoDevice];
         success = [mCaptureSession addInput:mCaptureVideoDeviceInput error:&error];
