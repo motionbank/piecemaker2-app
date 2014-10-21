@@ -18,3 +18,19 @@
 
 @property (assign) RecorderController *recorderController;
 @end
+
+// add private web preferences
+@interface WebPreferences (WebPrivate)
+
+- (BOOL)webGLEnabled;
+- (void)setWebGLEnabled:(BOOL)enabled;
+
+- (BOOL)localStorageEnabled;
+- (void)setLocalStorageEnabled:(BOOL)localStorageEnabled;
+
+- (NSString *)_localStorageDatabasePath;
+- (void)_setLocalStorageDatabasePath:(NSString *)path;
+
+- (void)setDatabasesEnabled:(BOOL)enabled;
+- (void)setDeveloperExtrasEnabled:(BOOL)enabled;
+@end

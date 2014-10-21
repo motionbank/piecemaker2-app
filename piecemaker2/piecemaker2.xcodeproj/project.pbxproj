@@ -26,7 +26,7 @@
 
 /* Begin PBXFileReference section */
 		10955E0F19F141A3007C32D4 /* REFS.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = REFS.md; sourceTree = "<group>"; };
-		396EA794178F2E06003319B1 /* piecemaker2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = piecemaker2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		396EA794178F2E06003319B1 /* Piecemaker2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Piecemaker2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		396EA797178F2E06003319B1 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		396EA79A178F2E06003319B1 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		396EA79B178F2E06003319B1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -54,6 +54,7 @@
 		ADFF479917B2378600ADB99F /* ApiController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApiController.h; sourceTree = "<group>"; };
 		ADFF479A17B2378600ADB99F /* ApiController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApiController.m; sourceTree = "<group>"; };
 		ADFF479B17B2378600ADB99F /* ApiController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ApiController.xib; sourceTree = "<group>"; };
+		BA19DD5FC7AFDB73E7D9EAF8 /* libPods-Piecemaker2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Piecemaker2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,11 +75,9 @@
 			isa = PBXGroup;
 			children = (
 				10955E0F19F141A3007C32D4 /* REFS.md */,
-				AD938D3317DDE6CA005C85DF /* QTKit.framework */,
 				AD42663917B3B5BF00F2F51B /* local */,
-				AD1C936117B1BEC3001A2026 /* WebKit.framework */,
 				396EA7BE178F31B1003319B1 /* app */,
-				396EA79D178F2E06003319B1 /* piecemaker2 */,
+				396EA79D178F2E06003319B1 /* src */,
 				396EA796178F2E06003319B1 /* Frameworks */,
 				396EA795178F2E06003319B1 /* Products */,
 			);
@@ -87,7 +86,7 @@
 		396EA795178F2E06003319B1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				396EA794178F2E06003319B1 /* piecemaker2.app */,
+				396EA794178F2E06003319B1 /* Piecemaker2.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,8 +94,11 @@
 		396EA796178F2E06003319B1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD938D3317DDE6CA005C85DF /* QTKit.framework */,
+				AD1C936117B1BEC3001A2026 /* WebKit.framework */,
 				396EA797178F2E06003319B1 /* Cocoa.framework */,
 				396EA799178F2E06003319B1 /* Other Frameworks */,
+				BA19DD5FC7AFDB73E7D9EAF8 /* libPods-Piecemaker2.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -111,7 +113,7 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		396EA79D178F2E06003319B1 /* piecemaker2 */ = {
+		396EA79D178F2E06003319B1 /* src */ = {
 			isa = PBXGroup;
 			children = (
 				ADFF478F17B236A700ADB99F /* DeveloperController.h */,
@@ -130,6 +132,7 @@
 				AD1C935E17B15517001A2026 /* Helper.h */,
 				AD1C935F17B15517001A2026 /* Helper.m */,
 			);
+			name = src;
 			path = piecemaker2;
 			sourceTree = "<group>";
 		};
@@ -148,9 +151,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		396EA793178F2E06003319B1 /* piecemaker2 */ = {
+		396EA793178F2E06003319B1 /* Piecemaker2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 396EA7B1178F2E07003319B1 /* Build configuration list for PBXNativeTarget "piecemaker2" */;
+			buildConfigurationList = 396EA7B1178F2E07003319B1 /* Build configuration list for PBXNativeTarget "Piecemaker2" */;
 			buildPhases = (
 				396EA791178F2E06003319B1 /* Frameworks */,
 				396EA790178F2E06003319B1 /* Sources */,
@@ -160,9 +163,9 @@
 			);
 			dependencies = (
 			);
-			name = piecemaker2;
+			name = Piecemaker2;
 			productName = piecemaker2;
-			productReference = 396EA794178F2E06003319B1 /* piecemaker2.app */;
+			productReference = 396EA794178F2E06003319B1 /* Piecemaker2.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -172,9 +175,9 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
-				ORGANIZATIONNAME = motionbank;
+				ORGANIZATIONNAME = "Motion Bank";
 			};
-			buildConfigurationList = 396EA78F178F2E06003319B1 /* Build configuration list for PBXProject "piecemaker2" */;
+			buildConfigurationList = 396EA78F178F2E06003319B1 /* Build configuration list for PBXProject "Piecemaker2" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -186,7 +189,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				396EA793178F2E06003319B1 /* piecemaker2 */,
+				396EA793178F2E06003319B1 /* Piecemaker2 */,
 			);
 		};
 /* End PBXProject section */
@@ -335,7 +338,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		396EA78F178F2E06003319B1 /* Build configuration list for PBXProject "piecemaker2" */ = {
+		396EA78F178F2E06003319B1 /* Build configuration list for PBXProject "Piecemaker2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				396EA7AF178F2E07003319B1 /* Debug */,
@@ -344,7 +347,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		396EA7B1178F2E07003319B1 /* Build configuration list for PBXNativeTarget "piecemaker2" */ = {
+		396EA7B1178F2E07003319B1 /* Build configuration list for PBXNativeTarget "Piecemaker2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				396EA7B2178F2E07003319B1 /* Debug */,

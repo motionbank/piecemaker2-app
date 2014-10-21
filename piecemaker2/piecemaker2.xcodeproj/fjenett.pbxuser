@@ -1,0 +1,140 @@
+// !$*UTF8*$!
+{
+	1013441819E5E6E6003F4B42 /* piecemaker2 */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = piecemaker2;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	1013C3E319E5E705003F4B42 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	1013C3E419E5E705003F4B42 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	1013C40C19E5E863003F4B42 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "Expected a property attribute before 'unsafe_unretained'";
+		fRef = ADFF478F17B236A700ADB99F /* DeveloperController.h */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 14;
+		rType = 1;
+	};
+	1013C40F19E5E864003F4B42 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = ADFF478F17B236A700ADB99F /* DeveloperController.h */;
+		name = "DeveloperController.h: 15";
+		rLen = 0;
+		rLoc = 278;
+		rType = 0;
+		vrLen = 641;
+		vrLoc = 167;
+	};
+	396EA78C178F2E06003319B1 /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 1013441819E5E6E6003F4B42 /* piecemaker2 */;
+		activeTarget = 396EA793178F2E06003319B1 /* piecemaker2 */;
+		codeSenseManager = 1013C3E419E5E705003F4B42 /* Code sense */;
+		executables = (
+			1013441819E5E6E6003F4B42 /* piecemaker2 */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					728,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					688,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 434497254;
+			PBXWorkspaceStateSaveDate = 434497254;
+		};
+		perUserProjectItems = {
+			1013C40C19E5E863003F4B42 /* XCBuildMessageTextBookmark */ = 1013C40C19E5E863003F4B42 /* XCBuildMessageTextBookmark */;
+			1013C40F19E5E864003F4B42 /* PBXTextBookmark */ = 1013C40F19E5E864003F4B42 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 1013C3E319E5E705003F4B42 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	396EA793178F2E06003319B1 /* piecemaker2 */ = {
+		activeExec = 0;
+		executables = (
+			1013441819E5E6E6003F4B42 /* piecemaker2 */,
+		);
+	};
+	ADFF478F17B236A700ADB99F /* DeveloperController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1109, 455}}";
+			sepNavSelRange = "{278, 0}";
+			sepNavVisRange = "{142, 339}";
+		};
+	};
+}

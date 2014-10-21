@@ -8,13 +8,7 @@
 
 #import "ApiController.h"
 
-@interface ApiController ()
-@end
-
-@interface WebPreferences (WebPreferencesPrivate)
-- (void)_setLocalStorageDatabasePath:(NSString *)path;
-- (void) setLocalStorageEnabled: (BOOL) localStorageEnabled;
-@end
+#import "Helper.h"
 
 @implementation ApiController
 
@@ -140,9 +134,20 @@ NSUserDefaults* defaults;
     
     [_apiview setFrameLoadDelegate:self];
     
+    // TODO: this is a quick hack as for some reason all local storage files
+    // listed in the WebKit database get deleted every second time ...
+    NSString *sqlCmd = @"DELETE FROM Origins WHERE path LIKE \"%/Library/Piecemaker2/LocalStorage/%\"";
+    NSDictionary *result = [Helper runCommand:[NSString stringWithFormat:@"/opt/local/bin/sqlite3 /Users/fjenett/Library/WebKit/LocalStorage/StorageTracker.db '%@'", sqlCmd]
+         waitUntilExit:TRUE];
+    NSLog(@"Clearing LS.db: %@", [result valueForKey:@"result"]);
+    
+    //NSString* appBundleID = [[NSBundle mainBundle] bundleIdentifier];
     WebPreferences* prefs = [_apiview preferences];
-    [prefs _setLocalStorageDatabasePath:@"~/Library/Application Support/Piecemaker2App"];
+    [prefs _setLocalStorageDatabasePath:@"~/Library/Piecemaker2/LocalStorage"];
     [prefs setLocalStorageEnabled:YES];
+    [prefs setDatabasesEnabled:YES];
+    [prefs setDeveloperExtrasEnabled:YES];
+    [_apiview setPreferences:prefs];
 }
 
 //this is called as soon as the script environment is ready in the webview
