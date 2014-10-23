@@ -49,10 +49,16 @@ NSUserDefaults* defaults;
     NSEnumerator *enumerator = [devicesSet objectEnumerator];
     id value;
     QTCaptureDevice *videoDevice;
-    while ((value = [enumerator nextObject])) {
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *deviceUniqueId = [prefs stringForKey:@"recorder.device.id"];
+    
+    while ((value = [enumerator nextObject]))
+    {
         QTCaptureDevice *device = (QTCaptureDevice*) value;
         NSLog(@"Found device: %@", [device localizedDisplayName]);
-        if ( [[device localizedDisplayName] isEqualToString:@"USB Camera"] ) {
+        
+        if ( [deviceUniqueId isEqualToString:[device uniqueID]] ) {
             videoDevice = device;
         }
     }
@@ -71,7 +77,10 @@ NSUserDefaults* defaults;
         videoDevice = nil;
     }
     
-    if (videoDevice) {
+    if (videoDevice)
+    {
+        [prefs setValue:[videoDevice uniqueID] forKey:@"recorder.device.id"];
+        
         mCaptureVideoDeviceInput = [[QTCaptureDeviceInput alloc] initWithDevice:videoDevice];
         success = [mCaptureSession addInput:mCaptureVideoDeviceInput error:&error];
         if (!success) {

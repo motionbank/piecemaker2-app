@@ -49,19 +49,46 @@ NSUserDefaults* defaults;
 }
 
 // return a "nice name" for a JS method
-+(NSString*)webScriptNameForSelector:(SEL)sel
++ (NSString*) webScriptNameForSelector : (SEL)sel
 {
-    if(sel == @selector(jsRecorderMethod:))
+    //NSLog( @"Sel: %@", NSStringFromSelector(sel) );
+    
+    if ( sel == @selector(jsRecorderMethod:) )
         return @"recorder";
+    else if ( sel == @selector(jsSettingsInterface::) )
+        return @"settings";
+    
     return nil;
 }
 
 // allow for JS to call method (by hiding it from WebScript)
-+ (BOOL)isSelectorExcludedFromWebScript:(SEL)sel
++ (BOOL) isSelectorExcludedFromWebScript : (SEL)sel
 {
-    if(sel == @selector(jsRecorderMethod:))
+    //NSLog( @"Sel: %@", NSStringFromSelector(sel) );
+    
+    if ( sel == @selector(jsRecorderMethod:) )
         return NO;
+    else if ( sel == @selector(jsSettingsInterface::) )
+        return NO;
+    
     return YES;
+}
+
+// https://developer.apple.com/library/mac/documentation/AppleApplications/Conceptual/SafariJSProgTopics/Tasks/ObjCFromJavaScript.html
+// http://www.icodeblog.com/2008/10/03/iphone-programming-tutorial-savingretrieving-data-using-nsuserdefaults/
+
+- (NSString*) jsSettingsInterface :(NSString*) key :(NSString*) value
+{
+    NSLog(@"jsSettingsInterface: %@ --> %@", key, value);
+    
+    if ( key == NULL && [key isEqualTo:@""] ) return [WebUndefined init];
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ( value != NULL && [value isKindOfClass:[WebUndefined class]] == NO ) {
+        [prefs setObject:value forKey:key];
+    }
+    
+    return [prefs stringForKey:key];
 }
 
 - (NSString*)jsRecorderMethod:(NSString*) action
@@ -145,8 +172,8 @@ NSUserDefaults* defaults;
     WebPreferences* prefs = [_apiview preferences];
     [prefs _setLocalStorageDatabasePath:@"~/Library/Piecemaker2/LocalStorage"];
     [prefs setLocalStorageEnabled:YES];
-    [prefs setDatabasesEnabled:YES];
-    [prefs setDeveloperExtrasEnabled:YES];
+    //[prefs setDatabasesEnabled:YES];
+    //[prefs setDeveloperExtrasEnabled:YES];
     [_apiview setPreferences:prefs];
 }
 
